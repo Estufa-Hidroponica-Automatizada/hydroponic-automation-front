@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Theme } from "../../utils/theme";
+import { Theme } from "../../utils";
 
 export const ContentContainer = styled.div`
   display: flex;

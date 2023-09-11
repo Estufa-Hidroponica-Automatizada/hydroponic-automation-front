@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Theme } from "../../utils/theme";
+import { Theme } from "../../utils";
 
 export const FormContainer = styled.div`
   background: ${Theme.background.card};

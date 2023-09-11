@@ -1,18 +1,19 @@
 import { Button, Form, Input, Layout, Typography } from "antd";
 import { Content } from "antd/es/layout/layout";
 import React from "react";
-import { ContentContainer } from "../../components/content-container";
-import { PageHeader } from "../../components/header";
-import { Theme } from "../../utils/theme";
+import { useNavigate } from "react-router-dom";
+import { ContentContainer, PageHeader } from "../../components";
+import { Theme } from "../../utils";
 import { LoginFormFields } from "./form";
 import { FormContainer } from "./styles";
 
 export const LoginPage: React.FC = () => {
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
   const handleLogin = (values: any) => {
     // TO DO: INTEGRAR LOGIN
-    console.log("LOGIN: ", values);
+    navigate("/dashboard");
   };
 
   return (
