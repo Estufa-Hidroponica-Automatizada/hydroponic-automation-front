@@ -8,15 +8,15 @@ export const HeaderContainer = styled(Header)`
   top: 0;
   z-index: 1;
   width: 100vw;
+  height: 10vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
   gap: 1rem;
   background-color: ${Theme.primary.medium};
 `;
 
 export const HeaderIcon = styled(SlidersOutlined)`
   color: ${Theme.white};
-  font-size: 2rem;
+  font-size: 2.1rem;
 `;

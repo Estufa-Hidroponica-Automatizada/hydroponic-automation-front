@@ -1,4 +1,4 @@
-import { Button, Form, Input, Layout } from "antd";
+import { Button, Form, Input, Layout, Typography } from "antd";
 import { Content } from "antd/es/layout/layout";
 import React from "react";
 import { ContentContainer } from "../../components/content-container";
@@ -38,16 +38,20 @@ export const LoginPage: React.FC = () => {
                   <Input.Password />
                 </Form.Item>
 
-                <Form.Item className="d-flex flex-column align-items-center m-0">
+                <Form.Item className="d-flex flex-column align-items-center m-3">
                   <Button
                     type="primary"
                     style={{ backgroundColor: Theme.primary.medium }}
                     htmlType="submit"
                   >
-                    Conectar ao sistema
+                    Conectar
                   </Button>
                 </Form.Item>
               </Form>
+              <Typography.Paragraph style={{ textAlign: "center" }}>
+                Conecte-se para acompanhar o status do seu sistema de qualquer
+                lugar!
+              </Typography.Paragraph>
             </FormContainer>
           </div>
         </ContentContainer>
