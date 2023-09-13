@@ -49,7 +49,7 @@ export const LoginPage: React.FC = () => {
                   </Button>
                 </Form.Item>
               </Form>
-              <Typography.Paragraph style={{ textAlign: "center" }}>
+              <Typography.Paragraph className="text-center">
                 Conecte-se para acompanhar o status do seu sistema de qualquer
                 lugar!
               </Typography.Paragraph>
