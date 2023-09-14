@@ -14,7 +14,7 @@ export const PageHeader: React.FC = () => {
         level={1}
         style={{ color: Theme.white, marginBottom: 0 }}
       >
-        WebApp Estufa
+        Estufa
       </Typography.Title>
     </HeaderContainer>
   );

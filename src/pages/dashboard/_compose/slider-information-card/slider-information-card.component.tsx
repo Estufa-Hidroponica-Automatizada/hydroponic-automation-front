@@ -1,5 +1,6 @@
 import { Button, Slider, Typography } from "antd";
 import React, { useState } from "react";
+import { Limit } from "../../../../types";
 import { Theme } from "../../../../utils";
 import { SliderInformation } from "../../enum";
 import { DashboardCard } from "../../styles";
@@ -7,51 +8,37 @@ import { SliderRange, SliderTitle, SliderUnity } from "./utils";
 
 interface SliderInformationCardProps {
   information: SliderInformation;
+  limit: Limit;
+  readValue: number;
 }
 
 export const SliderInformationCard: React.FC<SliderInformationCardProps> = ({
   information,
+  limit,
+  readValue,
 }) => {
-  const MOCK_VALUE = {
-    min: information === SliderInformation.AirTemperature ? 16 : 2,
-    max:
-      information === SliderInformation.AirTemperature
-        ? 33
-        : information === SliderInformation.Humidity
-        ? 73
-        : information === SliderInformation.Condutivity
-        ? 1957
-        : 12,
-    read:
-      information === SliderInformation.AirTemperature
-        ? 22
-        : information === SliderInformation.Humidity
-        ? 54
-        : information === SliderInformation.Condutivity
-        ? 1000
-        : 8,
-  };
+  const minLimitValue = limit?.min ?? 0;
+  const maxLimitValue = limit?.max ?? 0;
 
-  const [savedRange, setSavedRange] = useState<Number[]>([
-    MOCK_VALUE.min,
-    MOCK_VALUE.max,
+  const [savedRange, setSavedRange] = useState<number[]>([
+    minLimitValue,
+    maxLimitValue,
   ]);
-  const [minValue, setMinValue] = useState(MOCK_VALUE.min);
-  const [maxValue, setMaxValue] = useState(MOCK_VALUE.max);
+  const [minValue, setMinValue] = useState(minLimitValue);
+  const [maxValue, setMaxValue] = useState(maxLimitValue);
 
-  const isReadOnRange =
-    MOCK_VALUE.read >= minValue && MOCK_VALUE.read <= maxValue;
+  const isReadOnRange = readValue >= minValue && readValue <= maxValue;
 
   const initialValue: Record<number, any> = {};
-  initialValue[MOCK_VALUE.min] = `${MOCK_VALUE.min}${SliderUnity[information]}`;
-  initialValue[MOCK_VALUE.max] = `${MOCK_VALUE.max}${SliderUnity[information]}`;
-  initialValue[MOCK_VALUE.read] = {
+  initialValue[minLimitValue] = " ";
+  initialValue[maxLimitValue] = " ";
+  initialValue[readValue] = {
     style: {
       color: isReadOnRange ? "green" : "red",
     },
     label: (
       <strong>
-        {MOCK_VALUE.read}
+        {readValue}
         {SliderUnity[information]}
       </strong>
     ),
@@ -68,9 +55,18 @@ export const SliderInformationCard: React.FC<SliderInformationCardProps> = ({
     if (value[1] !== maxValue) {
       setMaxValue(value[1]);
     }
-    initialValue[MOCK_VALUE.read].style.color = isReadOnRange ? "green" : "red";
+    initialValue[readValue].style.color = isReadOnRange ? "green" : "red";
     setMarkers({ ...initialValue });
   };
+
+  const showButtons = savedRange[0] !== minValue || savedRange[1] !== maxValue;
+
+  const handleCancel = () => {
+    setMinValue(savedRange[0]);
+    setMaxValue(savedRange[1]);
+  };
+
+  const handleSave = () => {};
 
   return (
     <DashboardCard>
@@ -78,33 +74,53 @@ export const SliderInformationCard: React.FC<SliderInformationCardProps> = ({
         {SliderTitle[information]}
       </Typography.Title>
       <Typography.Text strong className="text-center">
-        Medição atual: {MOCK_VALUE.read}
+        Medição atual: {readValue}
         {SliderUnity[information]}
       </Typography.Text>
+
+      <Typography.Text strong className="text-center">
+        Faixa atual: {savedRange[0]}
+        {SliderUnity[information]} - {savedRange[1]}
+        {SliderUnity[information]}
+      </Typography.Text>
+
+      <div className="d-flex justify-content-between">
+        <Typography.Text strong className="mb-0">
+          {SliderRange[information].min}
+        </Typography.Text>
+        <Typography.Text strong className="mb-0">
+          {SliderRange[information].max}
+        </Typography.Text>
+      </div>
       <Slider
         range
-        defaultValue={[MOCK_VALUE.min, MOCK_VALUE.max]}
+        defaultValue={[minValue, maxValue]}
         {...SliderRange[information]}
+        value={[minValue, maxValue]}
         marks={markers}
         className="mb-3"
         onChange={handleChange}
-        // trackStyle={{ backgroundColor: Theme.primary.medium }}
-        // handleStyle={{ backgroundColor: Theme.primary.medium }}
       />
-      {savedRange[0] !== minValue ||
-        (savedRange[1] !== maxValue && (
-          <div className="d-flex justify-content-center gap-2 pt-2 w-100">
-            <Button type="primary" style={{ backgroundColor: "red" }}>
-              Cancelar
-            </Button>
-            <Button
-              type="primary"
-              style={{ backgroundColor: Theme.primary.medium }}
-            >
-              Salvar
-            </Button>
-          </div>
-        ))}
+      {showButtons && (
+        <div className="d-flex justify-content-center gap-2 pt-3 w-100">
+          <Button
+            type="primary"
+            style={{ backgroundColor: "red" }}
+            onClick={handleCancel}
+            block
+          >
+            <strong>Cancelar</strong>
+          </Button>
+          <Button
+            type="primary"
+            style={{ backgroundColor: Theme.primary.medium }}
+            onClick={handleSave}
+            block
+          >
+            <strong>Salvar</strong>
+          </Button>
+        </div>
+      )}
     </DashboardCard>
   );
 };
