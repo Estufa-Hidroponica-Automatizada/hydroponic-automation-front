@@ -3,6 +3,7 @@ import { Content } from "antd/es/layout/layout";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ContentContainer, PageHeader } from "../../components";
+import { useLogin } from "../../hooks/login";
 import { Theme } from "../../utils";
 import { LoginFormFields } from "./form";
 import { FormContainer } from "./styles";
@@ -10,10 +11,15 @@ import { FormContainer } from "./styles";
 export const LoginPage: React.FC = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const { login, isLoading } = useLogin();
 
-  const handleLogin = (values: any) => {
-    // TO DO: INTEGRAR LOGIN
-    navigate("/dashboard");
+  // TO DO: improve login call
+  const handleLogin = async (values: any) => {
+    const loginResponse = await login();
+    if (loginResponse) {
+      console.log(values);
+      navigate("/dashboard");
+    }
   };
 
   return (

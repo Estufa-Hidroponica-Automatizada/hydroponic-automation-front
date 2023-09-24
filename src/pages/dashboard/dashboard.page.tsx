@@ -1,69 +1,54 @@
-import { LoadingOutlined } from "@ant-design/icons";
-import { Button, Layout, Typography, message } from "antd";
+import { Button, Layout, Typography } from "antd";
 import { Content } from "antd/es/layout/layout";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { ContentContainer, PageHeader } from "../../components";
 import { useLimits } from "../../hooks/limits";
-import { useSensorsData } from "../../hooks/sensors-data";
+import { useReadData } from "../../hooks/read-data";
 import { Theme } from "../../utils";
 import { SliderInformationCard } from "./_compose/slider-information-card";
 import { SliderInformation } from "./enum";
 import { DashboardContainer } from "./styles";
 
 export const DashboardPage: React.FC = () => {
-  const [messageApi, contextHolder] = message.useMessage();
-
   const {
     error: limitError,
     getLimits,
     isLoading: limitLoading,
     limits,
   } = useLimits();
+
   const {
-    error: sensorsDataError,
-    getSensorsData,
-    isLoading: sensorsDataLoading,
-    sensorsData,
-  } = useSensorsData();
+    error: readDataError,
+    getReadData,
+    isLoading: isLoadingReadData,
+    readValues,
+  } = useReadData();
 
-  const getDashboardValues = async () => {
-    await getLimits();
-    await getSensorsData();
-  };
+  const initialRender = useRef(true);
 
   useEffect(() => {
-    getDashboardValues();
-  }, [getLimits, getSensorsData]);
+    const getDashboardValues = async () => {
+      await getLimits();
+      await getReadData();
+    };
 
-  useEffect(() => {
-    if (limitError) {
-      messageApi.error(
-        "Ocorreu um erro ao fazer a listagem dos limites estabelecidos."
-      );
+    if (initialRender.current) {
+      getDashboardValues();
+      initialRender.current = false;
     }
-  }, [limitError]);
+  }, []);
 
-  useEffect(() => {
-    if (sensorsDataError) {
-      messageApi.error(
-        "Ocorreu um erro ao fazer a listagem dos valores lidos."
-      );
-    }
-  }, [sensorsDataError]);
+  const isLoading = limitLoading || isLoadingReadData;
+  const hasError = limitError || readDataError;
 
-  const isLoading = limitLoading || sensorsDataLoading;
-  const hasError = limitError || sensorsDataError;
   return (
     <Layout>
-      {contextHolder}
       <PageHeader />
 
       <Content>
         <ContentContainer>
           <DashboardContainer>
-            {isLoading ? (
-              <LoadingOutlined style={{ fontSize: 64 }} />
-            ) : hasError ? (
+            {hasError ? (
               <div className="d-flex flex-column align-items-center">
                 <Typography.Title level={4}>
                   Ocorreu um erro ao buscar os dados do dashboard.
@@ -79,23 +64,27 @@ export const DashboardPage: React.FC = () => {
               <>
                 <SliderInformationCard
                   information={SliderInformation.pH}
-                  limit={limits?.pH}
-                  readValue={sensorsData?.pH}
+                  isLoading={isLoading}
+                  limit={limits?.pH ?? 0}
+                  readValue={readValues?.pH ?? 0}
                 />
                 <SliderInformationCard
                   information={SliderInformation.AirTemperature}
-                  limit={limits?.airTemperature}
-                  readValue={sensorsData?.airTemperature}
+                  isLoading={isLoading}
+                  limit={limits?.airTemperature ?? 0}
+                  readValue={readValues?.airTemperature ?? 0}
                 />
                 <SliderInformationCard
                   information={SliderInformation.Humidity}
-                  limit={limits?.humidity}
-                  readValue={sensorsData?.humidity}
+                  isLoading={isLoading}
+                  limit={limits?.humidity ?? 0}
+                  readValue={readValues?.humidity ?? 0}
                 />
                 <SliderInformationCard
                   information={SliderInformation.Condutivity}
-                  limit={limits?.condutivity}
-                  readValue={sensorsData?.condutivity}
+                  isLoading={isLoading}
+                  limit={limits?.condutivity ?? 0}
+                  readValue={readValues?.condutivity ?? 0}
                 />
               </>
             )}

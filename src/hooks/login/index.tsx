@@ -1,30 +1,31 @@
 import { notification } from "antd";
 import axios from "axios";
 import { useCallback, useState } from "react";
-import { Limits } from "../../types";
 import { endpoints } from "../../utils";
 
-export const useLimits = () => {
+export const useLogin = () => {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [limits, setLimits] = useState<Limits>({} as Limits);
 
-  const getLimits = useCallback(async () => {
+  const login = useCallback(async () => {
     try {
       setError(false);
       setIsLoading(true);
-      const { data } = await axios.get<Limits>(endpoints.limits.getLimits);
-      setLimits(data);
+      const { data } = await axios.post(endpoints.auth.login);
+      if (data) {
+        return true;
+      }
     } catch {
       setError(true);
       notification.error({
-        message: "Limites",
-        description: "Ocorreu um erro ao consultar os limites",
+        message: "Login",
+        description: "Ocorreu um erro ao tentar se conectar ao sistema",
       });
+      return false;
     } finally {
       setIsLoading(false);
     }
   }, []);
 
-  return { error, getLimits, isLoading, limits };
+  return { error, login, isLoading };
 };

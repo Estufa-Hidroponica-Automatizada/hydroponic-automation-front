@@ -1,4 +1,4 @@
-import { Button, Slider, Typography } from "antd";
+import { Button, Skeleton, Slider, Typography } from "antd";
 import React, { useState } from "react";
 import { Limit } from "../../../../types";
 import { Theme } from "../../../../utils";
@@ -8,12 +8,14 @@ import { SliderRange, SliderTitle, SliderUnity } from "./utils";
 
 interface SliderInformationCardProps {
   information: SliderInformation;
+  isLoading: boolean;
   limit: Limit;
   readValue: number;
 }
 
 export const SliderInformationCard: React.FC<SliderInformationCardProps> = ({
   information,
+  isLoading,
   limit,
   readValue,
 }) => {
@@ -73,34 +75,52 @@ export const SliderInformationCard: React.FC<SliderInformationCardProps> = ({
       <Typography.Title level={2} className="m-0 text-center">
         {SliderTitle[information]}
       </Typography.Title>
-      <Typography.Text strong className="text-center">
-        Medição atual: {readValue}
-        {SliderUnity[information]}
-      </Typography.Text>
 
-      <Typography.Text strong className="text-center">
-        Faixa atual: {savedRange[0]}
-        {SliderUnity[information]} - {savedRange[1]}
-        {SliderUnity[information]}
-      </Typography.Text>
+      {isLoading ? (
+        <div className="d-flex flex-column align-items-center gap-1 py-2">
+          <Skeleton.Input size="small" active />
+          <Skeleton.Input size="small" active />
+        </div>
+      ) : (
+        <div className="d-flex flex-column pt-1">
+          <Typography.Text strong className="text-center">
+            Medição atual: {readValue}
+            {SliderUnity[information]}
+          </Typography.Text>
+
+          <Typography.Text strong className="text-center">
+            Faixa atual: {savedRange[0]}
+            {SliderUnity[information]} - {savedRange[1]}
+            {SliderUnity[information]}
+          </Typography.Text>
+        </div>
+      )}
 
       <div className="d-flex justify-content-between">
         <Typography.Text strong className="mb-0">
           {SliderRange[information].min}
+          {SliderUnity[information]}
         </Typography.Text>
         <Typography.Text strong className="mb-0">
           {SliderRange[information].max}
+          {SliderUnity[information]}
         </Typography.Text>
       </div>
-      <Slider
-        range
-        defaultValue={[minValue, maxValue]}
-        {...SliderRange[information]}
-        value={[minValue, maxValue]}
-        marks={markers}
-        className="mb-3"
-        onChange={handleChange}
-      />
+
+      {isLoading ? (
+        <Skeleton.Input size="small" active block />
+      ) : (
+        <Slider
+          {...SliderRange[information]}
+          // defaultValue={[minValue, maxValue]} TO DO: check if can remove this props
+          value={[minValue, maxValue]}
+          marks={markers}
+          className="mb-3"
+          onChange={handleChange}
+          range
+        />
+      )}
+
       {showButtons && (
         <div className="d-flex justify-content-center gap-2 pt-3 w-100">
           <Button

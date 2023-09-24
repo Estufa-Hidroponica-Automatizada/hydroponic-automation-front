@@ -1,4 +1,4 @@
-export interface SensorsData {
+export interface ReadData {
   airTemperature: number;
   condutivity: number;
   humidity: number;
