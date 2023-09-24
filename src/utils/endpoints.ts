@@ -1,4 +1,5 @@
-const baseURL = "http://177.63.216.134:2222";
+// const baseURL = "http://177.63.216.134:2222";
+const baseURL = "http://localhost:3000";
 
 export const endpoints = {
   getReadData: `${baseURL}/sensor`,
