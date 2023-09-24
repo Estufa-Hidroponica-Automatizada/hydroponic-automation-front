@@ -1,6 +1,11 @@
-import { Button, Layout, Typography } from "antd";
+import {
+  CameraOutlined,
+  DownOutlined,
+  VideoCameraOutlined,
+} from "@ant-design/icons";
+import { Button, Dropdown, Layout, MenuProps, Typography } from "antd";
 import { Content } from "antd/es/layout/layout";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { ContentContainer, PageHeader } from "../../components";
 import { useLimits } from "../../hooks/limits";
 import { useReadData } from "../../hooks/read-data";
@@ -9,7 +14,9 @@ import { SliderInformationCard } from "./_compose/slider-information-card";
 import { SliderInformation } from "./enum";
 import { DashboardContainer } from "./styles";
 
-export const DashboardPage: React.FC = () => {
+export const DashboardPage = () => {
+  const initialRender = useRef(true);
+
   const {
     error: limitError,
     getLimits,
@@ -24,22 +31,37 @@ export const DashboardPage: React.FC = () => {
     readValues,
   } = useReadData();
 
-  const initialRender = useRef(true);
+  const getDashboardValues = async () => {
+    await getLimits();
+    await getReadData();
+  };
 
   useEffect(() => {
-    const getDashboardValues = async () => {
-      await getLimits();
-      await getReadData();
-    };
-
     if (initialRender.current) {
-      getDashboardValues();
       initialRender.current = false;
+      getDashboardValues();
     }
   }, []);
 
   const isLoading = limitLoading || isLoadingReadData;
   const hasError = limitError || readDataError;
+
+  const menuOptions = [
+    {
+      label: "Ao vivo",
+      key: "photo",
+      icon: <CameraOutlined />,
+    },
+    {
+      label: "Time-lapse",
+      key: "timelapse",
+      icon: <VideoCameraOutlined />,
+    },
+  ];
+
+  const handleDropdownClick: MenuProps["onClick"] = (option) => {
+    console.log(option.key);
+  };
 
   return (
     <Layout>
@@ -47,15 +69,30 @@ export const DashboardPage: React.FC = () => {
 
       <Content>
         <ContentContainer>
+          <div className="d-flex gap-3 justify-content-center pb-3">
+            <Button type="primary" ghost>
+              Acessar meu perfil
+            </Button>
+            <Dropdown
+              menu={{ items: menuOptions, onClick: handleDropdownClick }}
+              trigger={["click"]}
+            >
+              <Button type="primary" icon={<DownOutlined />}>
+                Visualizar estufa
+              </Button>
+            </Dropdown>
+          </div>
           <DashboardContainer>
-            {hasError ? (
+            {!hasError ? (
               <div className="d-flex flex-column align-items-center">
                 <Typography.Title level={4}>
                   Ocorreu um erro ao buscar os dados do dashboard.
                 </Typography.Title>
                 <Button
-                  type="primary"
                   style={{ backgroundColor: Theme.primary.medium }}
+                  onClick={getDashboardValues}
+                  type="primary"
+                  loading={isLoading}
                 >
                   Tentar novamente
                 </Button>

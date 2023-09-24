@@ -1,5 +1,5 @@
 import { Button, Skeleton, Slider, Typography } from "antd";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Limit } from "../../../../types";
 import { Theme } from "../../../../utils";
 import { SliderInformation } from "../../enum";
@@ -13,12 +13,12 @@ interface SliderInformationCardProps {
   readValue: number;
 }
 
-export const SliderInformationCard: React.FC<SliderInformationCardProps> = ({
+export const SliderInformationCard = ({
   information,
   isLoading,
   limit,
   readValue,
-}) => {
+}: SliderInformationCardProps) => {
   const minLimitValue = limit?.min ?? 0;
   const maxLimitValue = limit?.max ?? 0;
 
@@ -112,7 +112,6 @@ export const SliderInformationCard: React.FC<SliderInformationCardProps> = ({
       ) : (
         <Slider
           {...SliderRange[information]}
-          // defaultValue={[minValue, maxValue]} TO DO: check if can remove this props
           value={[minValue, maxValue]}
           marks={markers}
           className="mb-3"

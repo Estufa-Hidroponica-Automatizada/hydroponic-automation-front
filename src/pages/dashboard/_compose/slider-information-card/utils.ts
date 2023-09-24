@@ -1,3 +1,4 @@
+import { Limit } from "../../../../types";
 import { SliderInformation } from "../../enum";
 
 export const SliderTitle: Record<SliderInformation, string> = {
@@ -14,10 +15,7 @@ export const SliderUnity: Record<SliderInformation, string> = {
   condutivity: "ppm",
 };
 
-export const SliderRange: Record<
-  SliderInformation,
-  { min: number; max: number }
-> = {
+export const SliderRange: Record<SliderInformation, Limit> = {
   pH: { min: 0, max: 14 },
   humidity: { min: 0, max: 100 },
   AirTemperature: { min: 15, max: 40 },

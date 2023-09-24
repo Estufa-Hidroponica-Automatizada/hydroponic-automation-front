@@ -1,14 +1,14 @@
+import { RightOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Layout, Typography } from "antd";
 import { Content } from "antd/es/layout/layout";
-import React from "react";
+import Link from "antd/es/typography/Link";
 import { useNavigate } from "react-router-dom";
 import { ContentContainer, PageHeader } from "../../components";
 import { useLogin } from "../../hooks/login";
-import { Theme } from "../../utils";
 import { LoginFormFields } from "./form";
 import { FormContainer } from "./styles";
 
-export const LoginPage: React.FC = () => {
+export const LoginPage = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const { login, isLoading } = useLogin();
@@ -16,7 +16,7 @@ export const LoginPage: React.FC = () => {
   // TO DO: improve login call
   const handleLogin = async (values: any) => {
     const loginResponse = await login();
-    if (loginResponse) {
+    if (!loginResponse) {
       console.log(values);
       navigate("/dashboard");
     }
@@ -46,11 +46,7 @@ export const LoginPage: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item className="d-flex flex-column align-items-center m-3">
-                  <Button
-                    type="primary"
-                    style={{ backgroundColor: Theme.primary.medium }}
-                    htmlType="submit"
-                  >
+                  <Button htmlType="submit" type="primary" loading={isLoading}>
                     Conectar
                   </Button>
                 </Form.Item>
@@ -59,6 +55,13 @@ export const LoginPage: React.FC = () => {
                 Conecte-se para acompanhar o status do seu sistema de qualquer
                 lugar!
               </Typography.Paragraph>
+              <Link
+                onClick={() => console.log("TO DO")}
+                className="d-flex gap-1 align-self-center"
+              >
+                Esqueci minha senha
+                <RightOutlined />
+              </Link>
             </FormContainer>
           </div>
         </ContentContainer>
