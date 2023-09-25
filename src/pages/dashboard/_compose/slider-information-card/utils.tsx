@@ -21,3 +21,25 @@ export const SliderRange: Record<SliderInformation, Limit> = {
   AirTemperature: { min: 15, max: 40 },
   condutivity: { min: 0, max: 3000 },
 };
+
+export const getSliderMarkers = (information: SliderInformation, min?: number, max?: number, readValue?: number,) => {
+  const markers: Record<number, any> = {};
+  if (min) {
+    markers[min] = " ";
+  }
+  if (max) {
+    markers[max] = " ";
+  }
+  if (readValue) {
+    markers[readValue] = {
+      style: {
+        color: readValue >= min! && readValue <= max! ? "green" : "red",
+        fontWeigth: 500,
+      },
+      label: 'xxx'
+      // label: `${readValue}${SliderUnity[information]}`
+    };
+  }
+
+  return markers
+}

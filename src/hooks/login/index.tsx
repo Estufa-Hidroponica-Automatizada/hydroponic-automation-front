@@ -1,9 +1,10 @@
 import { notification } from "antd";
 import axios from "axios";
 import { useCallback, useState } from "react";
+import { Login } from "../../types";
 import { endpoints } from "../../utils";
 
-export const useLogin = () => {
+export const useLogin = (loginData: Login) => {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -11,7 +12,7 @@ export const useLogin = () => {
     try {
       setError(false);
       setIsLoading(true);
-      const { data } = await axios.post(endpoints.auth.login);
+      const { data } = await axios.post(endpoints.auth.login, loginData);
       if (data) {
         return true;
       }

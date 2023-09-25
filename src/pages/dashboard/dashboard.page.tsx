@@ -1,6 +1,7 @@
 import {
   CameraOutlined,
   DownOutlined,
+  ReloadOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
 import { Button, Dropdown, Layout, MenuProps, Typography } from "antd";
@@ -9,7 +10,6 @@ import { useEffect, useRef } from "react";
 import { ContentContainer, PageHeader } from "../../components";
 import { useLimits } from "../../hooks/limits";
 import { useReadData } from "../../hooks/read-data";
-import { Theme } from "../../utils";
 import { SliderInformationCard } from "./_compose/slider-information-card";
 import { SliderInformation } from "./enum";
 import { DashboardContainer } from "./styles";
@@ -18,9 +18,9 @@ export const DashboardPage = () => {
   const initialRender = useRef(true);
 
   const {
-    error: limitError,
+    error: limitsError,
     getLimits,
-    isLoading: limitLoading,
+    isLoading: isLoadingLimits,
     limits,
   } = useLimits();
 
@@ -43,8 +43,8 @@ export const DashboardPage = () => {
     }
   }, []);
 
-  const isLoading = limitLoading || isLoadingReadData;
-  const hasError = limitError || readDataError;
+  const isLoading = isLoadingLimits || isLoadingReadData;
+  const hasError = limitsError || readDataError;
 
   const menuOptions = [
     {
@@ -59,9 +59,11 @@ export const DashboardPage = () => {
     },
   ];
 
-  const handleDropdownClick: MenuProps["onClick"] = (option) => {
-    console.log(option.key);
+
+  const handleDropdownClick: MenuProps["onClick"] = async (option) => {
+    // TO DO: REDIRECT
   };
+
 
   return (
     <Layout>
@@ -82,49 +84,50 @@ export const DashboardPage = () => {
               </Button>
             </Dropdown>
           </div>
+          {hasError && (
+            <div className="d-flex flex-column align-items-center pb-3">
+              <Typography.Title level={4}>
+                Ocorreu um erro ao buscar os dados do dashboard.
+              </Typography.Title>
+              <Button
+                onClick={getDashboardValues}
+                type="primary"
+                loading={isLoading}
+                icon={<ReloadOutlined />}
+              >
+                Tentar novamente
+              </Button>
+            </div>
+          )}
           <DashboardContainer>
-            {!hasError ? (
-              <div className="d-flex flex-column align-items-center">
-                <Typography.Title level={4}>
-                  Ocorreu um erro ao buscar os dados do dashboard.
-                </Typography.Title>
-                <Button
-                  style={{ backgroundColor: Theme.primary.medium }}
-                  onClick={getDashboardValues}
-                  type="primary"
-                  loading={isLoading}
-                >
-                  Tentar novamente
-                </Button>
-              </div>
-            ) : (
-              <>
-                <SliderInformationCard
-                  information={SliderInformation.pH}
-                  isLoading={isLoading}
-                  limit={limits?.pH ?? 0}
-                  readValue={readValues?.pH ?? 0}
-                />
-                <SliderInformationCard
-                  information={SliderInformation.AirTemperature}
-                  isLoading={isLoading}
-                  limit={limits?.airTemperature ?? 0}
-                  readValue={readValues?.airTemperature ?? 0}
-                />
-                <SliderInformationCard
-                  information={SliderInformation.Humidity}
-                  isLoading={isLoading}
-                  limit={limits?.humidity ?? 0}
-                  readValue={readValues?.humidity ?? 0}
-                />
-                <SliderInformationCard
-                  information={SliderInformation.Condutivity}
-                  isLoading={isLoading}
-                  limit={limits?.condutivity ?? 0}
-                  readValue={readValues?.condutivity ?? 0}
-                />
-              </>
-            )}
+            <SliderInformationCard
+              information={SliderInformation.pH}
+              isLoadingLimits={isLoadingLimits}
+              isLoadingReadData={isLoadingReadData}
+              limit={limits?.pH ?? 0}
+              readValue={readValues?.pH ?? 0}
+            />
+            <SliderInformationCard
+              information={SliderInformation.AirTemperature}
+              isLoadingLimits={isLoadingLimits}
+              isLoadingReadData={isLoadingReadData}
+              limit={limits?.airTemperature ?? 0}
+              readValue={readValues?.airTemperature ?? 0}
+            />
+            <SliderInformationCard
+              information={SliderInformation.Humidity}
+              isLoadingLimits={isLoadingLimits}
+              isLoadingReadData={isLoadingReadData}
+              limit={limits?.humidity ?? 0}
+              readValue={readValues?.humidity ?? 0}
+            />
+            <SliderInformationCard
+              information={SliderInformation.Condutivity}
+              isLoadingLimits={isLoadingLimits}
+              isLoadingReadData={isLoadingReadData}
+              limit={limits?.condutivity ?? 0}
+              readValue={readValues?.condutivity ?? 0}
+            />
           </DashboardContainer>
         </ContentContainer>
       </Content>

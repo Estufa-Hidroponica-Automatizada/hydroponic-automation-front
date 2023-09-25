@@ -4,51 +4,35 @@ import { Limit } from "../../../../types";
 import { Theme } from "../../../../utils";
 import { SliderInformation } from "../../enum";
 import { DashboardCard } from "../../styles";
-import { SliderRange, SliderTitle, SliderUnity } from "./utils";
+import { SliderRange, SliderTitle, SliderUnity, getSliderMarkers } from "./utils";
 
 interface SliderInformationCardProps {
   information: SliderInformation;
-  isLoading: boolean;
+  isLoadingLimits: boolean;
+  isLoadingReadData: boolean;
   limit: Limit;
   readValue: number;
 }
 
 export const SliderInformationCard = ({
   information,
-  isLoading,
+  isLoadingLimits,
+  isLoadingReadData,
   limit,
   readValue,
 }: SliderInformationCardProps) => {
-  const minLimitValue = limit?.min ?? 0;
-  const maxLimitValue = limit?.max ?? 0;
 
   const [savedRange, setSavedRange] = useState<number[]>([
-    minLimitValue,
-    maxLimitValue,
+    limit?.min,
+    limit?.max,
   ]);
-  const [minValue, setMinValue] = useState(minLimitValue);
-  const [maxValue, setMaxValue] = useState(maxLimitValue);
+  const [minValue, setMinValue] = useState(limit?.min);
+  const [maxValue, setMaxValue] = useState(limit?.max);
 
   const isReadOnRange = readValue >= minValue && readValue <= maxValue;
 
-  const initialValue: Record<number, any> = {};
-  initialValue[minLimitValue] = " ";
-  initialValue[maxLimitValue] = " ";
-  initialValue[readValue] = {
-    style: {
-      color: isReadOnRange ? "green" : "red",
-    },
-    label: (
-      <strong>
-        {readValue}
-        {SliderUnity[information]}
-      </strong>
-    ),
-  };
 
-  const [markers, setMarkers] = useState<Record<number, any>>({
-    ...initialValue,
-  });
+  const [markers, setMarkers] = useState<Record<number, any>>(getSliderMarkers(information, limit?.min, limit?.max, readValue));
 
   const handleChange = (value: number[]) => {
     if (value[0] !== minValue) {
@@ -57,8 +41,7 @@ export const SliderInformationCard = ({
     if (value[1] !== maxValue) {
       setMaxValue(value[1]);
     }
-    initialValue[readValue].style.color = isReadOnRange ? "green" : "red";
-    setMarkers({ ...initialValue });
+    setMarkers(getSliderMarkers(information, value[0], value[1], readValue));
   };
 
   const showButtons = savedRange[0] !== minValue || savedRange[1] !== maxValue;
@@ -68,7 +51,7 @@ export const SliderInformationCard = ({
     setMaxValue(savedRange[1]);
   };
 
-  const handleSave = () => {};
+  const handleSave = () => { };
 
   return (
     <DashboardCard>
@@ -76,7 +59,7 @@ export const SliderInformationCard = ({
         {SliderTitle[information]}
       </Typography.Title>
 
-      {isLoading ? (
+      {isLoadingReadData ? (
         <div className="d-flex flex-column align-items-center gap-1 py-2">
           <Skeleton.Input size="small" active />
           <Skeleton.Input size="small" active />
@@ -107,7 +90,7 @@ export const SliderInformationCard = ({
         </Typography.Text>
       </div>
 
-      {isLoading ? (
+      {isLoadingLimits ? (
         <Skeleton.Input size="small" active block />
       ) : (
         <Slider
@@ -124,7 +107,7 @@ export const SliderInformationCard = ({
         <div className="d-flex justify-content-center gap-2 pt-3 w-100">
           <Button
             type="primary"
-            style={{ backgroundColor: "red" }}
+            danger
             onClick={handleCancel}
             block
           >

@@ -1,5 +1,5 @@
 // const baseURL = "http://177.63.216.134:2222";
-const baseURL = "http://localhost:3000";
+const baseURL = "http://localhost:4000";
 
 export const endpoints = {
   getReadData: `${baseURL}/sensor`,
@@ -12,10 +12,8 @@ export const endpoints = {
   lightSchedule: `${baseURL}/light/schedule`,
   nutrientProportion: `${baseURL}/nutrient/proportion`,
   cam: {
-    downloadPhoto: `${baseURL}/cam/photo`,
-    downloadTimelapse: `${baseURL}/cam/timelapse`,
-    setLimit: (parameterName: string) => {
-      return `${baseURL}/limit/${parameterName}`;
+    getFile: (action: string) => {
+      return `${baseURL}/cam/${action}`;
     },
   },
   auth: {

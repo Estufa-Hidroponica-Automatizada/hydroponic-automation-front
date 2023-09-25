@@ -5,6 +5,7 @@ import Link from "antd/es/typography/Link";
 import { useNavigate } from "react-router-dom";
 import { ContentContainer, PageHeader } from "../../components";
 import { useLogin } from "../../hooks/login";
+import { Login } from "../../types";
 import { LoginFormFields } from "./form";
 import { FormContainer } from "./styles";
 
@@ -14,10 +15,9 @@ export const LoginPage = () => {
   const { login, isLoading } = useLogin();
 
   // TO DO: improve login call
-  const handleLogin = async (values: any) => {
-    const loginResponse = await login();
-    if (!loginResponse) {
-      console.log(values);
+  const handleLogin = async (loginData: Login) => {
+    const loginResponse = await login(loginData);
+    if (loginResponse) {
       navigate("/dashboard");
     }
   };
@@ -35,7 +35,7 @@ export const LoginPage = () => {
                   {...LoginFormFields.systemID}
                   rules={[LoginFormFields.systemID.validation]}
                 >
-                  <Input className="d-flex flex-column" />
+                  <Input />
                 </Form.Item>
 
                 <Form.Item
@@ -51,6 +51,7 @@ export const LoginPage = () => {
                   </Button>
                 </Form.Item>
               </Form>
+
               <Typography.Paragraph className="text-center">
                 Conecte-se para acompanhar o status do seu sistema de qualquer
                 lugar!

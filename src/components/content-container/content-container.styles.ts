@@ -8,4 +8,5 @@ export const ContentContainer = styled.div`
   width: 100vw;
   padding: 1rem;
   background: ${Theme.background.content};
+  background-attachment: local;
 `;
