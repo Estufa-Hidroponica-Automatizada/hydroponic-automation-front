@@ -4,11 +4,11 @@ import { useCallback, useState } from "react";
 import { Login } from "../../types";
 import { endpoints } from "../../utils";
 
-export const useLogin = (loginData: Login) => {
+export const useLogin = () => {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const login = useCallback(async () => {
+  const login = useCallback(async (loginData: Login) => {
     try {
       setError(false);
       setIsLoading(true);

@@ -6,18 +6,20 @@ import { endpoints } from "../../utils";
 export const usePhoto = () => {
     const [error, setError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [photo, setPhoto] = useState<string | ArrayBuffer | null>(null);
+    const [photo, setPhoto] = useState<string | null>(null);
 
     const getPhoto = useCallback(async () => {
         try {
             setError(false);
             setIsLoading(true);
-            const { data } = await axios.get(endpoints.cam.getFile('photo'), { responseType: 'blob' });
+            const { data } = await axios.get(endpoints.cam.getPhoto, {
+                responseType: "blob",
+            });
             const reader = new FileReader();
             reader.onload = () => {
                 const dataURL = reader.result;
-                setPhoto(dataURL);
-            }
+                setPhoto(dataURL as string);
+            };
             reader.readAsDataURL(data);
         } catch {
             setError(true);

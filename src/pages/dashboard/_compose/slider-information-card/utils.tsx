@@ -1,4 +1,5 @@
 import { Limit } from "../../../../types";
+import { isValueOnRange } from "../../../../utils";
 import { SliderInformation } from "../../enum";
 
 export const SliderTitle: Record<SliderInformation, string> = {
@@ -22,24 +23,31 @@ export const SliderRange: Record<SliderInformation, Limit> = {
   condutivity: { min: 0, max: 3000 },
 };
 
-export const getSliderMarkers = (information: SliderInformation, min?: number, max?: number, readValue?: number,) => {
+export const getSliderMarkers = (
+  information: SliderInformation,
+  min: number,
+  max: number,
+  readValue?: number
+) => {
   const markers: Record<number, any> = {};
-  if (min) {
-    markers[min] = " ";
-  }
-  if (max) {
-    markers[max] = " ";
-  }
-  if (readValue) {
+  markers[min] = " ";
+  markers[max] = " ";
+  if (
+    readValue &&
+    isValueOnRange(
+      readValue,
+      SliderRange[information].min,
+      SliderRange[information].max
+    )
+  ) {
     markers[readValue] = {
       style: {
-        color: readValue >= min! && readValue <= max! ? "green" : "red",
+        color: readValue >= min && readValue <= max ? "green" : "red",
         fontWeigth: 500,
       },
-      label: 'xxx'
-      // label: `${readValue}${SliderUnity[information]}`
+      label: `${readValue}${SliderUnity[information]}`,
     };
   }
 
-  return markers
-}
+  return markers;
+};

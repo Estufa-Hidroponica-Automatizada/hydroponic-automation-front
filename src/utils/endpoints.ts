@@ -1,5 +1,6 @@
-// const baseURL = "http://177.63.216.134:2222";
-const baseURL = "http://localhost:4000";
+// const baseURL = "http://177.63.216.134:4000"; // externalURL
+const baseURL = "http://192.168.15.10:4000"; // localURL
+// const baseURL = "http://localhost:4000"; // raspURL
 
 export const endpoints = {
   getReadData: `${baseURL}/sensor`,
@@ -12,9 +13,8 @@ export const endpoints = {
   lightSchedule: `${baseURL}/light/schedule`,
   nutrientProportion: `${baseURL}/nutrient/proportion`,
   cam: {
-    getFile: (action: string) => {
-      return `${baseURL}/cam/${action}`;
-    },
+    getPhoto: `${baseURL}/cam/photo`,
+    getTimelapse: `${baseURL}/cam/timelapse`,
   },
   auth: {
     login: `${baseURL}/login`,

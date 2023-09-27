@@ -7,15 +7,18 @@ import {
 import { Button, Dropdown, Layout, MenuProps, Typography } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { ContentContainer, PageHeader } from "../../components";
 import { useLimits } from "../../hooks/limits";
 import { useReadData } from "../../hooks/read-data";
+import { AppPath } from "../../routes";
 import { SliderInformationCard } from "./_compose/slider-information-card";
 import { SliderInformation } from "./enum";
 import { DashboardContainer } from "./styles";
 
 export const DashboardPage = () => {
   const initialRender = useRef(true);
+  const navigate = useNavigate()
 
   const {
     error: limitsError,
@@ -61,7 +64,11 @@ export const DashboardPage = () => {
 
 
   const handleDropdownClick: MenuProps["onClick"] = async (option) => {
-    // TO DO: REDIRECT
+    if (option.key === 'photo') {
+      navigate(AppPath.Photo)
+    } else {
+      navigate(AppPath.TimeLapse)
+    }
   };
 
 
@@ -73,7 +80,7 @@ export const DashboardPage = () => {
         <ContentContainer>
           <div className="d-flex gap-3 justify-content-center pb-3">
             <Button type="primary" ghost>
-              Acessar meu perfil
+              Minha estufa
             </Button>
             <Dropdown
               menu={{ items: menuOptions, onClick: handleDropdownClick }}
@@ -84,6 +91,7 @@ export const DashboardPage = () => {
               </Button>
             </Dropdown>
           </div>
+
           {hasError && (
             <div className="d-flex flex-column align-items-center pb-3">
               <Typography.Title level={4}>

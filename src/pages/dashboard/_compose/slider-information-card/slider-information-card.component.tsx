@@ -1,5 +1,5 @@
 import { Button, Skeleton, Slider, Typography } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Limit } from "../../../../types";
 import { Theme } from "../../../../utils";
 import { SliderInformation } from "../../enum";
@@ -28,6 +28,18 @@ export const SliderInformationCard = ({
   ]);
   const [minValue, setMinValue] = useState(limit?.min);
   const [maxValue, setMaxValue] = useState(limit?.max);
+
+  useEffect(() => {
+    if (limit?.min && limit?.max) {
+      setMinValue(limit.min)
+      setMaxValue(limit.max)
+      setSavedRange([limit.min, limit.max])
+    }
+  }, [limit])
+
+  useEffect(() => {
+    setMarkers(getSliderMarkers(information, limit?.min, limit?.max, readValue));
+  }, [limit, readValue])
 
   const isReadOnRange = readValue >= minValue && readValue <= maxValue;
 
