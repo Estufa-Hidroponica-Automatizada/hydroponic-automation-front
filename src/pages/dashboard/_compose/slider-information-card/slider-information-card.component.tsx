@@ -1,10 +1,17 @@
 import { Button, Skeleton, Slider, Typography } from "antd";
+import { ContentCard } from "components";
+import { useSetLimit } from "hooks";
 import { useEffect, useState } from "react";
-import { Limit } from "../../../../types";
-import { Theme } from "../../../../utils";
+import { Limit } from "types";
+import { Theme } from "utils";
 import { SliderInformation } from "../../enum";
-import { DashboardCard } from "../../styles";
-import { SliderRange, SliderTitle, SliderUnity, getSliderMarkers } from "./utils";
+import {
+  SliderDatabaseName,
+  SliderRange,
+  SliderTitle,
+  SliderUnity,
+  getSliderMarkers,
+} from "./utils";
 
 interface SliderInformationCardProps {
   information: SliderInformation;
@@ -21,7 +28,7 @@ export const SliderInformationCard = ({
   limit,
   readValue,
 }: SliderInformationCardProps) => {
-
+  const { isLoading, setLimit } = useSetLimit();
   const [savedRange, setSavedRange] = useState<number[]>([
     limit?.min,
     limit?.max,
@@ -31,20 +38,21 @@ export const SliderInformationCard = ({
 
   useEffect(() => {
     if (limit?.min && limit?.max) {
-      setMinValue(limit.min)
-      setMaxValue(limit.max)
-      setSavedRange([limit.min, limit.max])
+      setMinValue(limit.min);
+      setMaxValue(limit.max);
+      setSavedRange([limit.min, limit.max]);
     }
-  }, [limit])
+  }, [limit]);
 
   useEffect(() => {
-    setMarkers(getSliderMarkers(information, limit?.min, limit?.max, readValue));
-  }, [limit, readValue])
+    setMarkers(
+      getSliderMarkers(information, limit?.min, limit?.max, readValue)
+    );
+  }, [limit, readValue]);
 
-  const isReadOnRange = readValue >= minValue && readValue <= maxValue;
-
-
-  const [markers, setMarkers] = useState<Record<number, any>>(getSliderMarkers(information, limit?.min, limit?.max, readValue));
+  const [markers, setMarkers] = useState<Record<number, any>>(
+    getSliderMarkers(information, limit?.min, limit?.max, readValue)
+  );
 
   const handleChange = (value: number[]) => {
     if (value[0] !== minValue) {
@@ -63,11 +71,35 @@ export const SliderInformationCard = ({
     setMaxValue(savedRange[1]);
   };
 
-  const handleSave = () => { };
+  const handleSave = async () => {
+    if (minValue !== savedRange[0]) {
+      const response = await setLimit(
+        SliderDatabaseName[information],
+        "min",
+        minValue
+      );
+      if (response) {
+        setSavedRange([minValue, maxValue]);
+      }
+    }
+    if (maxValue !== savedRange[1]) {
+      const response = await setLimit(
+        SliderDatabaseName[information],
+        "max",
+        maxValue
+      );
+      if (response) {
+        setSavedRange([minValue, maxValue]);
+      }
+    }
+  };
 
   return (
-    <DashboardCard>
-      <Typography.Title level={2} className="m-0 text-center">
+    <ContentCard>
+      <Typography.Title
+        level={2}
+        className="m-0 text-center justify-self-start"
+      >
         {SliderTitle[information]}
       </Typography.Title>
 
@@ -117,24 +149,20 @@ export const SliderInformationCard = ({
 
       {showButtons && (
         <div className="d-flex justify-content-center gap-2 pt-3 w-100">
-          <Button
-            type="primary"
-            danger
-            onClick={handleCancel}
-            block
-          >
+          <Button type="primary" danger onClick={handleCancel} block>
             <strong>Cancelar</strong>
           </Button>
           <Button
             type="primary"
             style={{ backgroundColor: Theme.primary.medium }}
             onClick={handleSave}
+            loading={isLoading}
             block
           >
             <strong>Salvar</strong>
           </Button>
         </div>
       )}
-    </DashboardCard>
+    </ContentCard>
   );
 };

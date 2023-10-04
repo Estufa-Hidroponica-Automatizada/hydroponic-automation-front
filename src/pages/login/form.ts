@@ -1,14 +1,16 @@
+import { validators } from "utils";
+
 export const LoginFormFields = {
-  systemID: {
-    name: "systemID",
+  username: {
+    name: "username",
     label: "ID da estufa",
-    validation: { required: true, message: "O ID da estufa é obrigatório!" },
+    validation: validators.required,
     required: true,
   },
   password: {
     name: "password",
     label: "Senha",
-    validation: { required: true, message: "A senha é obrigatória!" },
+    validation: validators.required,
     required: true,
   },
 };

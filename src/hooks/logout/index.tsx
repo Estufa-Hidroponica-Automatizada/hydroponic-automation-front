@@ -2,27 +2,27 @@ import { notification } from "antd";
 import axios, { HttpStatusCode } from "axios";
 import { AuthContext } from "contexts";
 import { useCallback, useContext, useState } from "react";
-import { Login } from "types";
 import { endpoints } from "utils";
 
-export const useLogin = () => {
+export const useLogout = () => {
   const { setIsAuthenticated } = useContext(AuthContext);
+
   const [isLoading, setIsLoading] = useState(false);
 
-  const login = useCallback(async (loginData: Login) => {
+  const logout = useCallback(async () => {
     try {
       setIsLoading(true);
 
-      const { status } = await axios.post(endpoints.auth.login, loginData);
+      const { status } = await axios.post(endpoints.auth.logout);
 
       if (status === HttpStatusCode.Ok) {
-        setIsAuthenticated(true);
+        setIsAuthenticated(false);
         return true;
       }
     } catch {
       notification.error({
-        message: "Login",
-        description: "Ocorreu um erro ao tentar se conectar ao sistema",
+        message: "Logout",
+        description: "Ocorreu um erro ao tentar se desconectar do sistema",
       });
       return false;
     } finally {
@@ -30,5 +30,5 @@ export const useLogin = () => {
     }
   }, []);
 
-  return { login, isLoading };
+  return { logout, isLoading };
 };
