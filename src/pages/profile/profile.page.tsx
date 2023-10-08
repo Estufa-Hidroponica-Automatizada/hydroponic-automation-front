@@ -1,18 +1,18 @@
 import { Button, Typography } from "antd";
 import { ContentCard } from "components";
+import { AuthContext } from "contexts";
 import { useLogout } from "hooks";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppPath } from "routes";
 
 export const ProfilePage = () => {
+  const { user } = useContext(AuthContext);
   const { logout } = useLogout();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    const response = await logout();
-    if (response) {
-      navigate(AppPath.Login);
-    }
+    await logout();
   };
 
   return (
@@ -27,7 +27,7 @@ export const ProfilePage = () => {
             <Typography.Title level={4} className="m-0">
               Nome de usuário
             </Typography.Title>
-            <Typography.Text>user</Typography.Text>
+            <Typography.Text>{user}</Typography.Text>
           </div>
 
           <div className="d-flex align-items-center justify-content-between w-100">

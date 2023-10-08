@@ -33,22 +33,21 @@ export const getSliderMarkers = (
   readValue?: number
 ) => {
   const markers: Record<number, any> = {};
-  markers[min] = " ";
-  markers[max] = " ";
-  if (
-    readValue &&
-    isValueOnRange(
-      readValue,
-      SliderRange[information].min,
-      SliderRange[information].max
-    )
-  ) {
+  if (min >= SliderRange[information].min) {
+    markers[min] = " ";
+  }
+
+  if (max <= SliderRange[information].max) {
+    markers[max] = " ";
+  }
+
+  if (readValue && isValueOnRange(readValue, SliderRange[information])) {
     markers[readValue] = {
       style: {
         color: readValue >= min && readValue <= max ? "green" : "red",
         fontWeigth: 500,
       },
-      label: `${readValue}${SliderUnity[information]}`,
+      label: `${readValue} ${SliderUnity[information]}`,
     };
   }
 

@@ -1,8 +1,8 @@
 import { notification } from "antd";
-import axios, { HttpStatusCode } from "axios";
+import { HttpStatusCode } from "axios";
 import { useCallback, useState } from "react";
 import { ReadData } from "types";
-import { endpoints } from "utils";
+import { API, endpoints } from "utils";
 import { readDataFormatter } from "./utils";
 
 export const useReadData = () => {
@@ -14,7 +14,7 @@ export const useReadData = () => {
     try {
       setError(false);
       setIsLoading(true);
-      const { data, status } = await axios.get<ReadData>(endpoints.getReadData);
+      const { data, status } = await API.get<ReadData>(endpoints.getReadData);
 
       if (status === HttpStatusCode.Ok) {
         setReadValues(readDataFormatter(data));

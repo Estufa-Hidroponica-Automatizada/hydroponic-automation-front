@@ -1,3 +1,3 @@
-export const validators = {
-    required: { required: true, message: "Campo obrigatório!" }
-}
+export const Validators = {
+  required: { required: true, message: "Campo obrigatório!" },
+};

@@ -1,7 +1,6 @@
 import { notification } from "antd";
-import axios from "axios";
 import { useCallback, useState } from "react";
-import { endpoints } from "utils";
+import { API, endpoints } from "utils";
 
 export const usePhoto = () => {
   const [error, setError] = useState(false);
@@ -12,9 +11,10 @@ export const usePhoto = () => {
     try {
       setError(false);
       setIsLoading(true);
-      const { data } = await axios.get(endpoints.cam.getPhoto, {
+      const { data } = await API.get(endpoints.cam.getPhoto, {
         responseType: "blob",
       });
+
       const reader = new FileReader();
       reader.onload = () => {
         const dataURL = reader.result;

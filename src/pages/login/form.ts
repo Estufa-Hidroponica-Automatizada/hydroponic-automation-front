@@ -1,16 +1,14 @@
-import { validators } from "utils";
+import { LoginFormField } from "types";
 
 export const LoginFormFields = {
   username: {
-    name: "username",
+    name: LoginFormField.username,
     label: "ID da estufa",
-    validation: validators.required,
     required: true,
   },
   password: {
-    name: "password",
+    name: LoginFormField.password,
     label: "Senha",
-    validation: validators.required,
     required: true,
   },
 };

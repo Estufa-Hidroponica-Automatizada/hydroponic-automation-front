@@ -25,9 +25,7 @@ export const AppRoutes = () => {
         <Content>
           <ContentContainer>
             <Routes>
-              <Route path={AppPath.Login} element={<LoginPage />} />
-              <Route path="*" element={<Navigate to={AppPath.Login} />} />
-              {isAuthenticated && (
+              {isAuthenticated ? (
                 <>
                   <Route path={AppPath.Dashboard} element={<DashboardPage />} />
                   <Route
@@ -37,6 +35,15 @@ export const AppRoutes = () => {
                   <Route path={AppPath.Photo} element={<PhotoPage />} />
                   <Route path={AppPath.Profile} element={<ProfilePage />} />
                   <Route path={AppPath.TimeLapse} element={<TimeLapsePage />} />
+                  <Route
+                    path="*"
+                    element={<Navigate to={AppPath.Dashboard} />}
+                  />
+                </>
+              ) : (
+                <>
+                  <Route path={AppPath.Login} element={<LoginPage />} />
+                  <Route path="*" element={<Navigate to={AppPath.Login} />} />
                 </>
               )}
             </Routes>

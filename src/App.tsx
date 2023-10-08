@@ -1,12 +1,9 @@
 import { App as AntdApp, ConfigProvider } from "antd";
-import axios from "axios";
 import { AuthProvider } from "contexts";
 import { AppRoutes } from "routes";
 import { Theme } from "utils";
 
 function App() {
-  axios.defaults.withCredentials = true;
-
   return (
     <AntdApp>
       <ConfigProvider

@@ -1,8 +1,8 @@
 import { notification } from "antd";
-import axios, { HttpStatusCode } from "axios";
+import { HttpStatusCode } from "axios";
 import { useCallback, useState } from "react";
 import { Limits } from "types";
-import { endpoints } from "utils";
+import { API, endpoints } from "utils";
 import { limitFormatter } from "./utils";
 
 export const useLimits = () => {
@@ -14,14 +14,14 @@ export const useLimits = () => {
     try {
       setError(false);
       setIsLoading(true);
-      const { data, status } = await axios.get<Limits>(
+      const { data, status } = await API.get<Limits>(
         endpoints.limits.getLimits
       );
 
       if (status === HttpStatusCode.Ok) {
         setLimits(limitFormatter(data));
       }
-    } catch {
+    } catch (status) {
       setError(true);
       notification.error({
         message: "Limites",
@@ -36,15 +36,13 @@ export const useLimits = () => {
 };
 
 export const useSetLimit = () => {
-  const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const setLimit = useCallback(
     async (parameter: string, type: "min" | "max", value: number) => {
       try {
-        setError(false);
         setIsLoading(true);
-        const { status } = await axios.put(
+        const { status } = await API.put(
           endpoints.limits.setLimit(parameter, type),
           { value: value }
         );
@@ -53,7 +51,6 @@ export const useSetLimit = () => {
           return true;
         }
       } catch {
-        setError(true);
         notification.error({
           message: "Limites",
           description: "Ocorreu um erro ao atualizar os limites",
@@ -65,5 +62,5 @@ export const useSetLimit = () => {
     []
   );
 
-  return { error, setLimit, isLoading };
+  return { setLimit, isLoading };
 };

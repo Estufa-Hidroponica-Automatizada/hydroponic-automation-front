@@ -4,6 +4,7 @@ import { useChangePassword } from "hooks";
 import { useNavigate } from "react-router-dom";
 import { AppPath } from "routes";
 import { ChangePasswordFormField, ChangePasswordFormValues } from "types";
+import { Validators } from "utils";
 import { ChangePasswordFormFields } from "./form";
 
 export const ChangePasswordPage = () => {
@@ -27,14 +28,14 @@ export const ChangePasswordPage = () => {
         <Form layout="vertical" onFinish={handleChangePassword} form={form}>
           <Form.Item
             {...ChangePasswordFormFields.oldPassword}
-            rules={[ChangePasswordFormFields.oldPassword.validation]}
+            rules={[Validators.required]}
           >
             <Input.Password />
           </Form.Item>
 
           <Form.Item
             {...ChangePasswordFormFields.newPassword}
-            rules={[ChangePasswordFormFields.newPassword.validation]}
+            rules={[Validators.required]}
           >
             <Input.Password />
           </Form.Item>
@@ -42,7 +43,7 @@ export const ChangePasswordPage = () => {
           <Form.Item
             {...ChangePasswordFormFields.confirmPassword}
             rules={[
-              ChangePasswordFormFields.confirmPassword.validation,
+              Validators.required,
               ({ getFieldValue }) => ({
                 validator(_, value) {
                   if (

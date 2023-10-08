@@ -1,26 +1,24 @@
 import { notification } from "antd";
-import axios from "axios";
+import { HttpStatusCode } from "axios";
 import { useCallback, useState } from "react";
 
 import { ChangePasswordRequest } from "types";
-import { endpoints } from "utils";
+import { API, endpoints } from "utils";
 
 export const useChangePassword = () => {
-  const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const changePassword = useCallback(
     async (changePasswordRequest: ChangePasswordRequest) => {
       try {
-        setError(false);
         setIsLoading(true);
 
-        const response = await axios.post(
+        const { status } = await API.post(
           endpoints.auth.changePassword,
           changePasswordRequest
         );
 
-        if (response.data) {
+        if (status === HttpStatusCode.Ok) {
           notification.success({
             message: "Alterar senha",
             description: "Sua senha foi alterada com sucesso.",
@@ -28,7 +26,6 @@ export const useChangePassword = () => {
           return true;
         }
       } catch {
-        setError(true);
         notification.error({
           message: "Alterar senha",
           description: "Ocorreu um erro ao tentar alterar sua senha.",
@@ -41,5 +38,5 @@ export const useChangePassword = () => {
     []
   );
 
-  return { error, changePassword, isLoading };
+  return { changePassword, isLoading };
 };

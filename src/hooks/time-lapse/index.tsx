@@ -1,7 +1,6 @@
 import { notification } from "antd";
-import axios from "axios";
 import { useCallback, useState } from "react";
-import { endpoints } from "utils";
+import { API, endpoints } from "utils";
 
 export const useTimelapse = () => {
   const [error, setError] = useState(false);
@@ -12,7 +11,7 @@ export const useTimelapse = () => {
     try {
       setError(false);
       setIsLoading(true);
-      const { data } = await axios.get(endpoints.cam.getTimelapse, {
+      const { data } = await API.get(endpoints.cam.getTimelapse, {
         responseType: "blob",
       });
 

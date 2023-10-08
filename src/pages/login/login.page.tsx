@@ -1,20 +1,16 @@
 import { Button, Form, Input, Typography } from "antd";
 import { ContentCard } from "components";
 import { useLogin } from "hooks";
-import { useNavigate } from "react-router-dom";
 import { Login } from "types";
+import { Validators } from "utils";
 import { LoginFormFields } from "./form";
 
 export const LoginPage = () => {
   const [form] = Form.useForm();
-  const navigate = useNavigate();
   const { login, isLoading } = useLogin();
 
   const handleLogin = async (loginData: Login) => {
-    const loginResponse = await login(loginData);
-    if (loginResponse) {
-      navigate("/dashboard");
-    }
+    await login(loginData);
   };
 
   return (
@@ -23,14 +19,14 @@ export const LoginPage = () => {
         <Form layout="vertical" onFinish={handleLogin} form={form}>
           <Form.Item
             {...LoginFormFields.username}
-            rules={[LoginFormFields.username.validation]}
+            rules={[Validators.required]}
           >
             <Input />
           </Form.Item>
 
           <Form.Item
             {...LoginFormFields.password}
-            rules={[LoginFormFields.password.validation]}
+            rules={[Validators.required]}
           >
             <Input.Password />
           </Form.Item>

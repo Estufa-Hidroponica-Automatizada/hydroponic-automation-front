@@ -1,3 +1,5 @@
-export const isValueOnRange = (value: number, min: number, max: number) => {
-    return value >= min && value <= max;
+import { Limit } from "types";
+
+export const isValueOnRange = (value: number, range: Limit) => {
+  return value >= range.min && value <= range.max;
 };
