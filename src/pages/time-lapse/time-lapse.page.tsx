@@ -1,22 +1,21 @@
 import { Skeleton } from "antd";
-import { usePhoto } from "hooks";
+import { useTimelapse } from "hooks";
 import { useEffect, useRef } from "react";
 
-export const PhotoPage = () => {
+export const TimeLapsePage = () => {
   const initialRender = useRef(true);
-
-  const { getPhoto, photo, isLoading } = usePhoto();
+  const { getTimelapse, timelapse, isLoading } = useTimelapse();
 
   useEffect(() => {
-    const getCurrentPhoto = async () => {
-      await getPhoto();
+    const getCurrentTimelapse = async () => {
+      await getTimelapse();
     };
 
     if (initialRender.current) {
       initialRender.current = false;
-      getCurrentPhoto();
+      getCurrentTimelapse();
     }
-  }, [getPhoto]);
+  }, [getTimelapse]);
 
   const isPortrait = window.innerHeight > window.innerWidth;
 
@@ -28,13 +27,17 @@ export const PhotoPage = () => {
     ? `${window.innerWidth}px`
     : `${0.8 * window.innerHeight}px`;
 
-  const photoStyle = { width, height, rotate: isPortrait ? "90deg" : "0deg" };
+  const videoStyle = { width, height };
   return (
     <div className="d-flex justify-content-center h-100">
       {isLoading ? (
-        <Skeleton.Image active style={photoStyle} />
+        <Skeleton.Image active style={videoStyle} />
       ) : (
-        photo && <img alt="img" src={photo} style={photoStyle} />
+        timelapse && (
+          <video width={width} height={height} controls autoPlay>
+            <source src={timelapse} />
+          </video>
+        )
       )}
     </div>
   );

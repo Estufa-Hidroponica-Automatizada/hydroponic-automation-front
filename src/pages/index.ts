@@ -3,3 +3,4 @@ export * from "./dashboard";
 export * from "./login";
 export * from "./photo";
 export * from "./profile";
+export * from "./time-lapse";

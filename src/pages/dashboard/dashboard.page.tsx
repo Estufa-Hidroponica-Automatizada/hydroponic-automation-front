@@ -2,6 +2,7 @@ import {
   CameraOutlined,
   DownOutlined,
   ReloadOutlined,
+  VideoCameraOutlined,
 } from "@ant-design/icons";
 import { Button, Dropdown, Typography } from "antd";
 import { useLimits, useReadData } from "hooks";
@@ -59,11 +60,11 @@ export const DashboardPage = () => {
                 key: AppPath.Photo,
                 icon: <CameraOutlined />,
               },
-              // {
-              //   label: "Time-lapse",
-              //   key: AppPath.TimeLapse,
-              //   icon: <VideoCameraOutlined />,
-              // },
+              {
+                label: "Time-lapse",
+                key: AppPath.TimeLapse,
+                icon: <VideoCameraOutlined />,
+              },
             ],
             onClick: (option) => navigate(option.key),
           }}
