@@ -1,4 +1,4 @@
-import { Skeleton } from "antd";
+import { Button, Skeleton } from "antd";
 import { usePhoto } from "hooks";
 import { useEffect, useRef } from "react";
 
@@ -20,21 +20,27 @@ export const PhotoPage = () => {
 
   const isPortrait = window.innerHeight > window.innerWidth;
 
-  const width = isPortrait
-    ? `${1.33 * window.innerWidth}px`
-    : `${1.33 * (0.8 * window.innerHeight)}px`;
-
   const height = isPortrait
-    ? `${window.innerWidth}px`
-    : `${0.8 * window.innerHeight}px`;
+    ? `${window.innerWidth / 1.33}px`
+    : `${0.6 * window.innerHeight}px`;
 
-  const photoStyle = { width, height, rotate: isPortrait ? "90deg" : "0deg" };
+  const width = isPortrait
+    ? `${window.innerWidth}px`
+    : `${1.33 * (0.6 * window.innerHeight)}px`;
+
+  const photoStyle = { width, height };
   return (
     <div className="d-flex justify-content-center h-100">
       {isLoading ? (
         <Skeleton.Image active style={photoStyle} />
       ) : (
-        photo && <img alt="img" src={photo} style={photoStyle} />
+        photo && (
+          <div className="d-flex flex-column gap-3">
+            <Button type="primary">Baixar imagem</Button>
+
+            <img alt="img" src={photo} style={photoStyle} />
+          </div>
+        )
       )}
     </div>
   );
