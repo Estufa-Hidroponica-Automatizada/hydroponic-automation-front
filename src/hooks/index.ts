@@ -1,4 +1,5 @@
 export * from "./change-password";
+export * from "./light";
 export * from "./limits";
 export * from "./login";
 export * from "./logout";

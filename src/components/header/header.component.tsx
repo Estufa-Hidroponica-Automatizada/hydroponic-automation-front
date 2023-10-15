@@ -1,35 +1,45 @@
-import { LeftOutlined } from "@ant-design/icons";
+import { LeftOutlined, UserOutlined } from "@ant-design/icons";
 import Icon from "@ant-design/icons/lib/components/Icon";
 import { Typography } from "antd";
 import { LogoIconSVG } from "components";
+import { AuthContext } from "contexts";
+import { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AppPath } from "routes";
 import { Theme } from "utils";
 import { HeaderContainer } from "./styles";
 
 export const PageHeader = () => {
+  const { isAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
 
-  const shouldRenderBackButton = location.pathname !== AppPath.Login;
-
   return (
-    <HeaderContainer>
-      {shouldRenderBackButton && (
+    <HeaderContainer isAuthenticated={isAuthenticated}>
+      {isAuthenticated && (
         <LeftOutlined
-          style={{ color: Theme.white }}
+          style={{ color: Theme.colors.white }}
           onClick={() => navigate(-1)}
         />
       )}
 
-      <Icon component={LogoIconSVG} />
+      <div className="d-flex gap-3">
+        <Icon component={LogoIconSVG} />
 
-      <Typography.Title
-        level={1}
-        style={{ color: Theme.white, marginBottom: 0 }}
-      >
-        Estufa
-      </Typography.Title>
+        <Typography.Title
+          level={1}
+          style={{ color: Theme.colors.white, marginBottom: 0 }}
+        >
+          Estufa
+        </Typography.Title>
+      </div>
+
+      {isAuthenticated && (
+        <UserOutlined
+          style={{ color: Theme.colors.white }}
+          onClick={() => navigate(AppPath.Profile)}
+        />
+      )}
     </HeaderContainer>
   );
 };

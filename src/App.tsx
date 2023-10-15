@@ -8,7 +8,7 @@ function App() {
     <AntdApp>
       <ConfigProvider
         theme={{
-          token: { colorPrimary: Theme.primary.medium },
+          token: { colorPrimary: Theme.colors.primary.medium },
           components: { Button: { fontWeight: 600, primaryShadow: "0" } },
         }}
       >

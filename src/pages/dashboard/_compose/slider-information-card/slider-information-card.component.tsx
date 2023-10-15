@@ -2,19 +2,17 @@ import { Button, Skeleton, Slider, Typography } from "antd";
 import { ContentCard } from "components";
 import { useSetLimit } from "hooks";
 import { useEffect, useState } from "react";
-import { Limit } from "types";
-import { Theme } from "utils";
-import { SliderInformation } from "../../enum";
+import { Limit, RangeInformation } from "types";
+import { Theme, measureFormatter } from "utils";
 import {
   SliderDatabaseName,
   SliderRange,
   SliderTitle,
-  SliderUnity,
   getSliderMarkers,
 } from "./utils";
 
 interface SliderInformationCardProps {
-  information: SliderInformation;
+  information: RangeInformation;
   isLoadingLimits: boolean;
   isLoadingReadData: boolean;
   limit: Limit;
@@ -96,73 +94,70 @@ export const SliderInformationCard = ({
 
   return (
     <ContentCard>
-      <Typography.Title
-        level={2}
-        className="m-0 text-center justify-self-start"
-      >
-        {SliderTitle[information]}
-      </Typography.Title>
+      <div className="d-flex flex-column justify-content-between h-100">
+        <Typography.Title level={2} className="m-0 text-center">
+          {SliderTitle[information]}
+        </Typography.Title>
 
-      {isLoadingReadData ? (
-        <div className="d-flex flex-column align-items-center gap-1 py-2">
-          <Skeleton.Input size="small" active />
-          <Skeleton.Input size="small" active />
+        {isLoadingReadData ? (
+          <div className="d-flex flex-column align-items-center gap-1 py-2">
+            <Skeleton.Input size="small" active />
+            <Skeleton.Input size="small" active />
+          </div>
+        ) : (
+          <div className="d-flex flex-column pt-1">
+            <Typography.Text strong className="text-center">
+              Medição atual: {measureFormatter(readValue, information)}
+            </Typography.Text>
+
+            <Typography.Text strong className="text-center">
+              Faixa atual: {measureFormatter(savedRange[0], information)}-{" "}
+              {measureFormatter(savedRange[1], information)}
+            </Typography.Text>
+          </div>
+        )}
+
+        <div className="d-flex flex-column">
+          <div className="d-flex justify-content-between">
+            <Typography.Text strong className="mb-0">
+              {measureFormatter(SliderRange[information].min, information)}
+            </Typography.Text>
+            <Typography.Text strong className="mb-0">
+              {measureFormatter(SliderRange[information].max, information)}
+            </Typography.Text>
+          </div>
+
+          {isLoadingLimits ? (
+            <Skeleton.Input size="small" active block />
+          ) : (
+            <Slider
+              {...SliderRange[information]}
+              value={[minValue, maxValue]}
+              marks={markers}
+              className="mt-1 mb-3"
+              onChange={handleChange}
+              range
+            />
+          )}
         </div>
-      ) : (
-        <div className="d-flex flex-column pt-1">
-          <Typography.Text strong className="text-center">
-            Medição atual: {readValue}
-            {SliderUnity[information]}
-          </Typography.Text>
 
-          <Typography.Text strong className="text-center">
-            Faixa atual: {savedRange[0]}
-            {SliderUnity[information]} - {savedRange[1]}
-            {SliderUnity[information]}
-          </Typography.Text>
-        </div>
-      )}
-
-      <div className="d-flex justify-content-between">
-        <Typography.Text strong className="mb-0">
-          {SliderRange[information].min}
-          {SliderUnity[information]}
-        </Typography.Text>
-        <Typography.Text strong className="mb-0">
-          {SliderRange[information].max}
-          {SliderUnity[information]}
-        </Typography.Text>
+        {showButtons && (
+          <div className="d-flex justify-content-center gap-2 pt-3 w-100">
+            <Button type="primary" danger onClick={handleCancel} block>
+              <strong>Cancelar</strong>
+            </Button>
+            <Button
+              type="primary"
+              style={{ backgroundColor: Theme.colors.primary.medium }}
+              onClick={handleSave}
+              loading={isLoading}
+              block
+            >
+              <strong>Salvar</strong>
+            </Button>
+          </div>
+        )}
       </div>
-
-      {isLoadingLimits ? (
-        <Skeleton.Input size="small" active block />
-      ) : (
-        <Slider
-          {...SliderRange[information]}
-          value={[minValue, maxValue]}
-          marks={markers}
-          className="mb-3"
-          onChange={handleChange}
-          range
-        />
-      )}
-
-      {showButtons && (
-        <div className="d-flex justify-content-center gap-2 pt-3 w-100">
-          <Button type="primary" danger onClick={handleCancel} block>
-            <strong>Cancelar</strong>
-          </Button>
-          <Button
-            type="primary"
-            style={{ backgroundColor: Theme.primary.medium }}
-            onClick={handleSave}
-            loading={isLoading}
-            block
-          >
-            <strong>Salvar</strong>
-          </Button>
-        </div>
-      )}
     </ContentCard>
   );
 };

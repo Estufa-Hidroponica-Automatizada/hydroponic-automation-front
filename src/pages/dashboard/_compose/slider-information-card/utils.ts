@@ -1,8 +1,7 @@
-import { Limit } from "types";
-import { isValueOnRange } from "utils";
-import { SliderInformation } from "../../enum";
+import { Limit, RangeInformation } from "types";
+import { isValueOnRange, measureFormatter } from "utils";
 
-export const SliderTitle: Record<SliderInformation, string> = {
+export const SliderTitle: Record<RangeInformation, string> = {
   airTemperature: "Temperatura do ar",
   condutivity: "Condutividade da água",
   humidity: "Umidade do ar",
@@ -10,15 +9,7 @@ export const SliderTitle: Record<SliderInformation, string> = {
   waterTemperature: "Temperatura da água",
 };
 
-export const SliderUnity: Record<SliderInformation, string> = {
-  pH: "",
-  humidity: "%",
-  waterTemperature: "°C",
-  airTemperature: "°C",
-  condutivity: "ppm",
-};
-
-export const SliderRange: Record<SliderInformation, Limit> = {
+export const SliderRange: Record<RangeInformation, Limit> = {
   pH: { min: 0, max: 14 },
   humidity: { min: 0, max: 100 },
   airTemperature: { min: 15, max: 40 },
@@ -27,7 +18,7 @@ export const SliderRange: Record<SliderInformation, Limit> = {
 };
 
 export const getSliderMarkers = (
-  information: SliderInformation,
+  information: RangeInformation,
   min: number,
   max: number,
   readValue?: number
@@ -47,14 +38,14 @@ export const getSliderMarkers = (
         color: readValue >= min && readValue <= max ? "green" : "red",
         fontWeigth: 500,
       },
-      label: `${readValue} ${SliderUnity[information]}`,
+      label: measureFormatter(readValue, information),
     };
   }
 
   return markers;
 };
 
-export const SliderDatabaseName: Record<SliderInformation, string> = {
+export const SliderDatabaseName: Record<RangeInformation, string> = {
   airTemperature: "temperature",
   condutivity: "ec",
   humidity: "humidity",

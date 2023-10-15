@@ -2,9 +2,14 @@ import axios, { AxiosError, HttpStatusCode } from "axios";
 import { AuthContext } from "contexts";
 import { useContext } from "react";
 
-// const baseURL = "https://189.18.228.108:4000"; // externalURL
-const baseURL = "https://192.168.15.10:4000"; // localURL
-// const baseURL = "https://localhost:4000"; // raspURL
+// use when connected on external network
+const baseURL = "https://187.74.126.188:4000";
+
+// use when connected on same network
+// const baseURL = "https://192.168.15.10:4000";
+
+// use when connected on rasp
+// const baseURL = "https://localhost:4000";
 
 export const API = axios.create({ baseURL, withCredentials: true });
 

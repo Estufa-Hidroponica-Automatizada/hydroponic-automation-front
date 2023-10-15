@@ -2,7 +2,7 @@ import { Header } from "antd/es/layout/layout";
 import styled from "styled-components";
 import { Theme } from "utils";
 
-export const HeaderContainer = styled(Header)`
+export const HeaderContainer = styled(Header)<{ isAuthenticated: boolean }>`
   position: sticky;
   top: 0;
   z-index: 1;
@@ -10,7 +10,8 @@ export const HeaderContainer = styled(Header)`
   height: 10vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: ${(props) =>
+    props.isAuthenticated ? "space-between" : "center"};
   gap: 1rem;
-  background-color: ${Theme.primary.medium};
+  background-color: ${Theme.colors.primary.medium};
 `;

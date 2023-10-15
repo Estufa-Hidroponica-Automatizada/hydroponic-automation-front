@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 export const PhotoPage = () => {
   const initialRender = useRef(true);
 
-  const { getPhoto, photo, isLoading } = usePhoto();
+  const { getPhoto, isLoading, photo } = usePhoto();
 
   useEffect(() => {
     const getCurrentPhoto = async () => {
@@ -29,6 +29,7 @@ export const PhotoPage = () => {
     : `${1.33 * (0.6 * window.innerHeight)}px`;
 
   const photoStyle = { width, height };
+
   return (
     <div className="d-flex justify-content-center h-100">
       {isLoading ? (

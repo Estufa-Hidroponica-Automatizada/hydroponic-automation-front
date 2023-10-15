@@ -1,21 +1,15 @@
-import {
-  CameraOutlined,
-  DownOutlined,
-  ReloadOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
-import { Button, Dropdown, Typography } from "antd";
-import { useLimits, useReadData } from "hooks";
+import { ReloadOutlined } from "@ant-design/icons";
+import { Button, Typography } from "antd";
+import { useLight, useLimits, useReadData } from "hooks";
 import { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { AppPath } from "routes";
+import { RangeInformation } from "types";
+import { DashboardActions } from "./_compose/dashboard-actions";
+import { LightInformationCard } from "./_compose/light-information-card";
 import { SliderInformationCard } from "./_compose/slider-information-card";
-import { SliderInformation } from "./enum";
 import { DashboardContainer } from "./styles";
 
 export const DashboardPage = () => {
   const initialRender = useRef(true);
-  const navigate = useNavigate();
 
   const {
     error: limitsError,
@@ -31,9 +25,16 @@ export const DashboardPage = () => {
     readValues,
   } = useReadData();
 
+  const {
+    getLightSchedule,
+    isLoading: isLoadingLightSchedule,
+    lightSchedule,
+  } = useLight();
+
   const getDashboardValues = async () => {
     await getLimits();
     await getReadData();
+    await getLightSchedule();
   };
 
   useEffect(() => {
@@ -48,33 +49,10 @@ export const DashboardPage = () => {
 
   return (
     <>
-      <div className="d-flex gap-3 justify-content-center pb-3">
-        <Button type="primary" ghost onClick={() => navigate(AppPath.Profile)}>
-          Minha estufa
-        </Button>
-        <Dropdown
-          menu={{
-            items: [
-              {
-                label: "Ao vivo",
-                key: AppPath.Photo,
-                icon: <CameraOutlined />,
-              },
-              {
-                label: "Time-lapse",
-                key: AppPath.TimeLapse,
-                icon: <VideoCameraOutlined />,
-              },
-            ],
-            onClick: (option) => navigate(option.key),
-          }}
-          trigger={["click"]}
-        >
-          <Button type="primary" icon={<DownOutlined />}>
-            Visualizar estufa
-          </Button>
-        </Dropdown>
-      </div>
+      <DashboardActions
+        handleReloadData={getDashboardValues}
+        isLoading={isLoading}
+      />
 
       {hasError && (
         <div className="d-flex flex-column align-items-center pb-3">
@@ -91,41 +69,47 @@ export const DashboardPage = () => {
           </Button>
         </div>
       )}
+
       <DashboardContainer>
         <SliderInformationCard
-          information={SliderInformation.pH}
+          information={RangeInformation.pH}
           isLoadingLimits={isLoadingLimits}
           isLoadingReadData={isLoadingReadData}
           limit={limits?.pH ?? 0}
           readValue={readValues?.pH ?? 0}
         />
         <SliderInformationCard
-          information={SliderInformation.WaterTemperature}
+          information={RangeInformation.WaterTemperature}
           isLoadingLimits={isLoadingLimits}
           isLoadingReadData={isLoadingReadData}
           limit={limits?.waterTemperature ?? 0}
           readValue={readValues?.waterTemperature ?? 0}
         />
         <SliderInformationCard
-          information={SliderInformation.Condutivity}
+          information={RangeInformation.Condutivity}
           isLoadingLimits={isLoadingLimits}
           isLoadingReadData={isLoadingReadData}
           limit={limits?.condutivity ?? 0}
           readValue={readValues?.condutivity ?? 0}
         />
         <SliderInformationCard
-          information={SliderInformation.Humidity}
+          information={RangeInformation.Humidity}
           isLoadingLimits={isLoadingLimits}
           isLoadingReadData={isLoadingReadData}
           limit={limits?.humidity ?? 0}
           readValue={readValues?.humidity ?? 0}
         />
         <SliderInformationCard
-          information={SliderInformation.AirTemperature}
+          information={RangeInformation.AirTemperature}
           isLoadingLimits={isLoadingLimits}
           isLoadingReadData={isLoadingReadData}
           limit={limits?.airTemperature ?? 0}
           readValue={readValues?.airTemperature ?? 0}
+        />
+        <LightInformationCard
+          isLoading={isLoadingReadData || isLoadingLightSchedule}
+          lightStatus={readValues?.light < 1000}
+          lightSchedule={lightSchedule}
         />
       </DashboardContainer>
     </>
