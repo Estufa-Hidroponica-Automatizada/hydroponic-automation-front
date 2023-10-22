@@ -1,7 +1,7 @@
 import { notification } from "antd";
 import { HttpStatusCode } from "axios";
 import { useCallback, useState } from "react";
-import { Limits } from "types";
+import { Limit, Limits } from "types";
 import { API, endpoints } from "utils";
 import { limitFormatter } from "./utils";
 
@@ -38,29 +38,30 @@ export const useLimits = () => {
 export const useSetLimit = () => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const setLimit = useCallback(
-    async (parameter: string, type: "min" | "max", value: number) => {
-      try {
-        setIsLoading(true);
-        const { status } = await API.put(
-          endpoints.limits.setLimit(parameter, type),
-          { value: value }
-        );
+  const setLimit = useCallback(async (parameter: string, values: Limit) => {
+    try {
+      setIsLoading(true);
+      const { status } = await API.put(
+        endpoints.limits.setLimit(parameter),
+        values
+      );
 
-        if (status === HttpStatusCode.Ok) {
-          return true;
-        }
-      } catch {
-        notification.error({
+      if (status === HttpStatusCode.Ok) {
+        notification.success({
           message: "Limites",
-          description: "Ocorreu um erro ao atualizar os limites",
+          description: "Os limites foram atualizados com sucesso.",
         });
-      } finally {
-        setIsLoading(false);
+        return true;
       }
-    },
-    []
-  );
+    } catch {
+      notification.error({
+        message: "Limites",
+        description: "Ocorreu um erro ao atualizar os limites.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   return { setLimit, isLoading };
 };

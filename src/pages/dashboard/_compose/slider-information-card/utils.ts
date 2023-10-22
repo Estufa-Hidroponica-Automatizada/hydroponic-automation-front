@@ -1,21 +1,5 @@
-import { Limit, RangeInformation } from "types";
-import { isValueOnRange, measureFormatter } from "utils";
-
-export const SliderTitle: Record<RangeInformation, string> = {
-  airTemperature: "Temperatura do ar",
-  condutivity: "Condutividade da água",
-  humidity: "Umidade do ar",
-  pH: "pH da água",
-  waterTemperature: "Temperatura da água",
-};
-
-export const SliderRange: Record<RangeInformation, Limit> = {
-  pH: { min: 0, max: 14 },
-  humidity: { min: 0, max: 100 },
-  airTemperature: { min: 15, max: 40 },
-  waterTemperature: { min: 15, max: 40 },
-  condutivity: { min: 0, max: 3000 },
-};
+import { RangeInformation } from "types";
+import { LimitsRange, isValueOnRange, measureFormatter } from "utils";
 
 export const getSliderMarkers = (
   information: RangeInformation,
@@ -23,16 +7,16 @@ export const getSliderMarkers = (
   max: number,
   readValue?: number
 ) => {
-  const markers: Record<number, any> = {};
-  if (min >= SliderRange[information].min) {
+  const markers: Record<string | number, any> = {};
+  if (min >= LimitsRange[information].min) {
     markers[min] = " ";
   }
 
-  if (max <= SliderRange[information].max) {
+  if (max <= LimitsRange[information].max) {
     markers[max] = " ";
   }
 
-  if (readValue && isValueOnRange(readValue, SliderRange[information])) {
+  if (readValue && isValueOnRange(readValue, LimitsRange[information])) {
     markers[readValue] = {
       style: {
         color: readValue >= min && readValue <= max ? "green" : "red",

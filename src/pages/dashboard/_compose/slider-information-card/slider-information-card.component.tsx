@@ -1,15 +1,10 @@
-import { Button, Skeleton, Slider, Typography } from "antd";
-import { ContentCard } from "components";
+import { Button, Skeleton, Typography } from "antd";
+import { ContentCard, LimitsSlider } from "components";
 import { useSetLimit } from "hooks";
 import { useEffect, useState } from "react";
 import { Limit, RangeInformation } from "types";
-import { measureFormatter } from "utils";
-import {
-  SliderDatabaseName,
-  SliderRange,
-  SliderTitle,
-  getSliderMarkers,
-} from "./utils";
+import { LimitsTitle, measureFormatter } from "utils";
+import { SliderDatabaseName, getSliderMarkers } from "./utils";
 
 interface SliderInformationCardProps {
   information: RangeInformation;
@@ -70,25 +65,12 @@ export const SliderInformationCard = ({
   };
 
   const handleSave = async () => {
-    if (minValue !== savedRange[0]) {
-      const response = await setLimit(
-        SliderDatabaseName[information],
-        "min",
-        minValue
-      );
-      if (response) {
-        setSavedRange([minValue, maxValue]);
-      }
-    }
-    if (maxValue !== savedRange[1]) {
-      const response = await setLimit(
-        SliderDatabaseName[information],
-        "max",
-        maxValue
-      );
-      if (response) {
-        setSavedRange([minValue, maxValue]);
-      }
+    const response = await setLimit(SliderDatabaseName[information], {
+      min: minValue,
+      max: maxValue,
+    });
+    if (response) {
+      setSavedRange([minValue, maxValue]);
     }
   };
 
@@ -96,7 +78,7 @@ export const SliderInformationCard = ({
     <ContentCard>
       <div className="d-flex flex-column justify-content-between h-100">
         <Typography.Title level={2} className="m-0 text-center">
-          {SliderTitle[information]}
+          {LimitsTitle[information]}
         </Typography.Title>
 
         {isLoadingReadData ? (
@@ -111,35 +93,19 @@ export const SliderInformationCard = ({
             </Typography.Text>
 
             <Typography.Text strong className="text-center">
-              Faixa atual: {measureFormatter(savedRange[0], information)}-{" "}
+              Faixa atual: {measureFormatter(savedRange[0], information)} -{" "}
               {measureFormatter(savedRange[1], information)}
             </Typography.Text>
           </div>
         )}
 
-        <div className="d-flex flex-column">
-          <div className="d-flex justify-content-between">
-            <Typography.Text strong className="mb-0">
-              {measureFormatter(SliderRange[information].min, information)}
-            </Typography.Text>
-            <Typography.Text strong className="mb-0">
-              {measureFormatter(SliderRange[information].max, information)}
-            </Typography.Text>
-          </div>
-
-          {isLoadingLimits ? (
-            <Skeleton.Input size="small" active block />
-          ) : (
-            <Slider
-              {...SliderRange[information]}
-              value={[minValue, maxValue]}
-              marks={markers}
-              className="mt-1 mb-3"
-              onChange={handleChange}
-              range
-            />
-          )}
-        </div>
+        <LimitsSlider
+          handleChange={handleChange}
+          information={information}
+          isLoading={isLoadingLimits}
+          marks={markers}
+          values={[minValue, maxValue]}
+        />
 
         {showButtons && (
           <div className="d-flex justify-content-center gap-2 pt-3 w-100">

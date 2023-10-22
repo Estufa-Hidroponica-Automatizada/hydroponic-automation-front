@@ -6,11 +6,16 @@ export interface ProfileInfoFormValues {
 }
 
 interface LigthScheduleItem {
-  item: { time: Dayjs; state: boolean }[];
+  time: Dayjs;
+  state: boolean;
 }
 
 export interface LightScheduleFormValues {
-  lightSchedule: LigthScheduleItem[];
+  lightSchedule: LigthScheduleItem[][];
+}
+
+export interface LimitsRangeFormValues {
+  limitsRange: [number, number][];
 }
 
 export interface UpsertProfile {
@@ -21,8 +26,8 @@ export enum UpsertProfileFormField {
   Name = "name",
   WeeksDuration = "weeksDuration",
   LightSchedule = "lightSchedule",
-  // to do: verify
-  LightScheduleItem = "item",
-  LightScheduleItemTime = "time",
-  LightScheduleItemState = "state",
+  LightScheduleTime = "time",
+  LightScheduleState = "state",
+  LimitsRange = "limitsRange",
+  NutrientsProportion = "nutrientsProportion",
 }

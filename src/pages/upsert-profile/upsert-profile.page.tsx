@@ -4,7 +4,11 @@ import { ProfileContext } from "contexts";
 import { UpsertProfileStep } from "contexts/profile-provider/types";
 import { useContext } from "react";
 import { useLocation } from "react-router-dom";
+import { RangeInformation } from "types";
 import { LightScheduleInput } from "./_compose/light-schedule-input";
+import { LimitsRangeInput } from "./_compose/limits-range-input";
+import { NutrientsProportionInput } from "./_compose/nutrients-proportion-input";
+import { ProfileConfirmation } from "./_compose/profile-confirmation";
 import { ProfileInfoInput } from "./_compose/profile-info-input";
 
 export const UpsertProfilePage = () => {
@@ -13,6 +17,40 @@ export const UpsertProfilePage = () => {
   const isEditing = location.pathname.includes("edit");
 
   const { formStep } = useContext(ProfileContext);
+
+  const renderContent: Record<UpsertProfileStep, JSX.Element> = {
+    ProfileInfo: <ProfileInfoInput />,
+    LightSchedule: <LightScheduleInput />,
+    pHLimits: (
+      <LimitsRangeInput information={RangeInformation.pH} key="phLimitInput" />
+    ),
+    CondutivityLimits: (
+      <LimitsRangeInput
+        information={RangeInformation.Condutivity}
+        key="condutivityLimitInput"
+      />
+    ),
+    WaterTemperatureLimits: (
+      <LimitsRangeInput
+        information={RangeInformation.WaterTemperature}
+        key="waterTemperatureLimitInput"
+      />
+    ),
+    AirTemperatureLimits: (
+      <LimitsRangeInput
+        information={RangeInformation.AirTemperature}
+        key="airTemperatureLimitInput"
+      />
+    ),
+    HumidityLimits: (
+      <LimitsRangeInput
+        information={RangeInformation.Humidity}
+        key="humidityLimitInput"
+      />
+    ),
+    NutrientsProportion: <NutrientsProportionInput />,
+    ProfileConfirmation: <ProfileConfirmation />,
+  };
 
   return (
     <div className="d-flex flex-column align-items-center">
@@ -24,13 +62,7 @@ export const UpsertProfilePage = () => {
 
           <Divider className="my-2" />
 
-          {formStep === UpsertProfileStep.ProfileInfo ? (
-            <ProfileInfoInput />
-          ) : (
-            formStep === UpsertProfileStep.LightSchedule && (
-              <LightScheduleInput />
-            )
-          )}
+          {renderContent[formStep]}
         </div>
       </ContentCard>
     </div>

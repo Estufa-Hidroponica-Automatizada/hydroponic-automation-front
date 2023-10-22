@@ -42,8 +42,8 @@ export const ProfileInfoInput = () => {
         <Form.Item {...UpsertProfileFormFields.weeksDuration}>
           <IntegerInput
             currentValue={weeksDuration}
+            handleChange={(value: number) => setWeeksDuration(value)}
             minValue={1}
-            setValue={setWeeksDuration}
           />
         </Form.Item>
 

@@ -3,16 +3,16 @@ import { Button, Typography } from "antd";
 
 interface IntegerInputProps {
   currentValue: number;
+  handleChange: (newValue: number) => void;
   minValue?: number;
   maxValue?: number;
-  setValue: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const IntegerInput = ({
   currentValue,
+  handleChange,
   minValue,
   maxValue,
-  setValue,
 }: IntegerInputProps) => {
   const disableMinus = currentValue === minValue;
   const disablePlus = currentValue === maxValue;
@@ -23,7 +23,7 @@ export const IntegerInput = ({
         icon={<MinusOutlined />}
         shape="circle"
         type="text"
-        onClick={() => setValue(currentValue - 1)}
+        onClick={() => handleChange(currentValue - 1)}
         disabled={disableMinus}
       />
       <Typography>{currentValue}</Typography>
@@ -31,7 +31,7 @@ export const IntegerInput = ({
         icon={<PlusOutlined />}
         shape="circle"
         type="text"
-        onClick={() => setValue(currentValue + 1)}
+        onClick={() => handleChange(currentValue + 1)}
         disabled={disablePlus}
       />
     </div>

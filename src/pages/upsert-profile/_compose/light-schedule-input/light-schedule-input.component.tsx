@@ -23,11 +23,11 @@ export const LightScheduleInput = () => {
     const schedule: LightSchedule[][] = [];
     data.lightSchedule.map((week) => {
       const weekSchedule: LightSchedule[] = [];
-      week.item.map((itemSchedule) =>
+      week.map((weekItem) =>
         weekSchedule.push({
-          hour: itemSchedule.time.hour(),
-          minute: itemSchedule.time.minute(),
-          state: itemSchedule.state,
+          hour: weekItem.time.hour(),
+          minute: weekItem.time.minute(),
+          state: weekItem.state,
         })
       );
       schedule.push(weekSchedule);
@@ -37,14 +37,14 @@ export const LightScheduleInput = () => {
       ...prevData,
       lightSchedule: schedule,
     }));
-    setFormStep(UpsertProfileStep.Condutivity);
+    setFormStep(UpsertProfileStep.pHLimits);
   };
 
   return (
     <Form layout="vertical" onFinish={handleContinue} form={form}>
       <div className="d-flex flex-column gap-3">
         <Typography.Title level={4} className="m-0 text-center">
-          Cronograma - LuzW
+          Cronograma - Luz
         </Typography.Title>
 
         <Form.List
@@ -66,10 +66,7 @@ export const LightScheduleInput = () => {
                     <Form.Item>
                       <Form.List
                         initialValue={Array.from({ length: 1 })}
-                        name={[
-                          fieldName,
-                          UpsertProfileFormField.LightScheduleItem,
-                        ]}
+                        name={fieldName}
                       >
                         {(
                           subFields,
@@ -88,7 +85,7 @@ export const LightScheduleInput = () => {
                                   <Form.Item
                                     name={[
                                       subFieldName,
-                                      UpsertProfileFormField.LightScheduleItemTime,
+                                      UpsertProfileFormField.LightScheduleTime,
                                     ]}
                                     rules={[Validators.required]}
                                     className="m-0"
@@ -99,6 +96,7 @@ export const LightScheduleInput = () => {
                                       showNow={false}
                                       minuteStep={5}
                                       format="HH:mm"
+                                      inputReadOnly
                                       changeOnBlur
                                     />
                                   </Form.Item>
@@ -108,7 +106,7 @@ export const LightScheduleInput = () => {
                                     <Form.Item
                                       name={[
                                         subFieldName,
-                                        UpsertProfileFormField.LightScheduleItemState,
+                                        UpsertProfileFormField.LightScheduleState,
                                       ]}
                                       valuePropName="checked"
                                       initialValue={false}

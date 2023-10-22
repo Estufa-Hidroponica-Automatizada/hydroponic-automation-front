@@ -1,8 +1,7 @@
 import { BulbFilled, BulbOutlined } from "@ant-design/icons";
 import { Skeleton, Typography } from "antd";
-import { ContentCard } from "components";
+import { ContentCard, LightScheduleList } from "components";
 import { LightSchedule } from "types";
-import { timeFormatter } from "utils";
 
 interface LightInformationCardProps {
   isLoading: boolean;
@@ -55,19 +54,7 @@ export const LightInformationCard = ({
                   Cronograma atual
                 </Typography.Title>
 
-                {lightSchedule.map((schedule) => (
-                  <div
-                    className="d-flex align-items-center gap-1"
-                    key={schedule.id}
-                  >
-                    <Typography.Text>
-                      {schedule.state ? "Ligar" : "Desligar"} às{" "}
-                      {timeFormatter(schedule.hour, schedule.minute)}
-                    </Typography.Text>
-
-                    {schedule.state ? <BulbFilled /> : <BulbOutlined />}
-                  </div>
-                ))}
+                <LightScheduleList lightSchedule={lightSchedule} />
               </div>
             </>
           )}

@@ -2,8 +2,8 @@ export const endpoints = {
   getReadData: "/sensor",
   limits: {
     getLimits: "/limit",
-    setLimit: (parameterName: string, type: "min" | "max") => {
-      return `/limit/${parameterName}_${type}`;
+    setLimit: (parameterName: string) => {
+      return `/limit/${parameterName}`;
     },
   },
   lightSchedule: "/light/schedule",
@@ -17,5 +17,8 @@ export const endpoints = {
     changePassword: "change-password",
     logout: "/logout",
   },
-  profile: { current: "/profile/current" },
+  profile: {
+    current: "/profile/current",
+    create: "/profile",
+  },
 };

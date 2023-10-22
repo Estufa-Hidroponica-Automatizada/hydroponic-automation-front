@@ -1,4 +1,4 @@
-import { LightSchedule } from "types";
+import { ProfileData } from "types";
 
 export interface IProfileContext {
   profileData: ProfileData;
@@ -7,14 +7,14 @@ export interface IProfileContext {
   setFormStep: React.Dispatch<React.SetStateAction<UpsertProfileStep>>;
 }
 
-export interface ProfileData {
-  name: string;
-  weeksDuration: number;
-  lightSchedule: LightSchedule[][];
-}
-
 export enum UpsertProfileStep {
   ProfileInfo = "ProfileInfo",
   LightSchedule = "LightSchedule",
-  Condutivity = "Condutivity",
+  pHLimits = "pHLimits",
+  CondutivityLimits = "CondutivityLimits",
+  AirTemperatureLimits = "AirTemperatureLimits",
+  HumidityLimits = "HumidityLimits",
+  WaterTemperatureLimits = "WaterTemperatureLimits",
+  NutrientsProportion = "NutrientsProportion",
+  ProfileConfirmation = "ProfileConfirmation",
 }
