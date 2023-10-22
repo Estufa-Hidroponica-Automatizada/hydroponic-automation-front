@@ -13,23 +13,13 @@ export const useLight = () => {
     try {
       setError(false);
       setIsLoading(true);
-      const { data, status } = await API.get<number[][]>(
+      const { data, status } = await API.get<LightSchedule[]>(
         endpoints.lightSchedule
       );
 
       if (status === HttpStatusCode.Ok) {
-        const schedule: LightSchedule[] = [];
-
-        // TO DO: IMPROVE BACKEND INTERFACE
-        data.forEach((value) =>
-          schedule.push({
-            id: value[0],
-            hour: value[1],
-            minute: value[2],
-            status: value[3] === 1,
-          })
-        );
-        setLightSchedule(schedule);
+        // To do: sort items by hour
+        setLightSchedule(data);
       }
     } catch {
       setError(true);

@@ -108,7 +108,7 @@ export const DashboardPage = () => {
         />
         <LightInformationCard
           isLoading={isLoadingReadData || isLoadingLightSchedule}
-          lightStatus={readValues?.light < 1000}
+          lightStatus={readValues?.light > 100}
           lightSchedule={lightSchedule}
         />
       </DashboardContainer>

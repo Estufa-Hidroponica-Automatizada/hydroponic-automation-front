@@ -1,6 +1,6 @@
 export interface LightSchedule {
-  id: number;
+  id?: number;
   hour: number;
   minute: number;
-  status: boolean;
+  state: boolean;
 }

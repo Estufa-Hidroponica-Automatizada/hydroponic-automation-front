@@ -32,8 +32,8 @@ export const LightInformationCard = ({
               <Skeleton.Image active style={{ fontSize: "8rem" }} />
 
               <div className="d-flex flex-column justify-content-center gap-1">
-                <Skeleton.Input size="small" active style={{ width: "100%" }} />
-                <Skeleton.Input size="small" active style={{ width: "100%" }} />
+                <Skeleton.Input size="small" active />
+                <Skeleton.Input size="small" active />
                 <Skeleton.Input size="small" active />
               </div>
             </>
@@ -61,11 +61,11 @@ export const LightInformationCard = ({
                     key={schedule.id}
                   >
                     <Typography.Text>
-                      {schedule.status ? "Ligar" : "Desligar"} às{" "}
+                      {schedule.state ? "Ligar" : "Desligar"} às{" "}
                       {timeFormatter(schedule.hour, schedule.minute)}
                     </Typography.Text>
 
-                    {schedule.status ? <BulbFilled /> : <BulbOutlined />}
+                    {schedule.state ? <BulbFilled /> : <BulbOutlined />}
                   </div>
                 ))}
               </div>

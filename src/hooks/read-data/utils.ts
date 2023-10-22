@@ -8,7 +8,7 @@ export const readDataFormatter = (readData: ReadData) => {
     humidity: numberFormatter(readData.humidity),
     light: numberFormatter(readData.light),
     pH: numberFormatter(readData.pH),
-    waterLevel: numberFormatter(readData.waterLevel),
+    waterLevel: readData.waterLevel,
     waterTemperature: numberFormatter(readData.waterTemperature),
   };
 };

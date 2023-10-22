@@ -4,6 +4,6 @@ export interface ReadData {
   humidity: number;
   light: number;
   pH: number;
-  waterLevel: number;
+  waterLevel: boolean;
   waterTemperature: number;
 }

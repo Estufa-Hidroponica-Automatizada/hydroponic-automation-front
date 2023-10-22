@@ -17,5 +17,5 @@ export const endpoints = {
     changePassword: "change-password",
     logout: "/logout",
   },
-  profile: { current: "/perfil/atual" },
+  profile: { current: "/profile/current" },
 };

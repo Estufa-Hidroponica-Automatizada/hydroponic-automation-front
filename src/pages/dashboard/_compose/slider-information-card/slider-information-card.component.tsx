@@ -3,7 +3,7 @@ import { ContentCard } from "components";
 import { useSetLimit } from "hooks";
 import { useEffect, useState } from "react";
 import { Limit, RangeInformation } from "types";
-import { Theme, measureFormatter } from "utils";
+import { measureFormatter } from "utils";
 import {
   SliderDatabaseName,
   SliderRange,
@@ -144,16 +144,15 @@ export const SliderInformationCard = ({
         {showButtons && (
           <div className="d-flex justify-content-center gap-2 pt-3 w-100">
             <Button type="primary" danger onClick={handleCancel} block>
-              <strong>Cancelar</strong>
+              Cancelar
             </Button>
             <Button
               type="primary"
-              style={{ backgroundColor: Theme.colors.primary.medium }}
               onClick={handleSave}
               loading={isLoading}
               block
             >
-              <strong>Salvar</strong>
+              Salvar
             </Button>
           </div>
         )}

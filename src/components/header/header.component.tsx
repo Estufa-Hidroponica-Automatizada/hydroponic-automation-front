@@ -18,7 +18,7 @@ export const PageHeader = () => {
     <HeaderContainer isAuthenticated={isAuthenticated}>
       {isAuthenticated && (
         <LeftOutlined
-          style={{ color: Theme.colors.white }}
+          style={{ color: Theme.colors.white, fontSize: "1.5rem" }}
           onClick={() => navigate(-1)}
         />
       )}
@@ -36,8 +36,8 @@ export const PageHeader = () => {
 
       {isAuthenticated && (
         <UserOutlined
-          style={{ color: Theme.colors.white }}
-          onClick={() => navigate(AppPath.Profile)}
+          style={{ color: Theme.colors.white, fontSize: "1.5rem" }}
+          onClick={() => navigate(AppPath.System)}
         />
       )}
     </HeaderContainer>

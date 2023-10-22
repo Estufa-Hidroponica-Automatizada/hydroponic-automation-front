@@ -7,8 +7,9 @@ import {
   DashboardPage,
   LoginPage,
   PhotoPage,
-  ProfilePage,
+  SystemPage,
   TimeLapsePage,
+  UpsertProfilePage,
 } from "pages";
 import { useContext } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
@@ -33,8 +34,16 @@ export const AppRoutes = () => {
                     element={<ChangePasswordPage />}
                   />
                   <Route path={AppPath.Photo} element={<PhotoPage />} />
-                  <Route path={AppPath.Profile} element={<ProfilePage />} />
                   <Route path={AppPath.TimeLapse} element={<TimeLapsePage />} />
+                  <Route path={AppPath.System} element={<SystemPage />} />
+                  <Route
+                    path={AppPath.AddProfile}
+                    element={<UpsertProfilePage />}
+                  />
+                  <Route
+                    path={AppPath.EditProfile}
+                    element={<UpsertProfilePage />}
+                  />
                   <Route
                     path="*"
                     element={<Navigate to={AppPath.Dashboard} />}
