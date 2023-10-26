@@ -1,12 +1,11 @@
-import { ReloadOutlined } from "@ant-design/icons";
-import { Button, Typography } from "antd";
+import { Typography } from "antd";
+import { ResponsiveContainer } from "components";
 import { useLight, useLimits, useReadData } from "hooks";
 import { useEffect, useRef } from "react";
 import { RangeInformation } from "types";
 import { DashboardActions } from "./_compose/dashboard-actions";
 import { LightInformationCard } from "./_compose/light-information-card";
 import { SliderInformationCard } from "./_compose/slider-information-card";
-import { DashboardContainer } from "./styles";
 
 export const DashboardPage = () => {
   const initialRender = useRef(true);
@@ -59,18 +58,10 @@ export const DashboardPage = () => {
           <Typography.Title level={4}>
             Ocorreu um erro ao buscar os dados do dashboard.
           </Typography.Title>
-          <Button
-            onClick={getDashboardValues}
-            type="primary"
-            loading={isLoading}
-            icon={<ReloadOutlined />}
-          >
-            Tentar novamente
-          </Button>
         </div>
       )}
 
-      <DashboardContainer>
+      <ResponsiveContainer>
         <SliderInformationCard
           information={RangeInformation.pH}
           isLoadingLimits={isLoadingLimits}
@@ -111,7 +102,7 @@ export const DashboardPage = () => {
           lightStatus={readValues?.light > 100}
           lightSchedule={lightSchedule}
         />
-      </DashboardContainer>
+      </ResponsiveContainer>
     </>
   );
 };

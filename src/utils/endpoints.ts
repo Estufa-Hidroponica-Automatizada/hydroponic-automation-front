@@ -18,7 +18,8 @@ export const endpoints = {
     logout: "/logout",
   },
   profile: {
+    default: "/profile",
+    delete: (profileID: number) => `/profile/${profileID}`,
     current: "/profile/current",
-    create: "/profile",
   },
 };

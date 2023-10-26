@@ -43,7 +43,10 @@ export const LimitsRangeInput = ({ information }: LimitsRangeInputProps) => {
         </Typography.Title>
 
         <Form.List
-          initialValue={Array.from({ length: profileData.weeksDuration })}
+          initialValue={Array.from(
+            { length: profileData.weeksDuration }
+            // () => profileData[information]
+          )}
           name={UpsertProfileFormField.LimitsRange}
         >
           {(fields) => (

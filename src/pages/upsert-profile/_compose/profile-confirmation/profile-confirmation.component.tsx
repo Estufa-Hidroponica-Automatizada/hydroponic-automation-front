@@ -1,7 +1,10 @@
 import { Button, Divider, Typography } from "antd";
 import { LightScheduleList } from "components";
 import { ProfileContext } from "contexts";
-import { UpsertProfileStep } from "contexts/profile-provider/types";
+import {
+  UpsertProfileMode,
+  UpsertProfileStep,
+} from "contexts/profile-provider/types";
 import { useCreateProfile } from "hooks";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +16,7 @@ export const ProfileConfirmation = () => {
   const { createProfile, isLoading } = useCreateProfile();
   const navigate = useNavigate();
 
-  const { profileData, setFormStep } = useContext(ProfileContext);
+  const { profileData, mode, setFormStep } = useContext(ProfileContext);
 
   const handleContinue = async () => {
     const success = await createProfile(profileData);
@@ -30,7 +33,7 @@ export const ProfileConfirmation = () => {
 
       <div className="d-flex align-items-center justify-content-between w-100">
         <Typography.Title level={4} className="m-0">
-          Nome de usuário
+          Nome
         </Typography.Title>
         <Typography.Text>{profileData.name}</Typography.Text>
       </div>
@@ -162,7 +165,7 @@ export const ProfileConfirmation = () => {
         <Button
           type="primary"
           onClick={() => setFormStep(UpsertProfileStep.NutrientsProportion)}
-          loading={isLoading}
+          disabled={isLoading}
           block
           ghost
         >
@@ -175,7 +178,7 @@ export const ProfileConfirmation = () => {
           loading={isLoading}
           block
         >
-          Criar perfil
+          {mode === UpsertProfileMode.Create ? "Criar perfil" : "Editar perfil"}
         </Button>
       </div>
     </div>

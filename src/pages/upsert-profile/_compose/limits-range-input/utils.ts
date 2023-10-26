@@ -6,7 +6,7 @@ export const previousStep: Record<RangeInformation, UpsertProfileStep> = {
   condutivity: UpsertProfileStep.pHLimits,
   waterTemperature: UpsertProfileStep.CondutivityLimits,
   airTemperature: UpsertProfileStep.WaterTemperatureLimits,
-  humidity: UpsertProfileStep.HumidityLimits,
+  humidity: UpsertProfileStep.AirTemperatureLimits,
 };
 
 export const nextStep: Record<RangeInformation, UpsertProfileStep> = {

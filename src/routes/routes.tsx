@@ -7,6 +7,7 @@ import {
   DashboardPage,
   LoginPage,
   PhotoPage,
+  ProfilesListPage,
   SystemPage,
   TimeLapsePage,
   UpsertProfilePage,
@@ -37,7 +38,11 @@ export const AppRoutes = () => {
                   <Route path={AppPath.TimeLapse} element={<TimeLapsePage />} />
                   <Route path={AppPath.System} element={<SystemPage />} />
                   <Route
-                    path={AppPath.AddProfile}
+                    path={AppPath.ProfilesList}
+                    element={<ProfilesListPage />}
+                  />
+                  <Route
+                    path={AppPath.CreateProfile}
                     element={<UpsertProfilePage />}
                   />
                   <Route

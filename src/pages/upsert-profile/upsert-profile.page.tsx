@@ -1,9 +1,13 @@
 import { Divider, Typography } from "antd";
 import { ContentCard } from "components";
 import { ProfileContext } from "contexts";
-import { UpsertProfileStep } from "contexts/profile-provider/types";
-import { useContext } from "react";
+import {
+  UpsertProfileMode,
+  UpsertProfileStep,
+} from "contexts/profile-provider/types";
+import { useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { AppPath } from "routes";
 import { RangeInformation } from "types";
 import { LightScheduleInput } from "./_compose/light-schedule-input";
 import { LimitsRangeInput } from "./_compose/limits-range-input";
@@ -14,9 +18,15 @@ import { ProfileInfoInput } from "./_compose/profile-info-input";
 export const UpsertProfilePage = () => {
   const location = useLocation();
 
-  const isEditing = location.pathname.includes("edit");
+  const { formStep, mode, setMode } = useContext(ProfileContext);
 
-  const { formStep } = useContext(ProfileContext);
+  useEffect(() => {
+    setMode(
+      location.pathname.includes(AppPath.CreateProfile)
+        ? UpsertProfileMode.Create
+        : UpsertProfileMode.Edit
+    );
+  }, []);
 
   const renderContent: Record<UpsertProfileStep, JSX.Element> = {
     ProfileInfo: <ProfileInfoInput />,
@@ -57,7 +67,9 @@ export const UpsertProfilePage = () => {
       <ContentCard>
         <div className="d-flex flex-column justify-content-between h-100">
           <Typography.Title level={2} className="m-0 text-center">
-            {isEditing ? "Editar perfil" : "Adicionar perfil"}
+            {mode === UpsertProfileMode.Create
+              ? "Criar perfil"
+              : "Editar perfil"}
           </Typography.Title>
 
           <Divider className="my-2" />

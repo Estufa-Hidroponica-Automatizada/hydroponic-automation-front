@@ -2,7 +2,7 @@ import { Button, Divider, Skeleton, Typography } from "antd";
 import { ContentCard } from "components";
 import { AuthContext, ProfileContext } from "contexts";
 import { UpsertProfileStep } from "contexts/profile-provider/types";
-import { useCurrentProfile, useLogout } from "hooks";
+import { useGetCurrentProfile, useLogout } from "hooks";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppPath } from "routes";
@@ -17,7 +17,7 @@ export const SystemPage = () => {
     currentProfile,
     getCurrentProfile,
     isLoading: isLoadingCurrentProfile,
-  } = useCurrentProfile();
+  } = useGetCurrentProfile();
 
   const getSystemInformation = async () => {
     await getCurrentProfile();
@@ -79,7 +79,7 @@ export const SystemPage = () => {
             {isLoadingCurrentProfile ? (
               <Skeleton.Input size="small" active />
             ) : (
-              <Typography.Text>MOCK</Typography.Text>
+              <Typography.Text>{currentProfile.name}</Typography.Text>
             )}
           </div>
 
@@ -90,8 +90,19 @@ export const SystemPage = () => {
             {isLoadingCurrentProfile ? (
               <Skeleton.Input size="small" active />
             ) : (
+              <Typography.Text>{currentProfile.days ?? 0} dias</Typography.Text>
+            )}
+          </div>
+
+          <div className="d-flex align-items-center justify-content-between w-100">
+            <Typography.Title level={4} className="m-0">
+              Duração (em semanas)
+            </Typography.Title>
+            {isLoadingCurrentProfile ? (
+              <Skeleton.Input size="small" active />
+            ) : (
               <Typography.Text>
-                {currentProfile.days ?? ""} dias
+                {currentProfile.totalWeeks ?? 0} semanas
               </Typography.Text>
             )}
           </div>
@@ -111,8 +122,7 @@ export const SystemPage = () => {
 
             <Button
               type="primary"
-              onClick={() => console.log("to do")}
-              // loading={isLoading}
+              onClick={() => navigate(AppPath.ProfilesList)}
               block
             >
               Lista de perfis

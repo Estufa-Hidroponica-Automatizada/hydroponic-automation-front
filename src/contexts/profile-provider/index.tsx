@@ -1,28 +1,27 @@
 import { PropsWithChildren, createContext, useState } from "react";
-import { LightSchedule, Limit, NutrientsProportion, ProfileData } from "types";
-import { IProfileContext, UpsertProfileStep } from "./types";
+import { ProfileData } from "types";
+import { IProfileContext, UpsertProfileMode, UpsertProfileStep } from "./types";
+import { blankProfileData } from "./utils";
 
 export const ProfileContext = createContext<IProfileContext>(
   {} as IProfileContext
 );
 
 export const ProfileProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const [profileData, setProfileData] = useState<ProfileData>({
-    name: "",
-    weeksDuration: 0,
-    lightSchedule: [[]] as LightSchedule[][],
-    pH: [] as Limit[],
-    airTemperature: [] as Limit[],
-    condutivity: [] as Limit[],
-    humidity: [] as Limit[],
-    waterTemperature: [] as Limit[],
-    nutrientsProportion: [] as NutrientsProportion[],
-  });
+  const [profileData, setProfileData] = useState<ProfileData>(blankProfileData);
   const [formStep, setFormStep] = useState(UpsertProfileStep.ProfileInfo);
+  const [mode, setMode] = useState(UpsertProfileMode.Create);
 
   return (
     <ProfileContext.Provider
-      value={{ profileData, setProfileData, formStep, setFormStep }}
+      value={{
+        profileData,
+        setProfileData,
+        formStep,
+        setFormStep,
+        mode,
+        setMode,
+      }}
     >
       {children}
     </ProfileContext.Provider>

@@ -12,9 +12,12 @@ export const ProfileInfoInput = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
 
-  const { setProfileData, setFormStep } = useContext(ProfileContext);
+  const { profileData, setProfileData, setFormStep } =
+    useContext(ProfileContext);
 
-  const [weeksDuration, setWeeksDuration] = useState(1);
+  const [weeksDuration, setWeeksDuration] = useState(
+    profileData.humidity.length
+  );
 
   const handleContinue = (data: ProfileInfoFormValues) => {
     setProfileData((prevData) => ({
@@ -35,6 +38,7 @@ export const ProfileInfoInput = () => {
         <Form.Item
           {...UpsertProfileFormFields.name}
           rules={[Validators.required]}
+          initialValue={profileData.name}
         >
           <Input />
         </Form.Item>

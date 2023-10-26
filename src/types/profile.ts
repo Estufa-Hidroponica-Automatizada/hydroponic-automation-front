@@ -6,9 +6,12 @@ export interface SummaryProfile {
   days: number;
   id: number;
   isFinished: boolean;
+  name: string;
+  totalWeeks: number;
 }
 
 export interface ProfileData {
+  id?: number;
   name: string;
   weeksDuration: number;
   lightSchedule: LightSchedule[][];
