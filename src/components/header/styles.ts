@@ -1,3 +1,4 @@
+import { LeftOutlined, UserOutlined } from "@ant-design/icons";
 import { Header } from "antd/es/layout/layout";
 import styled from "styled-components";
 import { Theme } from "utils";
@@ -14,4 +15,14 @@ export const HeaderContainer = styled(Header)<{ isAuthenticated: boolean }>`
     props.isAuthenticated ? "space-between" : "center"};
   gap: 1rem;
   background-color: ${Theme.colors.primary.medium};
+`;
+
+export const BackButton = styled(LeftOutlined)`
+  color: ${Theme.colors.white};
+  font-size: 1.5rem;
+`;
+
+export const UserButton = styled(UserOutlined)`
+  color: ${Theme.colors.white};
+  font-size: 1.5rem;
 `;
