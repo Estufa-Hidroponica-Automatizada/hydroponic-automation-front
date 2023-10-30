@@ -3,6 +3,7 @@ import { HttpStatusCode } from "axios";
 import { useCallback, useState } from "react";
 import { ProfileData, SummaryProfile } from "types";
 import { API, endpoints } from "utils";
+import { adaptProfilesResponseToProfilesData } from "./utils";
 
 export const useGetCurrentProfile = () => {
   const [error, setError] = useState(false);
@@ -85,10 +86,10 @@ export const useProfilesList = () => {
     try {
       setError(false);
       setIsLoading(true);
-      const { data, status } = await API.get(endpoints.profile.default);
+      const { data, status } = await API.get(endpoints.profile.listAll);
 
       if (status === HttpStatusCode.Ok) {
-        setProfilesList(data);
+        setProfilesList(adaptProfilesResponseToProfilesData(data));
       }
     } catch {
       setError(true);
@@ -112,7 +113,7 @@ export const useCreateProfile = () => {
     try {
       setError(false);
       setIsLoading(true);
-      const { status } = await API.post(endpoints.profile.default, {
+      const { status } = await API.post(endpoints.profile.create, {
         name: profile.name,
         temperature: profile.airTemperature,
         humidity: profile.humidity,
@@ -153,17 +154,20 @@ export const useEditProfile = () => {
     try {
       setError(false);
       setIsLoading(true);
-      const { status } = await API.put(endpoints.profile.default, {
-        id: profile.id,
-        name: profile.name,
-        temperature: profile.airTemperature,
-        humidity: profile.humidity,
-        ph: profile.pH,
-        condutivity: profile.condutivity,
-        water_temperature: profile.waterTemperature,
-        light_schedule: profile.lightSchedule,
-        nutrient_proportion: profile.nutrientsProportion,
-      });
+      const { status } = await API.put(
+        endpoints.profile.edit(profile.id ?? 0),
+        {
+          id: profile.id,
+          name: profile.name,
+          temperature: profile.airTemperature,
+          humidity: profile.humidity,
+          ph: profile.pH,
+          condutivity: profile.condutivity,
+          water_temperature: profile.waterTemperature,
+          light_schedule: profile.lightSchedule,
+          nutrient_proportion: profile.nutrientsProportion,
+        }
+      );
 
       if (status === HttpStatusCode.Ok) {
         notification.success({

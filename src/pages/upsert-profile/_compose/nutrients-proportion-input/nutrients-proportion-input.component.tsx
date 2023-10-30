@@ -1,26 +1,19 @@
-import { Button, Form, Typography } from "antd";
+import { Typography } from "antd";
 import { IntegerInput } from "components";
 import { ProfileContext } from "contexts";
 import { UpsertProfileStep } from "contexts/profile-provider/types";
 import { useContext, useState } from "react";
 import { NutrientsProportion } from "types";
+import { UpsertProfileFooter } from "../upsert-profile-footer";
+import { nutrientsProportionInitialValues } from "./utils";
 
 export const NutrientsProportionInput = () => {
   const { profileData, setFormStep, setProfileData } =
     useContext(ProfileContext);
 
-  const initialProportions = Array.from(
-    { length: profileData.weeksDuration },
-    () => ({
-      nutrientA: 1,
-      nutrientB: 1,
-    })
-  );
-
-  const [nutrientsProportion, setNutrientsProportion] =
-    useState<NutrientsProportion[]>(initialProportions);
-
-  const [form] = Form.useForm();
+  const [nutrientsProportion, setNutrientsProportion] = useState<
+    NutrientsProportion[]
+  >(nutrientsProportionInitialValues(profileData));
 
   const handleChangeValue = (
     value: number,
@@ -48,7 +41,7 @@ export const NutrientsProportionInput = () => {
       </Typography.Title>
 
       <div className="d-flex flex-column gap-3">
-        {initialProportions.map((_, index) => (
+        {Array.from({ length: profileData.weeksDuration }).map((_, index) => (
           <div
             className="d-flex flex-column align-items-center gap-1"
             key={`nutrientsProportion_week${index}`}
@@ -91,20 +84,10 @@ export const NutrientsProportionInput = () => {
         ))}
       </div>
 
-      <div className="d-flex justify-content-center gap-2 w-100">
-        <Button
-          type="primary"
-          onClick={() => setFormStep(UpsertProfileStep.HumidityLimits)}
-          block
-          ghost
-        >
-          Voltar
-        </Button>
-
-        <Button onClick={handleContinue} type="primary" block>
-          Avançar
-        </Button>
-      </div>
+      <UpsertProfileFooter
+        handleBack={() => setFormStep(UpsertProfileStep.HumidityLimits)}
+        handleContinue={handleContinue}
+      />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { Button, Form, Input, Typography } from "antd";
+import { Form, Input, Typography } from "antd";
 import { IntegerInput } from "components";
 import { ProfileContext } from "contexts";
 import { UpsertProfileStep } from "contexts/profile-provider/types";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { ProfileInfoFormValues } from "types";
 import { Validators } from "utils";
 import { UpsertProfileFormFields } from "../../form";
+import { UpsertProfileFooter } from "../upsert-profile-footer";
 
 export const ProfileInfoInput = () => {
   const navigate = useNavigate();
@@ -15,9 +16,7 @@ export const ProfileInfoInput = () => {
   const { profileData, setProfileData, setFormStep } =
     useContext(ProfileContext);
 
-  const [weeksDuration, setWeeksDuration] = useState(
-    profileData.humidity.length
-  );
+  const [weeksDuration, setWeeksDuration] = useState(profileData.weeksDuration);
 
   const handleContinue = (data: ProfileInfoFormValues) => {
     setProfileData((prevData) => ({
@@ -52,15 +51,7 @@ export const ProfileInfoInput = () => {
         </Form.Item>
 
         <Form.Item className="m-0">
-          <div className="d-flex justify-content-center gap-2 w-100">
-            <Button type="primary" onClick={() => navigate(-1)} block ghost>
-              Voltar
-            </Button>
-
-            <Button htmlType="submit" type="primary" block>
-              Avançar
-            </Button>
-          </div>
+          <UpsertProfileFooter handleBack={() => navigate(-1)} />
         </Form.Item>
       </div>
     </Form>

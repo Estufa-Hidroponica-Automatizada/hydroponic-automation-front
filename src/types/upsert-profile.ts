@@ -5,7 +5,7 @@ export interface ProfileInfoFormValues {
   name: string;
 }
 
-interface LigthScheduleItem {
+export interface LigthScheduleItem {
   time: Dayjs;
   state: boolean;
 }

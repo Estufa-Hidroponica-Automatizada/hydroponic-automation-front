@@ -5,7 +5,7 @@ import {
   UpsertProfileMode,
   UpsertProfileStep,
 } from "contexts/profile-provider/types";
-import { useCreateProfile } from "hooks";
+import { useCreateProfile, useEditProfile } from "hooks";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppPath } from "routes";
@@ -13,17 +13,27 @@ import { RangeInformation } from "types";
 import { LimitsTitle, measureFormatter } from "utils";
 
 export const ProfileConfirmation = () => {
-  const { createProfile, isLoading } = useCreateProfile();
+  const { createProfile, isLoading: isLoadingCreateProfile } =
+    useCreateProfile();
+  const { editProfile, isLoading: isLoadingEditProfile } = useEditProfile();
+
   const navigate = useNavigate();
 
   const { profileData, mode, setFormStep } = useContext(ProfileContext);
 
   const handleContinue = async () => {
-    const success = await createProfile(profileData);
+    let success = false;
+    if (mode === UpsertProfileMode.Create) {
+      success = (await createProfile(profileData)) ?? false;
+    } else {
+      success = (await editProfile(profileData)) ?? false;
+    }
     if (success) {
-      navigate(AppPath.System);
+      navigate(AppPath.ProfilesList);
     }
   };
+
+  const isLoading = isLoadingCreateProfile || isLoadingEditProfile;
 
   return (
     <div className="d-flex flex-column gap-3">

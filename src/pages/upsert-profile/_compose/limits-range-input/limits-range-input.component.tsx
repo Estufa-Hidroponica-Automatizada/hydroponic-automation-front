@@ -1,15 +1,20 @@
-import { Button, Form, Typography } from "antd";
+import { Form, Typography } from "antd";
 import { LimitsSlider } from "components";
 import { ProfileContext } from "contexts";
 import { useContext } from "react";
 import {
-  Limit,
   LimitsRangeFormValues,
   RangeInformation,
   UpsertProfileFormField,
 } from "types";
 import { LimitsTitle } from "utils";
-import { nextStep, previousStep } from "./utils";
+import { UpsertProfileFooter } from "../upsert-profile-footer";
+import {
+  adaptFormValuesToLimits,
+  limitsRangeInitialValues,
+  nextStep,
+  previousStep,
+} from "./utils";
 
 interface LimitsRangeInputProps {
   information: RangeInformation;
@@ -21,15 +26,9 @@ export const LimitsRangeInput = ({ information }: LimitsRangeInputProps) => {
   const [form] = Form.useForm();
 
   const handleContinue = (data: LimitsRangeFormValues) => {
-    const limits: Limit[] = [];
-
-    data.limitsRange.map((limit) =>
-      limits.push({ min: limit[0], max: limit[1] })
-    );
-
     setProfileData((prevData) => ({
       ...prevData,
-      [information]: limits,
+      [information]: adaptFormValuesToLimits(data),
     }));
 
     setFormStep(nextStep[information]);
@@ -43,10 +42,7 @@ export const LimitsRangeInput = ({ information }: LimitsRangeInputProps) => {
         </Typography.Title>
 
         <Form.List
-          initialValue={Array.from(
-            { length: profileData.weeksDuration }
-            // () => profileData[information]
-          )}
+          initialValue={limitsRangeInitialValues(profileData, information)}
           name={UpsertProfileFormField.LimitsRange}
         >
           {(fields) => (
@@ -73,20 +69,9 @@ export const LimitsRangeInput = ({ information }: LimitsRangeInputProps) => {
         </Form.List>
 
         <Form.Item className="m-0">
-          <div className="d-flex justify-content-center gap-2 w-100">
-            <Button
-              type="primary"
-              onClick={() => setFormStep(previousStep[information])}
-              block
-              ghost
-            >
-              Voltar
-            </Button>
-
-            <Button htmlType="submit" type="primary" block>
-              Avançar
-            </Button>
-          </div>
+          <UpsertProfileFooter
+            handleBack={() => setFormStep(previousStep[information])}
+          />
         </Form.Item>
       </div>
     </Form>

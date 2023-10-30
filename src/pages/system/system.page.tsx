@@ -2,13 +2,14 @@ import { Button, Divider, Skeleton, Typography } from "antd";
 import { ContentCard } from "components";
 import { AuthContext, ProfileContext } from "contexts";
 import { UpsertProfileStep } from "contexts/profile-provider/types";
+import { blankProfileData } from "contexts/profile-provider/utils";
 import { useGetCurrentProfile, useLogout } from "hooks";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppPath } from "routes";
 
 export const SystemPage = () => {
-  const { setFormStep } = useContext(ProfileContext);
+  const { setFormStep, setProfileData } = useContext(ProfileContext);
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -112,12 +113,13 @@ export const SystemPage = () => {
               type="primary"
               onClick={() => {
                 setFormStep(UpsertProfileStep.ProfileInfo);
-                navigate(AppPath.EditProfile);
+                setProfileData(blankProfileData);
+                navigate(AppPath.CreateProfile);
               }}
               block
               ghost
             >
-              Editar perfil
+              Criar perfil
             </Button>
 
             <Button

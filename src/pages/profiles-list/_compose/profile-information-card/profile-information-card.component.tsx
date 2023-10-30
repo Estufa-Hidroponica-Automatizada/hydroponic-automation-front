@@ -60,7 +60,7 @@ export const ProfileInformationCard = ({
           <Button
             icon={<EyeOutlined />}
             disabled={isLoading}
-            onClick={() => console.log()}
+            onClick={() => console.log("TO DO")}
             shape="circle"
             type="text"
           />

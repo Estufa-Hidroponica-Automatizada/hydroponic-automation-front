@@ -7,12 +7,13 @@ import { Button, Form, Switch, TimePicker, Typography } from "antd";
 import { ProfileContext } from "contexts";
 import { UpsertProfileStep } from "contexts/profile-provider/types";
 import { useContext } from "react";
-import {
-  LightSchedule,
-  LightScheduleFormValues,
-  UpsertProfileFormField,
-} from "types";
+import { LightScheduleFormValues, UpsertProfileFormField } from "types";
 import { Validators } from "utils";
+import { UpsertProfileFooter } from "../upsert-profile-footer";
+import {
+  adaptFormValuesToLightSchedule,
+  lightScheduleInitialValues,
+} from "./utils";
 
 export const LightScheduleInput = () => {
   const { profileData, setFormStep, setProfileData } =
@@ -20,22 +21,9 @@ export const LightScheduleInput = () => {
   const [form] = Form.useForm();
 
   const handleContinue = (data: LightScheduleFormValues) => {
-    const schedule: LightSchedule[][] = [];
-    data.lightSchedule.map((week) => {
-      const weekSchedule: LightSchedule[] = [];
-      week.map((weekItem) =>
-        weekSchedule.push({
-          hour: weekItem.time.hour(),
-          minute: weekItem.time.minute(),
-          state: weekItem.state,
-        })
-      );
-      schedule.push(weekSchedule);
-    });
-
     setProfileData((prevData) => ({
       ...prevData,
-      lightSchedule: schedule,
+      lightSchedule: adaptFormValuesToLightSchedule(data),
     }));
     setFormStep(UpsertProfileStep.pHLimits);
   };
@@ -48,7 +36,7 @@ export const LightScheduleInput = () => {
         </Typography.Title>
 
         <Form.List
-          initialValue={Array.from({ length: profileData.weeksDuration })}
+          initialValue={lightScheduleInitialValues(profileData)}
           name={UpsertProfileFormField.LightSchedule}
         >
           {(fields) => (
@@ -64,10 +52,7 @@ export const LightScheduleInput = () => {
 
                   <div className="w-100">
                     <Form.Item>
-                      <Form.List
-                        initialValue={Array.from({ length: 1 })}
-                        name={fieldName}
-                      >
+                      <Form.List name={fieldName}>
                         {(
                           subFields,
                           { add: addSubField, remove: removeSubField }
@@ -149,20 +134,9 @@ export const LightScheduleInput = () => {
         </Form.List>
 
         <Form.Item className="m-0">
-          <div className="d-flex justify-content-center gap-2 w-100">
-            <Button
-              type="primary"
-              onClick={() => setFormStep(UpsertProfileStep.ProfileInfo)}
-              block
-              ghost
-            >
-              Voltar
-            </Button>
-
-            <Button htmlType="submit" type="primary" block>
-              Avançar
-            </Button>
-          </div>
+          <UpsertProfileFooter
+            handleBack={() => setFormStep(UpsertProfileStep.ProfileInfo)}
+          />
         </Form.Item>
       </div>
     </Form>
