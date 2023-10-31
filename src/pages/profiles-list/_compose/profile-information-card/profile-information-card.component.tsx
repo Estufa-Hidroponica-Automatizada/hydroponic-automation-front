@@ -1,8 +1,7 @@
 import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import { Button, Typography } from "antd";
 import { ContentCard } from "components";
-import { ProfileContext } from "contexts";
-import { UpsertProfileStep } from "contexts/profile-provider/types";
+import { ProfileContext, UpsertProfileStep } from "contexts";
 import { useDeleteProfile, useSetCurrentProfile } from "hooks";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";

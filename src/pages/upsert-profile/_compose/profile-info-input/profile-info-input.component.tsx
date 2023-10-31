@@ -1,7 +1,6 @@
 import { Form, Input, Typography } from "antd";
 import { IntegerInput } from "components";
-import { ProfileContext } from "contexts";
-import { UpsertProfileStep } from "contexts/profile-provider/types";
+import { ProfileContext, UpsertProfileStep } from "contexts";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ProfileInfoFormValues } from "types";

@@ -1,7 +1,6 @@
 import { Typography } from "antd";
 import { IntegerInput } from "components";
-import { ProfileContext } from "contexts";
-import { UpsertProfileStep } from "contexts/profile-provider/types";
+import { ProfileContext, UpsertProfileStep } from "contexts";
 import { useContext, useState } from "react";
 import { NutrientsProportion } from "types";
 import { UpsertProfileFooter } from "../upsert-profile-footer";

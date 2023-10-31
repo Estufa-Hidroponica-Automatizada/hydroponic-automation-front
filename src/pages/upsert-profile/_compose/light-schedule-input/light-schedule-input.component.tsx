@@ -4,8 +4,7 @@ import {
   MinusCircleOutlined,
 } from "@ant-design/icons";
 import { Button, Form, Switch, TimePicker, Typography } from "antd";
-import { ProfileContext } from "contexts";
-import { UpsertProfileStep } from "contexts/profile-provider/types";
+import { ProfileContext, UpsertProfileStep } from "contexts";
 import { useContext } from "react";
 import { LightScheduleFormValues, UpsertProfileFormField } from "types";
 import { Validators } from "utils";

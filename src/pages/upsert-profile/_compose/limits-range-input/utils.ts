@@ -1,4 +1,4 @@
-import { UpsertProfileStep } from "contexts/profile-provider/types";
+import { UpsertProfileStep } from "contexts";
 import {
   Limit,
   LimitsRangeFormValues,

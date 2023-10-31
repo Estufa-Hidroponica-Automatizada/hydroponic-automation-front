@@ -1,8 +1,11 @@
 import { Button, Divider, Skeleton, Typography } from "antd";
 import { ContentCard } from "components";
-import { AuthContext, ProfileContext } from "contexts";
-import { UpsertProfileStep } from "contexts/profile-provider/types";
-import { blankProfileData } from "contexts/profile-provider/utils";
+import {
+  AuthContext,
+  ProfileContext,
+  UpsertProfileStep,
+  blankProfileData,
+} from "contexts";
 import { useGetCurrentProfile, useLogout } from "hooks";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";

@@ -1,10 +1,6 @@
 import { Button, Divider, Typography } from "antd";
 import { LightScheduleList } from "components";
-import { ProfileContext } from "contexts";
-import {
-  UpsertProfileMode,
-  UpsertProfileStep,
-} from "contexts/profile-provider/types";
+import { ProfileContext, UpsertProfileMode, UpsertProfileStep } from "contexts";
 import { useCreateProfile, useEditProfile } from "hooks";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";

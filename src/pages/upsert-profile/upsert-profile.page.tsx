@@ -1,10 +1,6 @@
 import { Divider, Typography } from "antd";
 import { ContentCard } from "components";
-import { ProfileContext } from "contexts";
-import {
-  UpsertProfileMode,
-  UpsertProfileStep,
-} from "contexts/profile-provider/types";
+import { ProfileContext, UpsertProfileMode, UpsertProfileStep } from "contexts";
 import { useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { AppPath } from "routes";
