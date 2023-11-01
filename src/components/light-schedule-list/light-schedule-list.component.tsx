@@ -2,6 +2,7 @@ import { BulbFilled, BulbOutlined } from "@ant-design/icons";
 import { Typography } from "antd";
 import { LightSchedule } from "types";
 import { timeFormatter } from "utils";
+import { timeSorter } from "./utils";
 
 interface LightScheduleListProps {
   lightSchedule: LightSchedule[];
@@ -12,7 +13,7 @@ export const LightScheduleList = ({
 }: LightScheduleListProps) => {
   return (
     <>
-      {lightSchedule.map((schedule, index) => (
+      {lightSchedule.sort(timeSorter).map((schedule, index) => (
         <div
           className="d-flex align-items-center gap-1"
           key={`scheduleItem${index}`}
