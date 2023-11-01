@@ -8,7 +8,14 @@ import { ProfilesListActions } from "./_compose/profiles-list-actions";
 export const ProfilesListPage = () => {
   const [filter, setFilter] = useState("");
   const initialRender = useRef(true);
-  const { error, getProfiles, isLoading, profilesList } = useProfilesList();
+
+  const {
+    error,
+    getProfiles,
+    isLoading: isLoadingProfilesList,
+    profilesList,
+  } = useProfilesList();
+
   const {
     currentProfile,
     getCurrentProfile,
@@ -32,7 +39,7 @@ export const ProfilesListPage = () => {
       <ProfilesListActions
         handleChangeFilter={setFilter}
         handleReloadData={getProfilesInfo}
-        isLoading={isLoading}
+        isLoading={isLoadingProfilesList || isLoadingCurrentProfile}
       />
 
       {error && (

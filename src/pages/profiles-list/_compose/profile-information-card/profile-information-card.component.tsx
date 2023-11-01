@@ -20,7 +20,8 @@ export const ProfileInformationCard = ({
   refreshList,
 }: ProfileInformationCardProps) => {
   const { setFormStep, setProfileData } = useContext(ProfileContext);
-  const { deleteProfile, isLoading } = useDeleteProfile();
+  const { deleteProfile, isLoading: isLoadingDeleteProfile } =
+    useDeleteProfile();
   const { setCurrentProfile, isLoading: isLoadingSetCurrentProfile } =
     useSetCurrentProfile();
   const navigate = useNavigate();
@@ -32,11 +33,16 @@ export const ProfileInformationCard = ({
     }
   };
 
-  const handleDelete = async () => {
+  const handleDeleteProfile = async () => {
     const success = await deleteProfile(profile);
     if (success) {
       refreshList();
     }
+  };
+
+  const handleViewProfileDetails = () => {
+    setProfileData(profile);
+    navigate(AppPath.ProfileDetails);
   };
 
   return (
@@ -45,9 +51,9 @@ export const ProfileInformationCard = ({
         <div className="d-flex align-items-center justify-content-between">
           <Button
             icon={<DeleteOutlined />}
-            loading={isLoading}
-            onClick={handleDelete}
-            disabled={isCurrent}
+            loading={isLoadingDeleteProfile}
+            onClick={handleDeleteProfile}
+            disabled={isCurrent || isLoadingSetCurrentProfile}
             shape="circle"
             type="text"
           />
@@ -58,8 +64,8 @@ export const ProfileInformationCard = ({
 
           <Button
             icon={<EyeOutlined />}
-            disabled={isLoading}
-            onClick={() => console.log("TO DO")}
+            disabled={isLoadingDeleteProfile || isLoadingSetCurrentProfile}
+            onClick={handleViewProfileDetails}
             shape="circle"
             type="text"
           />
@@ -81,12 +87,13 @@ export const ProfileInformationCard = ({
                 setProfileData(profile);
                 navigate(AppPath.EditProfile);
               },
+              disabled: isLoadingDeleteProfile || isLoadingSetCurrentProfile,
             },
             {
               text: isCurrent ? "Perfil selecionado" : "Selecionar perfil",
               handleClick: handleSelectProfile,
               loading: isLoadingSetCurrentProfile,
-              disabled: isCurrent,
+              disabled: isCurrent || isLoadingDeleteProfile,
             },
           ]}
         />

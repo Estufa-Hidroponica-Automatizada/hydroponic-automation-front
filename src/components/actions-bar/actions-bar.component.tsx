@@ -7,8 +7,9 @@ export const ActionsBar = ({ buttons }: ActionsBarProps) => {
       <Button
         type="primary"
         onClick={buttons[0].handleClick}
-        disabled={buttons[0].disabled}
+        disabled={buttons[0].disabled || buttons[1].loading}
         loading={buttons[0].loading}
+        icon={buttons[0].icon}
         block
         ghost
       >
@@ -18,8 +19,9 @@ export const ActionsBar = ({ buttons }: ActionsBarProps) => {
       <Button
         type="primary"
         onClick={buttons[1].handleClick}
-        disabled={buttons[1].disabled}
+        disabled={buttons[1].disabled || buttons[0].loading}
         loading={buttons[1].loading}
+        icon={buttons[1].icon}
         block
       >
         {buttons[1].text}

@@ -5,4 +5,5 @@ export * from "./icons";
 export * from "./integer-input";
 export * from "./light-schedule-list";
 export * from "./limits-slider";
+export * from "./profile-information";
 export * from "./responsive-container";

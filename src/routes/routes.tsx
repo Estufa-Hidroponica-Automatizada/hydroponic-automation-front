@@ -7,6 +7,7 @@ import {
   DashboardPage,
   LoginPage,
   PhotoPage,
+  ProfileDetailsPage,
   ProfilesListPage,
   SystemPage,
   TimeLapsePage,
@@ -48,6 +49,10 @@ export const AppRoutes = () => {
                   <Route
                     path={AppPath.EditProfile}
                     element={<UpsertProfilePage />}
+                  />
+                  <Route
+                    path={AppPath.ProfileDetails}
+                    element={<ProfileDetailsPage />}
                   />
                   <Route
                     path="*"

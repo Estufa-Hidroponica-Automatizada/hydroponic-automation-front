@@ -5,6 +5,7 @@ export enum AppPath {
   ProfilesList = "/profile",
   CreateProfile = "/profile/create",
   EditProfile = "/profile/edit",
+  ProfileDetails = "/profile/details",
   System = "/system",
   Photo = "/cam/now",
   TimeLapse = "/cam/time-lapse",

@@ -5,6 +5,8 @@ import {
 } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import { ResponsiveActionsContainer } from "components";
+import { ProfileContext, blankProfileData } from "contexts";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppPath } from "routes";
 
@@ -20,6 +22,12 @@ export const ProfilesListActions = ({
   isLoading,
 }: DashboardActionsProps) => {
   const navigate = useNavigate();
+  const { setProfileData } = useContext(ProfileContext);
+
+  const handleCreateProfileClick = () => {
+    setProfileData(blankProfileData);
+    navigate(AppPath.CreateProfile);
+  };
 
   return (
     <ResponsiveActionsContainer className="flex-column gap-3 pb-3">
@@ -38,7 +46,7 @@ export const ProfilesListActions = ({
         <Button
           type="primary"
           icon={<PlusOutlined />}
-          onClick={() => navigate(AppPath.CreateProfile)}
+          onClick={handleCreateProfileClick}
           disabled={isLoading}
           block
         >

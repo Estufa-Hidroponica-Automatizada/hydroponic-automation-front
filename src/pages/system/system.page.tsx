@@ -1,3 +1,4 @@
+import { PlusOutlined } from "@ant-design/icons";
 import { Button, Divider, Skeleton, Typography } from "antd";
 import { ActionsBar, ContentCard } from "components";
 import {
@@ -120,6 +121,7 @@ export const SystemPage = () => {
                   setProfileData(blankProfileData);
                   navigate(AppPath.CreateProfile);
                 },
+                icon: <PlusOutlined />,
               },
               {
                 text: "Lista de perfis",
