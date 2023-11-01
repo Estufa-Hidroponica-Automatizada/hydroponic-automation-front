@@ -1,6 +1,6 @@
 import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import { Button, Typography } from "antd";
-import { ContentCard } from "components";
+import { ActionsBar, ContentCard } from "components";
 import { ProfileContext, UpsertProfileStep } from "contexts";
 import { useDeleteProfile, useSetCurrentProfile } from "hooks";
 import { useContext } from "react";
@@ -72,30 +72,24 @@ export const ProfileInformationCard = ({
           <Typography.Text>{profile.humidity.length} semanas</Typography.Text>
         </div>
 
-        <div className="d-flex justify-content-center gap-2 pt-3 w-100">
-          <Button
-            type="primary"
-            onClick={() => {
-              setFormStep(UpsertProfileStep.ProfileInfo);
-              setProfileData(profile);
-              navigate(AppPath.EditProfile);
-            }}
-            block
-            ghost
-          >
-            Editar perfil
-          </Button>
-
-          <Button
-            type="primary"
-            onClick={handleSelectProfile}
-            loading={isLoadingSetCurrentProfile}
-            disabled={isCurrent}
-            block
-          >
-            {isCurrent ? "Perfil selecionado" : "Selecionar perfil"}
-          </Button>
-        </div>
+        <ActionsBar
+          buttons={[
+            {
+              text: "Editar perfil",
+              handleClick: () => {
+                setFormStep(UpsertProfileStep.ProfileInfo);
+                setProfileData(profile);
+                navigate(AppPath.EditProfile);
+              },
+            },
+            {
+              text: isCurrent ? "Perfil selecionado" : "Selecionar perfil",
+              handleClick: handleSelectProfile,
+              loading: isLoadingSetCurrentProfile,
+              disabled: isCurrent,
+            },
+          ]}
+        />
       </div>
     </ContentCard>
   );

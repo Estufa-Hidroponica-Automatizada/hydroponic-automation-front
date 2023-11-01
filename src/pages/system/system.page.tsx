@@ -1,5 +1,5 @@
 import { Button, Divider, Skeleton, Typography } from "antd";
-import { ContentCard } from "components";
+import { ActionsBar, ContentCard } from "components";
 import {
   AuthContext,
   ProfileContext,
@@ -111,28 +111,22 @@ export const SystemPage = () => {
             )}
           </div>
 
-          <div className="d-flex justify-content-center gap-2 pt-3 w-100">
-            <Button
-              type="primary"
-              onClick={() => {
-                setFormStep(UpsertProfileStep.ProfileInfo);
-                setProfileData(blankProfileData);
-                navigate(AppPath.CreateProfile);
-              }}
-              block
-              ghost
-            >
-              Criar perfil
-            </Button>
-
-            <Button
-              type="primary"
-              onClick={() => navigate(AppPath.ProfilesList)}
-              block
-            >
-              Lista de perfis
-            </Button>
-          </div>
+          <ActionsBar
+            buttons={[
+              {
+                text: "Criar perfil",
+                handleClick: () => {
+                  setFormStep(UpsertProfileStep.ProfileInfo);
+                  setProfileData(blankProfileData);
+                  navigate(AppPath.CreateProfile);
+                },
+              },
+              {
+                text: "Lista de perfis",
+                handleClick: () => navigate(AppPath.ProfilesList),
+              },
+            ]}
+          />
         </div>
       </div>
     </ContentCard>
