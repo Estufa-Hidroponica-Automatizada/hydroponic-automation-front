@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 
 export interface ActionsBarProps {
   buttons: [ActionButton, ActionButton];
+  notPadding?: boolean;
 }
 
 interface ActionButton {
