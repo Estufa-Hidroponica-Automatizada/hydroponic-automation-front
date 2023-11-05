@@ -11,7 +11,8 @@ function App() {
           token: { colorPrimary: Theme.colors.primary.medium },
           components: {
             Button: { fontWeight: 600, primaryShadow: "0" },
-            Form: { itemMarginBottom: 0 },
+            Form: { itemMarginBottom: 16 },
+            Typography: { titleMarginTop: 0, titleMarginBottom: 0, margin: 0 },
           },
         }}
       >

@@ -31,16 +31,16 @@ export const LoginPage = () => {
             <Input.Password />
           </Form.Item>
 
-          <Form.Item className="d-flex flex-column align-items-center m-3">
+          <Form.Item className="d-flex justify-content-center">
             <Button htmlType="submit" type="primary" loading={isLoading}>
               Conectar
             </Button>
           </Form.Item>
         </Form>
 
-        <Typography.Paragraph className="text-center">
+        <Typography.Text className="text-center">
           Conecte-se para acompanhar o status do seu sistema de qualquer lugar!
-        </Typography.Paragraph>
+        </Typography.Text>
       </ContentCard>
     </div>
   );
