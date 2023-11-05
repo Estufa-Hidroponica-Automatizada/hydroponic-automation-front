@@ -18,6 +18,7 @@ export const useReadData = () => {
 
       if (status === HttpStatusCode.Ok) {
         setReadValues(readDataFormatter(data));
+        return true;
       }
     } catch {
       setError(true);
@@ -25,6 +26,7 @@ export const useReadData = () => {
         message: "Sensores",
         description: "Ocorreu um erro ao consultar os dados dos sensores",
       });
+      return false;
     } finally {
       setIsLoading(false);
     }

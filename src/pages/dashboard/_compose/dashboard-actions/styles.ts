@@ -3,7 +3,7 @@ import { Theme } from "utils";
 
 export const DashboardActionsContainer = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-self: center;
   width: ${Theme.sizes.responsiveWidth};
 `;

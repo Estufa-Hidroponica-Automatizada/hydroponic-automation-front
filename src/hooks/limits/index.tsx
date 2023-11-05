@@ -20,6 +20,7 @@ export const useLimits = () => {
 
       if (status === HttpStatusCode.Ok) {
         setLimits(limitFormatter(data));
+        return true;
       }
     } catch (status) {
       setError(true);
@@ -27,6 +28,7 @@ export const useLimits = () => {
         message: "Limites",
         description: "Ocorreu um erro ao consultar os limites",
       });
+      return false;
     } finally {
       setIsLoading(false);
     }

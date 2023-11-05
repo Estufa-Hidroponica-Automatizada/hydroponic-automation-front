@@ -18,7 +18,6 @@ export const useLight = () => {
       );
 
       if (status === HttpStatusCode.Ok) {
-        // To do: sort items by hour
         setLightSchedule(data);
       }
     } catch {

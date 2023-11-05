@@ -1,4 +1,3 @@
-import { Typography } from "antd";
 import { ResponsiveContainer } from "components";
 import { useLight, useLimits, useReadData } from "hooks";
 import { useEffect, useRef } from "react";
@@ -25,15 +24,20 @@ export const DashboardPage = () => {
   } = useReadData();
 
   const {
+    error: lightScheduleError,
     getLightSchedule,
     isLoading: isLoadingLightSchedule,
     lightSchedule,
   } = useLight();
 
   const getDashboardValues = async () => {
-    await getLimits();
-    await getReadData();
-    await getLightSchedule();
+    const limitSuccess = await getLimits();
+    if (limitSuccess) {
+      const readDataSuccess = await getReadData();
+      if (readDataSuccess) {
+        await getLightSchedule();
+      }
+    }
   };
 
   useEffect(() => {
@@ -44,65 +48,60 @@ export const DashboardPage = () => {
   }, []);
 
   const isLoading = isLoadingLimits || isLoadingReadData;
-  const hasError = limitsError || readDataError;
+  const hasError = limitsError || readDataError || lightScheduleError;
 
   return (
-    <>
+    <div className="d-flex flex-column gap-3">
       <DashboardActions
         handleReloadData={getDashboardValues}
         isLoading={isLoading}
+        hasError={hasError}
       />
 
-      {hasError && (
-        <div className="d-flex flex-column align-items-center pb-3">
-          <Typography.Title level={4}>
-            Ocorreu um erro ao buscar os dados do dashboard.
-          </Typography.Title>
-        </div>
+      {!hasError && (
+        <ResponsiveContainer>
+          <SliderInformationCard
+            information={RangeInformation.pH}
+            isLoadingLimits={isLoadingLimits}
+            isLoadingReadData={isLoadingReadData}
+            limit={limits?.pH ?? 0}
+            readValue={readValues?.pH ?? 0}
+          />
+          <SliderInformationCard
+            information={RangeInformation.WaterTemperature}
+            isLoadingLimits={isLoadingLimits}
+            isLoadingReadData={isLoadingReadData}
+            limit={limits?.waterTemperature ?? 0}
+            readValue={readValues?.waterTemperature ?? 0}
+          />
+          <SliderInformationCard
+            information={RangeInformation.Condutivity}
+            isLoadingLimits={isLoadingLimits}
+            isLoadingReadData={isLoadingReadData}
+            limit={limits?.condutivity ?? 0}
+            readValue={readValues?.condutivity ?? 0}
+          />
+          <SliderInformationCard
+            information={RangeInformation.Humidity}
+            isLoadingLimits={isLoadingLimits}
+            isLoadingReadData={isLoadingReadData}
+            limit={limits?.humidity ?? 0}
+            readValue={readValues?.humidity ?? 0}
+          />
+          <SliderInformationCard
+            information={RangeInformation.AirTemperature}
+            isLoadingLimits={isLoadingLimits}
+            isLoadingReadData={isLoadingReadData}
+            limit={limits?.airTemperature ?? 0}
+            readValue={readValues?.airTemperature ?? 0}
+          />
+          <LightInformationCard
+            isLoading={isLoadingReadData || isLoadingLightSchedule}
+            lightStatus={readValues?.light > 100}
+            lightSchedule={lightSchedule}
+          />
+        </ResponsiveContainer>
       )}
-
-      <ResponsiveContainer>
-        <SliderInformationCard
-          information={RangeInformation.pH}
-          isLoadingLimits={isLoadingLimits}
-          isLoadingReadData={isLoadingReadData}
-          limit={limits?.pH ?? 0}
-          readValue={readValues?.pH ?? 0}
-        />
-        <SliderInformationCard
-          information={RangeInformation.WaterTemperature}
-          isLoadingLimits={isLoadingLimits}
-          isLoadingReadData={isLoadingReadData}
-          limit={limits?.waterTemperature ?? 0}
-          readValue={readValues?.waterTemperature ?? 0}
-        />
-        <SliderInformationCard
-          information={RangeInformation.Condutivity}
-          isLoadingLimits={isLoadingLimits}
-          isLoadingReadData={isLoadingReadData}
-          limit={limits?.condutivity ?? 0}
-          readValue={readValues?.condutivity ?? 0}
-        />
-        <SliderInformationCard
-          information={RangeInformation.Humidity}
-          isLoadingLimits={isLoadingLimits}
-          isLoadingReadData={isLoadingReadData}
-          limit={limits?.humidity ?? 0}
-          readValue={readValues?.humidity ?? 0}
-        />
-        <SliderInformationCard
-          information={RangeInformation.AirTemperature}
-          isLoadingLimits={isLoadingLimits}
-          isLoadingReadData={isLoadingReadData}
-          limit={limits?.airTemperature ?? 0}
-          readValue={readValues?.airTemperature ?? 0}
-        />
-        <LightInformationCard
-          isLoading={isLoadingReadData || isLoadingLightSchedule}
-          lightStatus={readValues?.light > 100}
-          lightSchedule={lightSchedule}
-        />
-      </ResponsiveContainer>
-    </>
+    </div>
   );
 };
