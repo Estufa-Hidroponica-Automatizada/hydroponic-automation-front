@@ -1,3 +1,4 @@
+import { ReloadOutlined } from "@ant-design/icons";
 import { Skeleton } from "antd";
 import { ActionsBar, ResponsiveActionsContainer } from "components";
 import dayjs from "dayjs";
@@ -48,20 +49,21 @@ export const PhotoPage = () => {
               text: "Recarregar imagem",
               handleClick: getCurrentPhoto,
               loading: isLoading,
+              icon: <ReloadOutlined />,
             },
-            { text: "Baixar imagem", handleClick: handleDownload },
+            {
+              text: "Baixar imagem",
+              handleClick: handleDownload,
+              disabled: !photo,
+            },
           ]}
           notPadding
         />
       </ResponsiveActionsContainer>
       {isLoading ? (
-        <Skeleton.Image active style={{ width: "100%" }} />
+        <Skeleton.Image active style={photoStyle} />
       ) : (
-        photo && (
-          <div className="d-flex flex-column gap-3">
-            <img alt="img" src={photo} />
-          </div>
-        )
+        photo && <img src={photo} alt="img" style={photoStyle} />
       )}
     </div>
   );
