@@ -2,7 +2,7 @@ import { Button } from "antd";
 import { AuthContext } from "contexts";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AppPath } from "routes";
+import { AppPath } from "utils";
 import { AppTitle } from "./_compose/app-title";
 import { BackButton, HeaderContainer, UserButton } from "./styles";
 

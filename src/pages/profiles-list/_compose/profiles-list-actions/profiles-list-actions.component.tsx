@@ -8,7 +8,7 @@ import { ResponsiveActionsContainer } from "components";
 import { ProfileContext, blankProfileData } from "contexts";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AppPath } from "routes";
+import { AppPath } from "utils";
 
 interface DashboardActionsProps {
   handleChangeFilter: React.Dispatch<React.SetStateAction<string>>;

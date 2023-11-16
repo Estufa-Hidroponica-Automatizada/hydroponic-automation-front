@@ -5,8 +5,8 @@ import { ProfileContext, UpsertProfileStep } from "contexts";
 import { useDeleteProfile, useSetCurrentProfile } from "hooks";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AppPath } from "routes";
 import { ProfileData } from "types";
+import { AppPath } from "utils";
 
 interface ProfileInformationCardProps {
   isCurrent: boolean;

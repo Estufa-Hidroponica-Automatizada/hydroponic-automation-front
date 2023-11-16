@@ -6,7 +6,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Dropdown, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
-import { AppPath } from "routes";
+import { AppPath } from "utils";
 import { DashboardActionsContainer } from "./styles";
 
 interface DashboardActionsProps {

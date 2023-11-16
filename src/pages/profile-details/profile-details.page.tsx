@@ -3,7 +3,7 @@ import { ProfileContext, UpsertProfileStep } from "contexts";
 import { useGetCurrentProfile, useSetCurrentProfile } from "hooks";
 import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AppPath } from "routes";
+import { AppPath } from "utils";
 
 export const ProfileDetailsPage = () => {
   const { profileData, setFormStep } = useContext(ProfileContext);

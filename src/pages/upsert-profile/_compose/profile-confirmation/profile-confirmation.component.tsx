@@ -3,7 +3,7 @@ import { ProfileContext, UpsertProfileMode, UpsertProfileStep } from "contexts";
 import { useCreateProfile, useEditProfile } from "hooks";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AppPath } from "routes";
+import { AppPath } from "utils";
 
 export const ProfileConfirmation = () => {
   const { createProfile, isLoading: isLoadingCreateProfile } =

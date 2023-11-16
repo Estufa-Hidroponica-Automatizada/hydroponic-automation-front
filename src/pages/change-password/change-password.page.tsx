@@ -2,9 +2,8 @@ import { Button, Form, Input } from "antd";
 import { ContentCard } from "components";
 import { useChangePassword } from "hooks";
 import { useNavigate } from "react-router-dom";
-import { AppPath } from "routes";
 import { ChangePasswordFormField, ChangePasswordFormValues } from "types";
-import { Validators } from "utils";
+import { AppPath, Validators } from "utils";
 import { ChangePasswordFormFields } from "./form";
 
 export const ChangePasswordPage = () => {
