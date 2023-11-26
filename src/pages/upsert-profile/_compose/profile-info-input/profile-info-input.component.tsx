@@ -1,7 +1,7 @@
 import { Form, Input, Typography } from "antd";
 import { IntegerInput } from "components";
-import { ProfileContext, UpsertProfileStep } from "contexts";
-import { useContext, useState } from "react";
+import { UpsertProfileStep, useProfile } from "contexts";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ProfileInfoFormValues } from "types";
 import { Validators } from "utils";
@@ -12,8 +12,7 @@ export const ProfileInfoInput = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
 
-  const { profileData, setProfileData, setFormStep } =
-    useContext(ProfileContext);
+  const { profileData, setProfileData, setFormStep } = useProfile();
 
   const [weeksDuration, setWeeksDuration] = useState(profileData.weeksDuration);
 

@@ -1,12 +1,11 @@
 import { Divider, Typography } from "antd";
 import { LightScheduleList } from "components";
-import { ProfileContext } from "contexts";
-import { useContext } from "react";
+import { useProfile } from "contexts";
 import { RangeInformation } from "types";
 import { LimitsTitle, measureFormatter } from "utils";
 
 export const ProfileInformation = () => {
-  const { profileData } = useContext(ProfileContext);
+  const { profileData } = useProfile();
 
   return (
     <div className="d-flex flex-column gap-3">

@@ -1,12 +1,12 @@
 import { ActionsBar, ContentCard, ProfileInformation } from "components";
-import { ProfileContext, UpsertProfileStep } from "contexts";
+import { UpsertProfileStep, useProfile } from "contexts";
 import { useGetCurrentProfile, useSetCurrentProfile } from "hooks";
 import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppPath } from "utils";
 
 export const ProfileDetailsPage = () => {
-  const { profileData, setFormStep } = useContext(ProfileContext);
+  const { profileData, setFormStep } = useProfile();
   const [isCurrent, setIsCurrent] = useState(false);
   const initialRender = useRef(true);
 

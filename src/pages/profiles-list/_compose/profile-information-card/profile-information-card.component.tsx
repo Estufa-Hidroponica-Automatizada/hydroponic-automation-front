@@ -1,9 +1,8 @@
 import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import { Button, Typography } from "antd";
 import { ActionsBar, ContentCard } from "components";
-import { ProfileContext, UpsertProfileStep } from "contexts";
+import { UpsertProfileStep, useProfile } from "contexts";
 import { useDeleteProfile, useSetCurrentProfile } from "hooks";
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ProfileData } from "types";
 import { AppPath } from "utils";
@@ -19,7 +18,7 @@ export const ProfileInformationCard = ({
   profile,
   refreshList,
 }: ProfileInformationCardProps) => {
-  const { setFormStep, setProfileData } = useContext(ProfileContext);
+  const { setFormStep, setProfileData } = useProfile();
   const { deleteProfile, isLoading: isLoadingDeleteProfile } =
     useDeleteProfile();
   const { setCurrentProfile, isLoading: isLoadingSetCurrentProfile } =

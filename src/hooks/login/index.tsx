@@ -1,12 +1,12 @@
 import { notification } from "antd";
 import { HttpStatusCode } from "axios";
-import { AuthContext } from "contexts";
-import { useCallback, useContext, useState } from "react";
+import { useAuthentication } from "contexts";
+import { useCallback, useState } from "react";
 import { Login } from "types";
 import { API, endpoints } from "utils";
 
 export const useLogin = () => {
-  const { setIsAuthenticated, setUser } = useContext(AuthContext);
+  const { login: loginFunction } = useAuthentication();
   const [isLoading, setIsLoading] = useState(false);
 
   const login = useCallback(async (loginData: Login) => {
@@ -16,8 +16,7 @@ export const useLogin = () => {
       const { status } = await API.post(endpoints.auth.login, loginData);
 
       if (status === HttpStatusCode.Ok) {
-        setIsAuthenticated(true);
-        setUser(loginData.username);
+        loginFunction(loginData.username);
       }
     } catch {
       notification.error({

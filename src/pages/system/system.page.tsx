@@ -2,19 +2,19 @@ import { PlusOutlined } from "@ant-design/icons";
 import { Button, Divider, Skeleton, Typography } from "antd";
 import { ActionsBar, ContentCard } from "components";
 import {
-  AuthContext,
-  ProfileContext,
   UpsertProfileStep,
   blankProfileData,
+  useAuthentication,
+  useProfile,
 } from "contexts";
 import { useGetCurrentProfile, useLogout } from "hooks";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppPath } from "utils";
 
 export const SystemPage = () => {
-  const { setFormStep, setProfileData } = useContext(ProfileContext);
-  const { user } = useContext(AuthContext);
+  const { setFormStep, setProfileData } = useProfile();
+  const { user } = useAuthentication();
   const navigate = useNavigate();
 
   const { logout } = useLogout();

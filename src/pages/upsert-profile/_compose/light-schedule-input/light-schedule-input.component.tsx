@@ -4,8 +4,7 @@ import {
   MinusCircleOutlined,
 } from "@ant-design/icons";
 import { Button, Form, Switch, TimePicker, Typography } from "antd";
-import { ProfileContext, UpsertProfileStep } from "contexts";
-import { useContext } from "react";
+import { UpsertProfileStep, useProfile } from "contexts";
 import { LightScheduleFormValues, UpsertProfileFormField } from "types";
 import { Validators } from "utils";
 import { UpsertProfileFooter } from "../upsert-profile-footer";
@@ -15,8 +14,7 @@ import {
 } from "./utils";
 
 export const LightScheduleInput = () => {
-  const { profileData, setFormStep, setProfileData } =
-    useContext(ProfileContext);
+  const { profileData, setFormStep, setProfileData } = useProfile();
   const [form] = Form.useForm();
 
   const handleContinue = (data: LightScheduleFormValues) => {

@@ -1,7 +1,7 @@
 import { Layout } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { ContentContainer, PageHeader } from "components";
-import { AuthContext } from "contexts";
+import { useAuthentication } from "contexts";
 import {
   ChangePasswordPage,
   DashboardPage,
@@ -13,12 +13,15 @@ import {
   TimeLapsePage,
   UpsertProfilePage,
 } from "pages";
-import { useContext } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { AppPath } from "./paths";
+import { AppPath } from "utils";
 
 export const AppRoutes = () => {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated } = useAuthentication();
+
+  const authRoute = (page: JSX.Element) => {
+    return isAuthenticated ? page : <Navigate to={AppPath.Login} />;
+  };
 
   return (
     <BrowserRouter>
@@ -28,43 +31,44 @@ export const AppRoutes = () => {
         <Content>
           <ContentContainer>
             <Routes>
-              {isAuthenticated ? (
-                <>
-                  <Route path={AppPath.Dashboard} element={<DashboardPage />} />
-                  <Route
-                    path={AppPath.ChangePassword}
-                    element={<ChangePasswordPage />}
-                  />
-                  <Route path={AppPath.Photo} element={<PhotoPage />} />
-                  <Route path={AppPath.TimeLapse} element={<TimeLapsePage />} />
-                  <Route path={AppPath.System} element={<SystemPage />} />
-                  <Route
-                    path={AppPath.ProfilesList}
-                    element={<ProfilesListPage />}
-                  />
-                  <Route
-                    path={AppPath.CreateProfile}
-                    element={<UpsertProfilePage />}
-                  />
-                  <Route
-                    path={AppPath.EditProfile}
-                    element={<UpsertProfilePage />}
-                  />
-                  <Route
-                    path={AppPath.ProfileDetails}
-                    element={<ProfileDetailsPage />}
-                  />
-                  <Route
-                    path="*"
-                    element={<Navigate to={AppPath.Dashboard} />}
-                  />
-                </>
-              ) : (
-                <>
-                  <Route path={AppPath.Login} element={<LoginPage />} />
-                  <Route path="*" element={<Navigate to={AppPath.Login} />} />
-                </>
-              )}
+              <Route path={AppPath.Login} element={<LoginPage />} />
+              <Route
+                path={AppPath.Dashboard}
+                element={authRoute(<DashboardPage />)}
+              />
+              <Route
+                path={AppPath.ChangePassword}
+                element={authRoute(<ChangePasswordPage />)}
+              />
+              <Route path={AppPath.Photo} element={authRoute(<PhotoPage />)} />
+              <Route
+                path={AppPath.TimeLapse}
+                element={authRoute(<TimeLapsePage />)}
+              />
+              <Route
+                path={AppPath.System}
+                element={authRoute(<SystemPage />)}
+              />
+              <Route
+                path={AppPath.ProfilesList}
+                element={authRoute(<ProfilesListPage />)}
+              />
+              <Route
+                path={AppPath.CreateProfile}
+                element={authRoute(<UpsertProfilePage />)}
+              />
+              <Route
+                path={AppPath.EditProfile}
+                element={authRoute(<UpsertProfilePage />)}
+              />
+              <Route
+                path={AppPath.ProfileDetails}
+                element={authRoute(<ProfileDetailsPage />)}
+              />
+              <Route
+                path="*"
+                element={authRoute(<Navigate to={AppPath.Dashboard} />)}
+              />
             </Routes>
           </ContentContainer>
         </Content>

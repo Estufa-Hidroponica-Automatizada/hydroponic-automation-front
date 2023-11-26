@@ -1,14 +1,13 @@
 import { Typography } from "antd";
 import { IntegerInput } from "components";
-import { ProfileContext, UpsertProfileStep } from "contexts";
-import { useContext, useState } from "react";
+import { UpsertProfileStep, useProfile } from "contexts";
+import { useState } from "react";
 import { NutrientsProportion } from "types";
 import { UpsertProfileFooter } from "../upsert-profile-footer";
 import { nutrientsProportionInitialValues } from "./utils";
 
 export const NutrientsProportionInput = () => {
-  const { profileData, setFormStep, setProfileData } =
-    useContext(ProfileContext);
+  const { profileData, setFormStep, setProfileData } = useProfile();
 
   const [nutrientsProportion, setNutrientsProportion] = useState<
     NutrientsProportion[]

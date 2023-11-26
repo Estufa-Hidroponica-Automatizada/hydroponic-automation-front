@@ -1,13 +1,12 @@
 import { Button } from "antd";
-import { AuthContext } from "contexts";
-import { useContext } from "react";
+import { useAuthentication } from "contexts";
 import { useNavigate } from "react-router-dom";
 import { AppPath } from "utils";
 import { AppTitle } from "./_compose/app-title";
 import { BackButton, HeaderContainer, UserButton } from "./styles";
 
 export const PageHeader = () => {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated } = useAuthentication();
   const navigate = useNavigate();
 
   return (

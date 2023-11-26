@@ -1,11 +1,9 @@
-import { PropsWithChildren, createContext, useState } from "react";
+import { PropsWithChildren, createContext, useContext, useState } from "react";
 import { ProfileData } from "types";
 import { IProfileContext, UpsertProfileMode, UpsertProfileStep } from "./types";
 import { blankProfileData } from "./utils";
 
-export const ProfileContext = createContext<IProfileContext>(
-  {} as IProfileContext
-);
+const ProfileContext = createContext<IProfileContext>({} as IProfileContext);
 
 export const ProfileProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [profileData, setProfileData] = useState<ProfileData>(blankProfileData);
@@ -27,3 +25,5 @@ export const ProfileProvider: React.FC<PropsWithChildren> = ({ children }) => {
     </ProfileContext.Provider>
   );
 };
+
+export const useProfile = () => useContext(ProfileContext);

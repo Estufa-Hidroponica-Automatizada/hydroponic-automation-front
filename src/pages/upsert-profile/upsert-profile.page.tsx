@@ -1,7 +1,7 @@
 import { Divider, Typography } from "antd";
 import { ContentCard } from "components";
-import { ProfileContext, UpsertProfileMode, UpsertProfileStep } from "contexts";
-import { useContext, useEffect } from "react";
+import { UpsertProfileMode, UpsertProfileStep, useProfile } from "contexts";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { RangeInformation } from "types";
 import { AppPath } from "utils";
@@ -14,7 +14,7 @@ import { ProfileInfoInput } from "./_compose/profile-info-input";
 export const UpsertProfilePage = () => {
   const location = useLocation();
 
-  const { formStep, mode, setMode } = useContext(ProfileContext);
+  const { formStep, mode, setMode } = useProfile();
 
   useEffect(() => {
     setMode(

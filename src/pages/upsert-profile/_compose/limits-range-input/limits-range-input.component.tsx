@@ -1,7 +1,6 @@
 import { Form, Typography } from "antd";
 import { LimitsSlider } from "components";
-import { ProfileContext } from "contexts";
-import { useContext } from "react";
+import { useProfile } from "contexts";
 import {
   LimitsRangeFormValues,
   RangeInformation,
@@ -21,8 +20,7 @@ interface LimitsRangeInputProps {
 }
 
 export const LimitsRangeInput = ({ information }: LimitsRangeInputProps) => {
-  const { profileData, setFormStep, setProfileData } =
-    useContext(ProfileContext);
+  const { profileData, setFormStep, setProfileData } = useProfile();
   const [form] = Form.useForm();
 
   const handleContinue = (data: LimitsRangeFormValues) => {

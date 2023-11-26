@@ -1,7 +1,6 @@
 import { ActionsBar, ProfileInformation } from "components";
-import { ProfileContext, UpsertProfileMode, UpsertProfileStep } from "contexts";
+import { UpsertProfileMode, UpsertProfileStep, useProfile } from "contexts";
 import { useCreateProfile, useEditProfile } from "hooks";
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppPath } from "utils";
 
@@ -12,7 +11,7 @@ export const ProfileConfirmation = () => {
 
   const navigate = useNavigate();
 
-  const { profileData, mode, setFormStep } = useContext(ProfileContext);
+  const { profileData, mode, setFormStep } = useProfile();
 
   const handleContinue = async () => {
     let success = false;

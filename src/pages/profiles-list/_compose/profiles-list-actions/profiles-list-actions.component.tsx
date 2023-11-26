@@ -5,8 +5,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import { ResponsiveActionsContainer } from "components";
-import { ProfileContext, blankProfileData } from "contexts";
-import { useContext } from "react";
+import { blankProfileData, useProfile } from "contexts";
 import { useNavigate } from "react-router-dom";
 import { AppPath } from "utils";
 
@@ -22,7 +21,7 @@ export const ProfilesListActions = ({
   isLoading,
 }: DashboardActionsProps) => {
   const navigate = useNavigate();
-  const { setProfileData } = useContext(ProfileContext);
+  const { setProfileData } = useProfile();
 
   const handleCreateProfileClick = () => {
     setProfileData(blankProfileData);
