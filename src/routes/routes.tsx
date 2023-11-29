@@ -31,7 +31,16 @@ export const AppRoutes = () => {
         <Content>
           <ContentContainer>
             <Routes>
-              <Route path={AppPath.Login} element={<LoginPage />} />
+              <Route
+                path={AppPath.Login}
+                element={
+                  !isAuthenticated ? (
+                    <LoginPage />
+                  ) : (
+                    <Navigate to={AppPath.Dashboard} />
+                  )
+                }
+              />
               <Route
                 path={AppPath.Dashboard}
                 element={authRoute(<DashboardPage />)}

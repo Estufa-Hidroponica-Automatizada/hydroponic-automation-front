@@ -1,7 +1,7 @@
 import axios, { AxiosError, HttpStatusCode } from "axios";
 import { useAuthentication } from "contexts";
 
-const baseURL = "https://localhost:4000";
+const baseURL = "http://localhost:4000";
 
 export const API = axios.create({ baseURL, withCredentials: true });
 
