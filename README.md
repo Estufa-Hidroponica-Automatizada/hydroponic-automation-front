@@ -1,6 +1,6 @@
 # hydroponic-automation-front
 
-Repositório do app WEB feito com React para monitoramento e controle do sistema de cultivo hidropônico automatizado.\
+Repositório do app web feito com React para monitoramento e controle do sistema de cultivo hidropônico automatizado.\
 Este projeto foi desenvolvido como Trabalho de Conclusão de Curso do curso de Engenharia de Computação na Escola Politécnica da Universidade de São Paulo pelos alunos:
 - Brian Andrade Nunes
 - Marco Aurélio Condé Oliveira Prado
