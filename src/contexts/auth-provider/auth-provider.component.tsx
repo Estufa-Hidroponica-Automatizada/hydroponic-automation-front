@@ -7,12 +7,14 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState("");
 
-  const login = (identification: string) => {
+  const login = (identification: string, access_token: string) => {
     setIsAuthenticated(true);
     setUser(identification);
+    localStorage.setItem("access_token", access_token);
   };
 
   const logout = () => {
+    localStorage.removeItem('access_token');
     setIsAuthenticated(true);
     setUser("");
   };

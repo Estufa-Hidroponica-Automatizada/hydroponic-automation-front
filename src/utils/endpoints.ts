@@ -14,7 +14,7 @@ export const endpoints = {
   },
   auth: {
     login: "/login",
-    changePassword: "change-password",
+    changePassword: "/change-password",
     logout: "/logout",
   },
   profile: {
