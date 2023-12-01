@@ -1,7 +1,10 @@
 import axios, { AxiosError, HttpStatusCode } from "axios";
 import { useAuthentication } from "contexts";
 
-const baseURL = "http://localhost:4000";
+const baseURL =
+  window.location.hostname === "192.168.15.10"
+    ? "http://192.168.15.10:4000"
+    : "http://estufa.ddns.net:4000";
 
 export const API = axios.create({ baseURL, withCredentials: true });
 
