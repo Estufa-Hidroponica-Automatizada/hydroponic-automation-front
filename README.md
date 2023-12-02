@@ -35,3 +35,5 @@ Para fazer o deploy do seu aplicativo em produção no seu servidor local, basta
 npm run deploy
 ```
 Isso fará o build do aplicativo (conforme script anterior) e, em sequência, fará o deploy do aplicativo em produção no seu servidor local.
+> **Lembrete**: Isso só irá rodar o servidor localmente, permitindo o acesso pela rede local. Se você deseja acessar remotamente, configure adequadamente o redirecionamento de portas no seu roteador.
+
