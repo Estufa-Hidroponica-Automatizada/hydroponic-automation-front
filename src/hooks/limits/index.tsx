@@ -16,6 +16,7 @@ export const useLimits = () => {
     try {
       setError(false);
       setIsLoading(true);
+      setLimits({} as Limits);
       const { data, status } = await API.get<Limits>(
         endpoints.limits.getLimits
       );

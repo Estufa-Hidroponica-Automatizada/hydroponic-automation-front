@@ -64,40 +64,41 @@ export const DashboardPage = () => {
             information={RangeInformation.pH}
             isLoadingLimits={isLoadingLimits}
             isLoadingReadData={isLoadingReadData}
-            limit={limits?.pH ?? 0}
-            readValue={readValues?.pH ?? 0}
+            limit={limits?.pH}
+            readValue={readValues?.pH}
           />
           <SliderInformationCard
             information={RangeInformation.WaterTemperature}
             isLoadingLimits={isLoadingLimits}
             isLoadingReadData={isLoadingReadData}
-            limit={limits?.waterTemperature ?? 0}
-            readValue={readValues?.waterTemperature ?? 0}
+            limit={limits?.waterTemperature}
+            readValue={readValues?.waterTemperature}
           />
           <SliderInformationCard
             information={RangeInformation.Condutivity}
             isLoadingLimits={isLoadingLimits}
             isLoadingReadData={isLoadingReadData}
-            limit={limits?.condutivity ?? 0}
-            readValue={readValues?.condutivity ?? 0}
+            limit={limits?.condutivity}
+            readValue={readValues?.condutivity}
           />
           <SliderInformationCard
             information={RangeInformation.Humidity}
             isLoadingLimits={isLoadingLimits}
             isLoadingReadData={isLoadingReadData}
-            limit={limits?.humidity ?? 0}
-            readValue={readValues?.humidity ?? 0}
+            limit={limits?.humidity}
+            readValue={readValues?.humidity}
           />
           <SliderInformationCard
             information={RangeInformation.AirTemperature}
             isLoadingLimits={isLoadingLimits}
             isLoadingReadData={isLoadingReadData}
-            limit={limits?.airTemperature ?? 0}
-            readValue={readValues?.airTemperature ?? 0}
+            limit={limits?.airTemperature}
+            readValue={readValues?.airTemperature}
           />
           <LightInformationCard
-            isLoading={isLoadingReadData || isLoadingLightSchedule}
-            lightStatus={readValues?.light > 100}
+            isLoadingLightSchedule={isLoadingLightSchedule}
+            isLoadingReadData={isLoadingReadData}
+            lightLevel={readValues?.light}
             lightSchedule={lightSchedule}
           />
         </ResponsiveContainer>

@@ -16,6 +16,7 @@ export const useReadData = () => {
     try {
       setError(false);
       setIsLoading(true);
+      setReadValues({} as ReadData);
       const { data, status } = await API.get<ReadData>(endpoints.getReadData);
 
       if (status === HttpStatusCode.Ok) {

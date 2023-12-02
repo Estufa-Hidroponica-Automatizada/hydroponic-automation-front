@@ -30,10 +30,11 @@ export const SliderInformationCard = ({
   const [maxValue, setMaxValue] = useState(limit?.max);
 
   useEffect(() => {
-    if (limit?.min && limit?.max) {
-      setMinValue(limit.min);
-      setMaxValue(limit.max);
-      setSavedRange([limit.min, limit.max]);
+    if (limit) {
+      const { min, max } = limit;
+      setMinValue(min);
+      setMaxValue(max);
+      setSavedRange([min, max]);
     }
   }, [limit]);
 
@@ -74,6 +75,9 @@ export const SliderInformationCard = ({
     }
   };
 
+  const showReadValueSkeleton = !readValue || isLoadingReadData;
+  const showLimitSkeleton = !limit || isLoadingLimits;
+
   return (
     <ContentCard>
       <div className="d-flex flex-column justify-content-between h-100">
@@ -81,23 +85,28 @@ export const SliderInformationCard = ({
           {LimitsTitle[information]}
         </Typography.Title>
 
-        {isLoadingReadData ? (
-          <div className="d-flex flex-column align-items-center gap-1 py-2">
+        <div
+          className={`d-flex flex-column align-items-center gap-1 ${
+            showLimitSkeleton ? "py-1" : "pt-1"
+          }`}
+        >
+          {showReadValueSkeleton ? (
             <Skeleton.Input size="small" active />
-            <Skeleton.Input size="small" active />
-          </div>
-        ) : (
-          <div className="d-flex flex-column pt-1">
+          ) : (
             <Typography.Text strong className="text-center">
               Medição atual: {measureFormatter(readValue, information)}
             </Typography.Text>
+          )}
 
+          {showLimitSkeleton ? (
+            <Skeleton.Input size="small" active />
+          ) : (
             <Typography.Text strong className="text-center">
               Faixa atual: {measureFormatter(savedRange[0], information)} -{" "}
               {measureFormatter(savedRange[1], information)}
             </Typography.Text>
-          </div>
-        )}
+          )}
+        </div>
 
         <LimitsSlider
           handleChange={handleChange}
