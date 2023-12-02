@@ -1,12 +1,13 @@
 import { notification } from "antd";
 import { HttpStatusCode } from "axios";
+import { useAxios } from "contexts";
 import { useCallback, useState } from "react";
-
 import { ChangePasswordRequest } from "types";
-import { API, endpoints } from "utils";
+import { endpoints } from "utils";
 
 export const useChangePassword = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const { API } = useAxios();
 
   const changePassword = useCallback(
     async (changePasswordRequest: ChangePasswordRequest) => {

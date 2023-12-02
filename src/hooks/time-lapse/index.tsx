@@ -1,11 +1,13 @@
 import { notification } from "antd";
+import { useAxios } from "contexts";
 import { useCallback, useState } from "react";
-import { API, endpoints } from "utils";
+import { endpoints } from "utils";
 
 export const useTimelapse = () => {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [timelapse, setTimelapse] = useState<string | null>(null);
+  const { API } = useAxios();
 
   const getTimelapse = useCallback(async () => {
     try {

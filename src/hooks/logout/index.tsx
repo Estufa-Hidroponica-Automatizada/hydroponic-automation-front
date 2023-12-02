@@ -1,12 +1,13 @@
 import { notification } from "antd";
 import { HttpStatusCode } from "axios";
-import { useAuthentication } from "contexts";
+import { useAuthentication, useAxios } from "contexts";
 import { useCallback, useState } from "react";
-import { API, endpoints } from "utils";
+import { endpoints } from "utils";
 
 export const useLogout = () => {
   const { logout: logoutFunction } = useAuthentication();
   const [isLoading, setIsLoading] = useState(false);
+  const { API } = useAxios();
 
   const logout = useCallback(async () => {
     try {

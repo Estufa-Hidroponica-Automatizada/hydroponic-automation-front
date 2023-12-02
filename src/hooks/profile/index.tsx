@@ -1,8 +1,9 @@
 import { notification } from "antd";
 import { HttpStatusCode } from "axios";
+import { useAxios } from "contexts";
 import { useCallback, useState } from "react";
 import { ProfileData, SummaryProfile } from "types";
-import { API, endpoints } from "utils";
+import { endpoints } from "utils";
 import { adaptProfilesResponseToProfilesData } from "./utils";
 
 export const useGetCurrentProfile = () => {
@@ -15,6 +16,7 @@ export const useGetCurrentProfile = () => {
     isFinished: false,
     totalWeeks: 0,
   });
+  const { API } = useAxios();
 
   const getCurrentProfile = useCallback(async () => {
     try {
@@ -44,6 +46,7 @@ export const useGetCurrentProfile = () => {
 export const useSetCurrentProfile = () => {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { API } = useAxios();
 
   const setCurrentProfile = useCallback(async (profile: ProfileData) => {
     try {
@@ -81,6 +84,7 @@ export const useProfilesList = () => {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [profilesList, setProfilesList] = useState<ProfileData[]>([]);
+  const { API } = useAxios();
 
   const getProfiles = useCallback(async () => {
     try {
@@ -108,6 +112,7 @@ export const useProfilesList = () => {
 export const useCreateProfile = () => {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { API } = useAxios();
 
   const createProfile = useCallback(async (profile: ProfileData) => {
     try {
@@ -149,6 +154,7 @@ export const useCreateProfile = () => {
 export const useEditProfile = () => {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { API } = useAxios();
 
   const editProfile = useCallback(async (profile: ProfileData) => {
     try {
@@ -194,6 +200,7 @@ export const useEditProfile = () => {
 export const useDeleteProfile = () => {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { API } = useAxios();
 
   const deleteProfile = useCallback(async (profile: ProfileData) => {
     try {

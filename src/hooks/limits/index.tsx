@@ -1,14 +1,16 @@
 import { notification } from "antd";
 import { HttpStatusCode } from "axios";
+import { useAxios } from "contexts";
 import { useCallback, useState } from "react";
 import { Limit, Limits } from "types";
-import { API, endpoints } from "utils";
+import { endpoints } from "utils";
 import { limitFormatter } from "./utils";
 
 export const useLimits = () => {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [limits, setLimits] = useState<Limits>({} as Limits);
+  const { API } = useAxios();
 
   const getLimits = useCallback(async () => {
     try {
@@ -39,6 +41,7 @@ export const useLimits = () => {
 
 export const useSetLimit = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const { API } = useAxios();
 
   const setLimit = useCallback(async (parameter: string, values: Limit) => {
     try {

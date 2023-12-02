@@ -1,13 +1,15 @@
 import { notification } from "antd";
 import { HttpStatusCode } from "axios";
+import { useAxios } from "contexts";
 import { useCallback, useState } from "react";
 import { LightSchedule } from "types";
-import { API, endpoints } from "utils";
+import { endpoints } from "utils";
 
 export const useLight = () => {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [lightSchedule, setLightSchedule] = useState<LightSchedule[]>([]);
+  const { API } = useAxios();
 
   const getLightSchedule = useCallback(async () => {
     try {

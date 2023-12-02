@@ -1,5 +1,6 @@
 import { App as AntdApp, ConfigProvider } from "antd";
 import { AuthProvider, ProfileProvider } from "contexts";
+import { AxiosProvider } from "contexts";
 import { AppRoutes } from "routes";
 import { Theme } from "utils";
 
@@ -17,9 +18,11 @@ function App() {
         }}
       >
         <AuthProvider>
-          <ProfileProvider>
-            <AppRoutes />
-          </ProfileProvider>
+          <AxiosProvider>
+            <ProfileProvider>
+              <AppRoutes />
+            </ProfileProvider>
+          </AxiosProvider>
         </AuthProvider>
       </ConfigProvider>
     </AntdApp>
