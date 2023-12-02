@@ -10,7 +10,6 @@ import {
   ProfileDetailsPage,
   ProfilesListPage,
   SystemPage,
-  TimeLapsePage,
   UpsertProfilePage,
 } from "pages";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
@@ -50,10 +49,6 @@ export const AppRoutes = () => {
                 element={authRoute(<ChangePasswordPage />)}
               />
               <Route path={AppPath.Photo} element={authRoute(<PhotoPage />)} />
-              <Route
-                path={AppPath.TimeLapse}
-                element={authRoute(<TimeLapsePage />)}
-              />
               <Route
                 path={AppPath.System}
                 element={authRoute(<SystemPage />)}

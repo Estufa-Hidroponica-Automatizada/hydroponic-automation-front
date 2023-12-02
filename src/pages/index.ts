@@ -5,5 +5,4 @@ export * from "./photo";
 export * from "./profile-details";
 export * from "./profiles-list";
 export * from "./system";
-export * from "./time-lapse";
 export * from "./upsert-profile";

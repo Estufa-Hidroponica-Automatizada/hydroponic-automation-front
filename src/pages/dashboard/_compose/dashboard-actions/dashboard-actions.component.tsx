@@ -5,6 +5,9 @@ import {
   VideoCameraOutlined,
 } from "@ant-design/icons";
 import { Button, Dropdown, Typography } from "antd";
+import dayjs from "dayjs";
+import { useTimelapse } from "hooks";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppPath } from "utils";
 import { DashboardActionsContainer } from "./styles";
@@ -20,7 +23,28 @@ export const DashboardActions = ({
   isLoading,
   hasError,
 }: DashboardActionsProps) => {
+  const { getTimelapse, timelapse } = useTimelapse();
   const navigate = useNavigate();
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleDropdownClick = async (option: any) => {
+    if (option.key === "photo") {
+      navigate(AppPath.Photo);
+    } else {
+      await getTimelapse();
+      setIsDownloading(true);
+    }
+  };
+
+  useEffect(() => {
+    if (isDownloading && timelapse) {
+      const a = document.createElement("a");
+      a.href = timelapse;
+      a.download = `${dayjs().format("DD-MM-YYYY-hhmm")}.mp4`;
+      a.click();
+      setIsDownloading(false);
+    }
+  }, [timelapse]);
 
   return (
     <DashboardActionsContainer className="gap-2">
@@ -41,16 +65,16 @@ export const DashboardActions = ({
             items: [
               {
                 label: "Ao vivo",
-                key: AppPath.Photo,
+                key: "photo",
                 icon: <CameraOutlined />,
               },
               {
                 label: "Time-lapse",
-                key: AppPath.TimeLapse,
+                key: "timelapse",
                 icon: <VideoCameraOutlined />,
               },
             ],
-            onClick: (option) => navigate(option.key),
+            onClick: handleDropdownClick,
           }}
           trigger={["click"]}
         >

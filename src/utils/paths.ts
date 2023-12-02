@@ -8,5 +8,4 @@ export enum AppPath {
   ProfileDetails = "/profile/details",
   System = "/system",
   Photo = "/cam/now",
-  TimeLapse = "/cam/time-lapse",
 }

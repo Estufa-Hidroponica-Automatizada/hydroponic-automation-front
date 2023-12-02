@@ -13,6 +13,10 @@ export const useTimelapse = () => {
     try {
       setError(false);
       setIsLoading(true);
+      notification.info({
+        message: "Timelapse",
+        description: "O arquivo está sendo processado para download.",
+      });
       const { data } = await API.get(endpoints.cam.getTimelapse, {
         responseType: "blob",
       });
