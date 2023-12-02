@@ -22,6 +22,10 @@ export const ProfileDetailsPage = () => {
   useEffect(() => {
     if (initialRender.current) {
       initialRender.current = false;
+      if (!profileData.id) {
+        navigate(AppPath.ProfilesList);
+        return;
+      }
       checkCurrentProfile();
     }
   }, []);
@@ -33,7 +37,7 @@ export const ProfileDetailsPage = () => {
   return (
     <div className="d-flex flex-column align-items-center">
       <ContentCard className="gap-3">
-        <ProfileInformation />
+        {profileData.id && <ProfileInformation />}
         <ActionsBar
           buttons={[
             {
