@@ -28,7 +28,7 @@ export const LightInformationCard = ({
           Luminosidade
         </Typography.Title>
 
-        <div className="d-flex justify-content-center gap-3 py-2">
+        <div className="d-flex align-items-center justify-content-center gap-3 py-2 h-100">
           {!lightLevel || isLoadingReadData ? (
             <Skeleton.Image active style={{ fontSize: "8rem" }} />
           ) : hasLight ? (
