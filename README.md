@@ -8,22 +8,30 @@ Este projeto foi desenvolvido como Trabalho de Conclusão de Curso do curso de E
 - Silas Lima e Silva
 
 ## Scripts
+### Dependências do projeto
+Antes de seguir para os próximos scripts, você primeiro deve instalar todas as dependências do projeto executando o seguinte comando:
+```
+npm install
+```
 
-Na raiz do projeto, você pode rodar os seguintes comandos
+### Modo desenvolvedor
 
-#### `npm install`
-
-Este comando é responsável por instalar todas as dependências do projeto.
-
-#### `npm run start`
-
-Roda o app no modo desenvolvedor. Para visualizá-lo no seu navegador, basta acessar a URL [http://localhost:3000](http://localhost:3000).\
+Para rodar o app no modo desenvolvedor, basta executar o seguinte comando:
+```
+npm run start
+```
+Após a execução desse script, aparecerá no terminal a URL para visualizar o app no seu navegador.\
 A página irá recarregar automaticamente ao fazer qualquer edição no código-fonte.
 
-#### `npm run build`
+### Build
+Para buildar o app de maneira otimizada, garantindo melhor performance, basta executar o seguinte comando:
+```
+npm run build
+```
 
-Builda o app para rodá-lo em produção, de maneira otimizada para garantir melhor performance.
-
-#### `npm run deploy`
-
-Realiza o build descrito no script anterior e, logo em sequência, faz o deploy do aplicativo em produção no seu servidor local.
+### Deploy
+Para fazer o deploy do seu aplicativo em produção no seu servidor local, basta executar o seguinte comando:
+```
+npm run deploy
+```
+Isso fará o build do aplicativo (conforme script anterior) e, em sequência, fará o deploy do aplicativo em produção no seu servidor local.
