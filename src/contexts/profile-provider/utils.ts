@@ -1,6 +1,6 @@
-import { LightSchedule, Limit, NutrientsProportion } from "types";
+import { LightSchedule, Limit, NutrientProportion, ProfileData } from "types";
 
-export const blankProfileData = {
+export const blankProfileData: ProfileData = {
   name: "",
   weeksDuration: 1,
   lightSchedule: [[]] as LightSchedule[][],
@@ -9,5 +9,5 @@ export const blankProfileData = {
   condutivity: [] as Limit[],
   humidity: [] as Limit[],
   waterTemperature: [] as Limit[],
-  nutrientsProportion: [] as NutrientsProportion[],
+  nutrientProportion: [] as NutrientProportion[],
 };

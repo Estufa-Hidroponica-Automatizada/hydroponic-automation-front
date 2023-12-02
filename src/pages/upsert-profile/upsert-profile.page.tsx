@@ -54,7 +54,7 @@ export const UpsertProfilePage = () => {
         key="humidityLimitInput"
       />
     ),
-    NutrientsProportion: <NutrientsProportionInput />,
+    NutrientProportion: <NutrientsProportionInput />,
     ProfileConfirmation: <ProfileConfirmation />,
   };
 

@@ -4,7 +4,6 @@ import { useAxios } from "contexts";
 import { useCallback, useState } from "react";
 import { ProfileData, SummaryProfile } from "types";
 import { endpoints } from "utils";
-import { adaptProfilesResponseToProfilesData } from "./utils";
 
 export const useGetCurrentProfile = () => {
   const [error, setError] = useState(false);
@@ -90,10 +89,17 @@ export const useProfilesList = () => {
     try {
       setError(false);
       setIsLoading(true);
-      const { data, status } = await API.get(endpoints.profile.listAll);
+      const { data, status } = await API.get<ProfileData[]>(
+        endpoints.profile.listAll
+      );
 
       if (status === HttpStatusCode.Ok) {
-        setProfilesList(adaptProfilesResponseToProfilesData(data));
+        setProfilesList(
+          data.map((profile) => ({
+            ...profile,
+            weeksDuration: profile.condutivity.length,
+          }))
+        );
       }
     } catch {
       setError(true);
@@ -118,16 +124,7 @@ export const useCreateProfile = () => {
     try {
       setError(false);
       setIsLoading(true);
-      const { status } = await API.post(endpoints.profile.create, {
-        name: profile.name,
-        temperature: profile.airTemperature,
-        humidity: profile.humidity,
-        ph: profile.pH,
-        condutivity: profile.condutivity,
-        water_temperature: profile.waterTemperature,
-        light_schedule: profile.lightSchedule,
-        nutrient_proportion: profile.nutrientsProportion,
-      });
+      const { status } = await API.post(endpoints.profile.create, profile);
 
       if (status === HttpStatusCode.Ok) {
         notification.success({
@@ -157,22 +154,15 @@ export const useEditProfile = () => {
   const { API } = useAxios();
 
   const editProfile = useCallback(async (profile: ProfileData) => {
+    if (!profile.id) {
+      return;
+    }
     try {
       setError(false);
       setIsLoading(true);
       const { status } = await API.put(
-        endpoints.profile.edit(profile.id ?? 0),
-        {
-          id: profile.id,
-          name: profile.name,
-          temperature: profile.airTemperature,
-          humidity: profile.humidity,
-          ph: profile.pH,
-          condutivity: profile.condutivity,
-          water_temperature: profile.waterTemperature,
-          light_schedule: profile.lightSchedule,
-          nutrient_proportion: profile.nutrientsProportion,
-        }
+        endpoints.profile.edit(profile.id),
+        profile
       );
 
       if (status === HttpStatusCode.Ok) {
@@ -203,12 +193,13 @@ export const useDeleteProfile = () => {
   const { API } = useAxios();
 
   const deleteProfile = useCallback(async (profile: ProfileData) => {
+    if (!profile.id) {
+      return;
+    }
     try {
       setError(false);
       setIsLoading(true);
-      const { status } = await API.delete(
-        endpoints.profile.delete(profile.id!)
-      );
+      const { status } = await API.delete(endpoints.profile.delete(profile.id));
 
       if (status === HttpStatusCode.Ok) {
         notification.success({

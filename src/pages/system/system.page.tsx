@@ -112,23 +112,25 @@ export const SystemPage = () => {
             )}
           </div>
 
-          <ActionsBar
-            buttons={[
-              {
-                text: "Criar perfil",
-                handleClick: () => {
-                  setFormStep(UpsertProfileStep.ProfileInfo);
-                  setProfileData(blankProfileData);
-                  navigate(AppPath.CreateProfile);
+          <div className="pt-3">
+            <ActionsBar
+              buttons={[
+                {
+                  text: "Criar perfil",
+                  handleClick: () => {
+                    setFormStep(UpsertProfileStep.ProfileInfo);
+                    setProfileData(blankProfileData);
+                    navigate(AppPath.CreateProfile);
+                  },
+                  icon: <PlusOutlined />,
                 },
-                icon: <PlusOutlined />,
-              },
-              {
-                text: "Lista de perfis",
-                handleClick: () => navigate(AppPath.ProfilesList),
-              },
-            ]}
-          />
+                {
+                  text: "Lista de perfis",
+                  handleClick: () => navigate(AppPath.ProfilesList),
+                },
+              ]}
+            />
+          </div>
         </div>
       </div>
     </ContentCard>

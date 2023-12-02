@@ -23,7 +23,7 @@ export const PhotoPage = () => {
   const isPortrait = window.innerHeight > window.innerWidth;
 
   const height = isPortrait
-    ? `${(0.75 * window.innerWidth) / 1.33}px`
+    ? `${(0.9 * window.innerWidth) / 1.33}px`
     : `${0.75 * window.innerHeight}px`;
 
   const width = isPortrait
@@ -49,7 +49,6 @@ export const PhotoPage = () => {
               disabled: !photo,
             },
           ]}
-          notPadding
         />
       </ResponsiveActionsContainer>
       {isLoading ? (

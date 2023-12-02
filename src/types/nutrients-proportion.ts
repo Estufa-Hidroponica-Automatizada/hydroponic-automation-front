@@ -1,4 +1,4 @@
-export interface NutrientsProportion {
+export interface NutrientProportion {
   nutrientA: number;
   nutrientB: number;
 }

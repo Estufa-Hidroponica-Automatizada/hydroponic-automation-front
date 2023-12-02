@@ -77,25 +77,27 @@ export const ProfileInformationCard = ({
           <Typography.Text>{profile.humidity.length} semanas</Typography.Text>
         </div>
 
-        <ActionsBar
-          buttons={[
-            {
-              text: "Editar perfil",
-              handleClick: () => {
-                setFormStep(UpsertProfileStep.ProfileInfo);
-                setProfileData(profile);
-                navigate(AppPath.EditProfile);
+        <div className="pt-3">
+          <ActionsBar
+            buttons={[
+              {
+                text: "Editar perfil",
+                handleClick: () => {
+                  setFormStep(UpsertProfileStep.ProfileInfo);
+                  setProfileData(profile);
+                  navigate(AppPath.EditProfile);
+                },
+                disabled: isLoadingDeleteProfile || isLoadingSetCurrentProfile,
               },
-              disabled: isLoadingDeleteProfile || isLoadingSetCurrentProfile,
-            },
-            {
-              text: isCurrent ? "Perfil selecionado" : "Selecionar perfil",
-              handleClick: handleSelectProfile,
-              loading: isLoadingSetCurrentProfile,
-              disabled: isCurrent || isLoadingDeleteProfile,
-            },
-          ]}
-        />
+              {
+                text: isCurrent ? "Perfil selecionado" : "Selecionar perfil",
+                handleClick: handleSelectProfile,
+                loading: isLoadingSetCurrentProfile,
+                disabled: isCurrent || isLoadingDeleteProfile,
+              },
+            ]}
+          />
+        </div>
       </div>
     </ContentCard>
   );

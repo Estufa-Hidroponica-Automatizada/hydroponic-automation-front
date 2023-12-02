@@ -2,6 +2,7 @@ import { Typography } from "antd";
 import { ResponsiveContainer } from "components";
 import { useGetCurrentProfile, useProfilesList } from "hooks";
 import { useEffect, useRef, useState } from "react";
+import { LoadingProfileCard } from "./_compose/loading-profile-card";
 import { ProfileInformationCard } from "./_compose/profile-information-card";
 import { ProfilesListActions } from "./_compose/profiles-list-actions";
 
@@ -23,8 +24,8 @@ export const ProfilesListPage = () => {
   } = useGetCurrentProfile();
 
   const getProfilesInfo = async () => {
-    await getCurrentProfile();
     await getProfiles();
+    await getCurrentProfile();
   };
 
   useEffect(() => {
@@ -51,15 +52,21 @@ export const ProfilesListPage = () => {
       )}
 
       <ResponsiveContainer>
-        {profilesList
-          .filter((profile) => profile.name.toLowerCase().includes(filter))
-          .map((profile) => (
-            <ProfileInformationCard
-              isCurrent={profile.id === currentProfile.id}
-              profile={profile}
-              refreshList={getProfilesInfo}
-            />
-          ))}
+        {isLoadingProfilesList ? (
+          <LoadingProfileCard />
+        ) : (
+          <>
+            {profilesList
+              .filter((profile) => profile.name.toLowerCase().includes(filter))
+              .map((profile) => (
+                <ProfileInformationCard
+                  isCurrent={profile.id === currentProfile.id}
+                  profile={profile}
+                  refreshList={getProfilesInfo}
+                />
+              ))}
+          </>
+        )}
       </ResponsiveContainer>
     </>
   );

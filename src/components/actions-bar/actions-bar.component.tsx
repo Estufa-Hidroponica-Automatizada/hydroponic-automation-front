@@ -2,13 +2,8 @@ import { Button } from "antd";
 import { ActionsBarProps } from "./types";
 
 export const ActionsBar = ({ buttons, notPadding }: ActionsBarProps) => {
-  // to do: remove notPadding props
   return (
-    <div
-      className={`d-flex justify-content-center gap-2 ${
-        notPadding ? "" : "pt-3"
-      } w-100`}
-    >
+    <div className="d-flex justify-content-center gap-2 w-100">
       <Button
         type="primary"
         onClick={buttons[0].handleClick}

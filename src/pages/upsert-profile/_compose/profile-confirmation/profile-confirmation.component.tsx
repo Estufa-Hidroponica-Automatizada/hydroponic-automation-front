@@ -36,7 +36,7 @@ export const ProfileConfirmation = () => {
           {
             text: "Voltar",
             handleClick: () =>
-              setFormStep(UpsertProfileStep.NutrientsProportion),
+              setFormStep(UpsertProfileStep.NutrientProportion),
           },
           {
             text:

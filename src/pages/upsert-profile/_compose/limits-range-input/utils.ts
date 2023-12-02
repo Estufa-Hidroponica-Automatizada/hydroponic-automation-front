@@ -20,7 +20,7 @@ export const nextStep: Record<RangeInformation, UpsertProfileStep> = {
   condutivity: UpsertProfileStep.WaterTemperatureLimits,
   waterTemperature: UpsertProfileStep.AirTemperatureLimits,
   airTemperature: UpsertProfileStep.HumidityLimits,
-  humidity: UpsertProfileStep.NutrientsProportion,
+  humidity: UpsertProfileStep.NutrientProportion,
 };
 
 export const limitsRangeInitialValues = (

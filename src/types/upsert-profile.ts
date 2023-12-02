@@ -29,5 +29,5 @@ export enum UpsertProfileFormField {
   LightScheduleTime = "time",
   LightScheduleState = "state",
   LimitsRange = "limitsRange",
-  NutrientsProportion = "nutrientsProportion",
+  NutrientProportion = "nutrientProportion",
 }

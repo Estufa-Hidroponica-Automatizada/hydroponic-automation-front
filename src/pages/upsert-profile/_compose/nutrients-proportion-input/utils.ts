@@ -1,11 +1,11 @@
 import { ProfileData } from "types";
 
-export const nutrientsProportionInitialValues = (profileData: ProfileData) => {
+export const nutrientProportionInitialValues = (profileData: ProfileData) => {
   return Array.from({ length: profileData.weeksDuration }, (_, weekIndex) =>
-    weekIndex < profileData.nutrientsProportion.length
+    weekIndex < profileData.nutrientProportion.length
       ? {
-          nutrientA: profileData.nutrientsProportion[weekIndex].nutrientA,
-          nutrientB: profileData.nutrientsProportion[weekIndex].nutrientB,
+          nutrientA: profileData.nutrientProportion[weekIndex].nutrientA,
+          nutrientB: profileData.nutrientProportion[weekIndex].nutrientB,
         }
       : { nutrientA: 1, nutrientB: 1 }
   );

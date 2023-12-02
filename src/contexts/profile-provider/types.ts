@@ -22,6 +22,6 @@ export enum UpsertProfileStep {
   AirTemperatureLimits = "AirTemperatureLimits",
   HumidityLimits = "HumidityLimits",
   WaterTemperatureLimits = "WaterTemperatureLimits",
-  NutrientsProportion = "NutrientsProportion",
+  NutrientProportion = "NutrientProportion",
   ProfileConfirmation = "ProfileConfirmation",
 }

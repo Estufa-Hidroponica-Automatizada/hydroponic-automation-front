@@ -137,8 +137,8 @@ export const ProfileInformation = () => {
                 Nutriente A / Nutriente B
               </Typography.Title>
               <Typography.Text>
-                {profileData.nutrientsProportion[week].nutrientA} /{" "}
-                {profileData.nutrientsProportion[week].nutrientB}
+                {profileData.nutrientProportion[week].nutrientA} /{" "}
+                {profileData.nutrientProportion[week].nutrientB}
               </Typography.Text>
             </div>
           </div>

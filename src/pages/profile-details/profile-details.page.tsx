@@ -1,7 +1,7 @@
 import { ActionsBar, ContentCard, ProfileInformation } from "components";
 import { UpsertProfileStep, useProfile } from "contexts";
 import { useGetCurrentProfile, useSetCurrentProfile } from "hooks";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppPath } from "utils";
 
@@ -32,7 +32,7 @@ export const ProfileDetailsPage = () => {
 
   return (
     <div className="d-flex flex-column align-items-center">
-      <ContentCard>
+      <ContentCard className="gap-3">
         <ProfileInformation />
         <ActionsBar
           buttons={[

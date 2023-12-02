@@ -2,31 +2,31 @@ import { Typography } from "antd";
 import { IntegerInput } from "components";
 import { UpsertProfileStep, useProfile } from "contexts";
 import { useState } from "react";
-import { NutrientsProportion } from "types";
+import { NutrientProportion } from "types";
 import { UpsertProfileFooter } from "../upsert-profile-footer";
-import { nutrientsProportionInitialValues } from "./utils";
+import { nutrientProportionInitialValues } from "./utils";
 
 export const NutrientsProportionInput = () => {
   const { profileData, setFormStep, setProfileData } = useProfile();
 
-  const [nutrientsProportion, setNutrientsProportion] = useState<
-    NutrientsProportion[]
-  >(nutrientsProportionInitialValues(profileData));
+  const [nutrientProportion, setNutrientProportion] = useState<
+    NutrientProportion[]
+  >(nutrientProportionInitialValues(profileData));
 
   const handleChangeValue = (
     value: number,
     nutrient: "nutrientA" | "nutrientB",
     index: number
   ) => {
-    var updatedValue = [...nutrientsProportion];
+    var updatedValue = [...nutrientProportion];
     updatedValue[index] = { ...updatedValue[index], [nutrient]: value };
-    setNutrientsProportion(updatedValue);
+    setNutrientProportion(updatedValue);
   };
 
   const handleContinue = () => {
     setProfileData((prevData) => ({
       ...prevData,
-      nutrientsProportion: nutrientsProportion,
+      nutrientProportion: nutrientProportion,
     }));
 
     setFormStep(UpsertProfileStep.ProfileConfirmation);
@@ -42,7 +42,7 @@ export const NutrientsProportionInput = () => {
         {Array.from({ length: profileData.weeksDuration }).map((_, index) => (
           <div
             className="d-flex flex-column align-items-center gap-1"
-            key={`nutrientsProportion_week${index}`}
+            key={`nutrientProportion_week${index}`}
           >
             <Typography.Title level={5} className="m-0 text-center">
               Semana {index + 1}
@@ -55,7 +55,7 @@ export const NutrientsProportionInput = () => {
                 </Typography.Title>
                 <div className="w-100">
                   <IntegerInput
-                    currentValue={nutrientsProportion[index].nutrientA}
+                    currentValue={nutrientProportion[index].nutrientA}
                     handleChange={(value: number) =>
                       handleChangeValue(value, "nutrientA", index)
                     }
@@ -69,7 +69,7 @@ export const NutrientsProportionInput = () => {
                 </Typography.Title>
                 <div className="w-100">
                   <IntegerInput
-                    currentValue={nutrientsProportion[index].nutrientB}
+                    currentValue={nutrientProportion[index].nutrientB}
                     handleChange={(value: number) =>
                       handleChangeValue(value, "nutrientB", index)
                     }

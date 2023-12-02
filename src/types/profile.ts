@@ -1,6 +1,6 @@
 import { LightSchedule } from "./light-schedule";
 import { Limit } from "./limits";
-import { NutrientsProportion } from "./nutrients-proportion";
+import { NutrientProportion } from "./nutrients-proportion";
 
 export interface SummaryProfile {
   days: number;
@@ -20,5 +20,5 @@ export interface ProfileData {
   condutivity: Limit[];
   humidity: Limit[];
   waterTemperature: Limit[];
-  nutrientsProportion: NutrientsProportion[];
+  nutrientProportion: NutrientProportion[];
 }
