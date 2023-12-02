@@ -12,14 +12,21 @@ import {
   SystemPage,
   UpsertProfilePage,
 } from "pages";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AppPath } from "utils";
 
 export const AppRoutes = () => {
+  const [hasToken, setHasToken] = useState(true);
   const { isAuthenticated } = useAuthentication();
 
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    setHasToken(!!token);
+  }, [isAuthenticated]);
+
   const authRoute = (page: JSX.Element) => {
-    return isAuthenticated ? page : <Navigate to={AppPath.Login} />;
+    return hasToken ? page : <Navigate to={AppPath.Login} />;
   };
 
   return (
