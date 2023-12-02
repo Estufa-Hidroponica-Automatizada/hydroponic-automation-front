@@ -1,3 +1,4 @@
+export * from "./download-media";
 export * from "./endpoints";
 export * from "./formatter";
 export * from "./limits-range";

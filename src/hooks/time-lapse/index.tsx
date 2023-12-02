@@ -13,6 +13,7 @@ export const useTimelapse = () => {
     try {
       setError(false);
       setIsLoading(true);
+      setTimelapse(null);
       notification.info({
         message: "Timelapse",
         description: "O arquivo está sendo processado para download.",

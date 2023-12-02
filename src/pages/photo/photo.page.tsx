@@ -1,9 +1,9 @@
 import { ReloadOutlined } from "@ant-design/icons";
 import { Skeleton } from "antd";
 import { ActionsBar, ResponsiveActionsContainer } from "components";
-import dayjs from "dayjs";
 import { usePhoto } from "hooks";
 import { useEffect, useRef } from "react";
+import { handleDownload } from "utils";
 
 export const PhotoPage = () => {
   const initialRender = useRef(true);
@@ -22,26 +22,18 @@ export const PhotoPage = () => {
 
   const isPortrait = window.innerHeight > window.innerWidth;
 
-  // TO DO: adjust size
   const height = isPortrait
-    ? `${window.innerWidth / 1.33}px`
+    ? `${(0.75 * window.innerWidth) / 1.33}px`
     : `${0.75 * window.innerHeight}px`;
 
   const width = isPortrait
-    ? `${window.innerWidth}px`
+    ? `${0.75 * window.innerWidth}px`
     : `${1.33 * (0.75 * window.innerHeight)}px`;
 
   const photoStyle = { width, height };
 
-  const handleDownload = () => {
-    const a = document.createElement("a");
-    a.href = photo ?? "";
-    a.download = `${dayjs().format("DD-MM-YYYY-hhmm")}.jpeg`;
-    a.click();
-  };
-
   return (
-    <div className="d-flex flex-column justify-content-center gap-3 h-100">
+    <div className="d-flex flex-column justify-content-center align-items-center gap-3 h-100">
       <ResponsiveActionsContainer>
         <ActionsBar
           buttons={[
@@ -53,7 +45,7 @@ export const PhotoPage = () => {
             },
             {
               text: "Baixar imagem",
-              handleClick: handleDownload,
+              handleClick: () => handleDownload("jpeg", photo),
               disabled: !photo,
             },
           ]}

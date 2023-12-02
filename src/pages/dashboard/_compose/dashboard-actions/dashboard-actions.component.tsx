@@ -5,11 +5,10 @@ import {
   VideoCameraOutlined,
 } from "@ant-design/icons";
 import { Button, Dropdown, Typography } from "antd";
-import dayjs from "dayjs";
 import { useTimelapse } from "hooks";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AppPath } from "utils";
+import { AppPath, handleDownload } from "utils";
 import { DashboardActionsContainer } from "./styles";
 
 interface DashboardActionsProps {
@@ -23,8 +22,8 @@ export const DashboardActions = ({
   isLoading,
   hasError,
 }: DashboardActionsProps) => {
-  const { getTimelapse, timelapse } = useTimelapse();
   const navigate = useNavigate();
+  const { getTimelapse, timelapse } = useTimelapse();
   const [isDownloading, setIsDownloading] = useState(false);
 
   const handleDropdownClick = async (option: any) => {
@@ -38,10 +37,7 @@ export const DashboardActions = ({
 
   useEffect(() => {
     if (isDownloading && timelapse) {
-      const a = document.createElement("a");
-      a.href = timelapse;
-      a.download = `${dayjs().format("DD-MM-YYYY-hhmm")}.mp4`;
-      a.click();
+      handleDownload("mp4", timelapse);
       setIsDownloading(false);
     }
   }, [timelapse]);
