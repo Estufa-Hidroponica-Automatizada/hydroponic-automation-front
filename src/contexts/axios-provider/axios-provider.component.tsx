@@ -28,8 +28,9 @@ export const AxiosProvider: React.FC<PropsWithChildren> = ({ children }) => {
     (response) => response,
     (error: AxiosError) => {
       const isExpired =
-        error.config?.url !== endpoints.auth.login &&
-        error.response?.status === HttpStatusCode.Unauthorized;
+        ![endpoints.auth.login, endpoints.auth.changePassword].includes(
+          error.config?.url ?? ""
+        ) && error.response?.status === HttpStatusCode.Unauthorized;
 
       if (isExpired) {
         notification.error({
