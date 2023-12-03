@@ -46,7 +46,6 @@ export const ProfilesListActions = ({
           type="primary"
           icon={<PlusOutlined />}
           onClick={handleCreateProfileClick}
-          disabled={isLoading}
           block
         >
           Criar perfil
