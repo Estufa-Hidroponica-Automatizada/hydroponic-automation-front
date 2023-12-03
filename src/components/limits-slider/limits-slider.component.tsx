@@ -1,6 +1,6 @@
 import { Form, Skeleton, Slider, Typography } from "antd";
 import { RangeInformation } from "types";
-import { LimitsRange, measureFormatter } from "utils";
+import { LimitsRange, LimitsStep, measureFormatter } from "utils";
 
 interface LimitsSliderProps {
   handleChange?: (values: number[]) => void;
@@ -40,7 +40,12 @@ export const LimitsSlider = ({
             LimitsRange[information].max,
           ]}
         >
-          <Slider {...LimitsRange[information]} className="mt-1 mb-3" range />
+          <Slider
+            {...LimitsRange[information]}
+            className="mt-1 mb-3"
+            step={LimitsStep[information]}
+            range
+          />
         </Form.Item>
       ) : (
         <Slider
@@ -49,6 +54,7 @@ export const LimitsSlider = ({
           marks={marks}
           className="mt-1 mb-3"
           onChange={handleChange}
+          step={LimitsStep[information]}
           range
         />
       )}

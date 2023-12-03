@@ -27,7 +27,6 @@ export const limitsRangeInitialValues = (
   profileData: ProfileData,
   information: RangeInformation
 ) => {
-  // TO DO: ajustar para inicializar com valores decimais
   return Array.from({ length: profileData.weeksDuration }, (_, weekIndex) =>
     weekIndex < profileData[information].length
       ? [
