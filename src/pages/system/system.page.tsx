@@ -1,12 +1,7 @@
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Divider, Skeleton, Typography } from "antd";
 import { ActionsBar, ContentCard } from "components";
-import {
-  UpsertProfileStep,
-  blankProfileData,
-  useAuthentication,
-  useProfile,
-} from "contexts";
+import { UpsertProfileStep, blankProfileData, useProfile } from "contexts";
 import { useGetCurrentProfile, useLogout } from "hooks";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -14,15 +9,15 @@ import { AppPath } from "utils";
 
 export const SystemPage = () => {
   const { setFormStep, setProfileData } = useProfile();
-  const { user } = useAuthentication();
   const navigate = useNavigate();
-
   const { logout } = useLogout();
   const {
     currentProfile,
     getCurrentProfile,
     isLoading: isLoadingCurrentProfile,
   } = useGetCurrentProfile();
+
+  const username = localStorage.getItem("username") ?? "";
 
   const getSystemInformation = async () => {
     await getCurrentProfile();
@@ -52,7 +47,7 @@ export const SystemPage = () => {
             <Typography.Title level={4} className="m-0">
               Nome de usuário
             </Typography.Title>
-            <Typography.Text>{user}</Typography.Text>
+            <Typography.Text>{username}</Typography.Text>
           </div>
 
           <div className="d-flex align-items-center justify-content-between w-100">
